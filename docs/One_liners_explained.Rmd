@@ -1,0 +1,22 @@
+---
+title: "Oneliners explained"
+author: "Aimer G. Diaz"
+output: html_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Awk oneliners 
+
+
+
+
+# Bash oneliners
+
+
+
+
+# Perl oneliners 
