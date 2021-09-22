@@ -1,8 +1,7 @@
 ---
 title: "Oneliners explained"
 author: "Aimer G. Diaz"
-output: html_document
-
+output: rmarkdown::github_document
 ---
 
 ```{r setup, include=FALSE}
