@@ -4,7 +4,7 @@
 
 The present folder has the code necessary to generate BSGenome R package for maize B73 AGPv3, v4 and v5, adiddtionaly for Mo17 Cau v1.0, starting from the fasta sequence, transforming to 2bit format and forging R BSgenome package.  
 
-The BSGenome R packges output of this initial parte are available at [EGlab BSGenome maize repository] (https://drive.google.com/drive/folders/1DimXX0S9Z2oloCKQiRCNk0j-YMMEvI1k?usp=sharing) 
+The BSGenome R packges output of this initial part are available at [EGlab BSGenome maize repository] (https://drive.google.com/drive/folders/1DimXX0S9Z2oloCKQiRCNk0j-YMMEvI1k?usp=sharing) 
 
 ### Notes Package forging 
 
