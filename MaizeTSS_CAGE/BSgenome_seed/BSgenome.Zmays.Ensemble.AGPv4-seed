@@ -1,0 +1,19 @@
+Package: BSgenome.Zmays.Ensemble.AGPv4r40
+Title: Full genome sequences for Zea mays (Ensembl version AGPv4 release 40)
+Description: Full genome sequences for Zea mays as provided by Ensembl (AGPv4, Mar. 2016).
+Version: 4.40
+Suggests: GenomicFeatures
+organism: Zea mays
+common_name: Maize
+provider: ENSEMBL
+provider_version: AGPv4.40
+release_date: Mar. 2016
+release_name: B73 RefGen_v4
+source_url: ftp://ftp.ensemblgenomes.org/pub/plants/release-40/fasta/zea_mays/dna/
+organism_biocview: Zea_mays
+BSgenomeObjname: Zmays
+circ_seqs: c("Mt","Pt")
+SrcDataFiles:Zea_mays.AGPv4.dna.toplevel.2bit  from ftp://ftp.ensemblgenomes.org/pub/plants/release-40/fasta/zea_mays/dna/
+#PkgExamples: genome$1  # same as genome[["chr1"]]
+seqs_srcdir: /home/aimer/Maize_TSS/Maize_Genomes/Fasta/BSGenome/ 
+seqfile_name: Zea_mays.AGPv4.dna.toplevel.2bit

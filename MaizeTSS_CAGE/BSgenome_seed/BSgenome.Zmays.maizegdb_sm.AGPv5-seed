@@ -1,0 +1,17 @@
+Package: BSgenome.Zmays.maizegdb.AGPv5.0
+Title: Full genome sequences Soft Masked for Zea mays ( Ensemble version AGPv5 release NAM 1 )
+Description: Full genome sequences for Zea mays as provided by MaizeGDB (AGPv5 NAM, Nov, 2019).
+Version: 5.0
+Suggests: GenomicFeatures
+organism: Zea mays
+common_name: Maize
+provider: MaizeGDB
+provider_version: AGPv5.0
+release_date: Nov. 2019
+release_name: B73 RefGen_v5
+source_url: https://download.maizegdb.org/Zm-B73-REFERENCE-NAM-5.0/
+organism_biocview: Zea_mays
+BSgenomeObjname: Zmays
+SrcDataFiles: Zea_mays.AGPv5.dna_sm.2bit  from https://download.maizegdb.org/Zm-B73-REFERENCE-NAM-5.0/
+seqs_srcdir: /maindisk/aimer/backup_aimer/Maize_TSS/Code/2BitGenomes/ 
+seqfile_name: Zea_mays.AGPv5.dna_sm.2bit

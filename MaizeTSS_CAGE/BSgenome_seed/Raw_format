@@ -1,0 +1,17 @@
+Package: BSgenome.PACKAGE_NAME.V.0.0 
+Title: Full genome sequences NAMES
+Description: Full genome sequences for NAMES AND VERSION DATES
+Version: 0.0
+Suggests: GenomicFeatures
+organism: 
+common_name: 
+provider: 
+provider_version: 
+release_date: 
+release_name: 
+source_url: 
+organism_biocview: 
+BSgenomeObjname: 
+SrcDataFiles: 
+seqs_srcdir: 
+seqfile_name: 

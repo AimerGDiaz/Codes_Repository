@@ -1,0 +1,18 @@
+Package: BSgenome.Zmays.Ensemble.AGPv3
+Title: Full genome sequences for Zea mays (Ensembl version AGPv3 release 31)
+Description: Full genome sequences for Zea mays as provided by Ensembl (AGPv3, Jan. 2010).
+Version: 3.31
+Suggests: GenomicFeatures
+organism: Zea mays
+common_name: Maize
+provider: ENSEMBL
+provider_version: AGPv3.31
+release_date: Jan. 2010
+release_name: B73 RefGen_v3
+source_url: ftp://ftp.ensemblgenomes.org/pub/plants/release-31/fasta/zea_mays/dna/
+organism_biocview: Zea_mays
+BSgenomeObjname: Zmays
+circ_seqs: c("Mt","Pt")
+SrcDataFiles:Zea_mays.AGPv3.dna.toplevel.2bit  from ftp://ftp.ensemblgenomes.org/pub/plants/release-31/fasta/zea_mays/dna/
+seqs_srcdir: /home/aimer/Maize_TSS/Code/2BitGenomes/ 
+seqfile_name: Zea_mays.AGPv3.31.2bit

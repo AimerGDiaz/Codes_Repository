@@ -1,0 +1,17 @@
+Package: BSgenome.Zmays.ncbiSM.Mo17
+Title: Full genome sequences Soft Masked for Zea mays ( NCBI version Mo17 Cau release 1)
+Description: Full genome sequences for Zea mays as provided by NCBI (Mo17 Cau, Sep, 2018).
+Version: 1.0
+Suggests: GenomicFeatures
+organism: Zea mays
+common_name: Maize
+provider: NCBI
+provider_version: Mo17Cau1.0
+release_date: Sep. 2018
+release_name: Mo17 CAUv1
+source_url: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/003/185/045/GCA_003185045.1_Zm-Mo17-REFERENCE-CAU-1.0/
+organism_biocview: Zea_mays
+BSgenomeObjname: Zmays
+SrcDataFiles: Zea_mays.Mo17_Cau.dna_sm.2bit  from ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/003/185/045/GCA_003185045.1_Zm-Mo17-REFERENCE-CAU-1.0/
+seqs_srcdir: /maindisk/aimer/backup_aimer/Maize_TSS/Code/2BitGenomes/ 
+seqfile_name: Zea_mays.Mo17_Cau.ncbiSM.2bit
