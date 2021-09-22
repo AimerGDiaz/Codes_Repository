@@ -18,9 +18,7 @@ https://rubenfcasal.github.io/post/intro-bookdown/
 Problems commiting , pushing and so on? 
 https://stackoverflow.com/questions/5097456/throw-away-local-commits-in-git
 --->
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 ## Codes repository
 
 Selection of commented and finished codes in bash, awk, perl and R languages, plus markdowns files explaining these codes using small toy datasets. Finally in this document you can also find useful one liners commented, also with toy examples. 

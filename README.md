@@ -2,9 +2,28 @@ Oneliners explained
 ================
 Aimer G. Diaz
 
-# Codes repository
+<!---
+Sintaxis propia de github markdown https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+El tema de las licencias https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
+Cuando lanze los paquetes tanto de deteccion de fragmentos como el script de reduccion de librerias https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
 
-Selection of codes in bash, awk, perl and R
+
+To edit the github page follow 
+https://resources.github.com/whitepapers/github-and-rstudio/ 
+
+Mejor guia para llegar hasta aca 
+https://rubenfcasal.github.io/post/intro-bookdown/
+
+Problems commiting , pushing and so on? 
+https://stackoverflow.com/questions/5097456/throw-away-local-commits-in-git
+--->
+
+## Codes repository
+
+Selection of commented and finished codes in bash, awk, perl and R
+languages, plus markdowns files explaining these codes using small toy
+datasets. Finally in this document you can also find useful one liners
+commented, also with toy examples.
 
 # Awk oneliners
 
