@@ -1,13 +1,15 @@
 ---
 title: "Oneliners explained"
 author: "Aimer G. Diaz"
-output: rmarkdown::github_document
+output: github_document
 ---
+<!---
+Sintaxis propia de github markdown https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet--->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# GitHub Repository
+# Codes repository
 
 Selection of codes in bash, awk, perl and R
 
@@ -22,5 +24,9 @@ Selection of codes in bash, awk, perl and R
 
 
 # Perl oneliners 
+
+# License 
+
+My codes are licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/).
 
 [![License: CC BY-NC 4.0](https://licensebuttons.net/l/by-nc/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc/4.0/)
