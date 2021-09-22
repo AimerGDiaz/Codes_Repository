@@ -1,0 +1,350 @@
+bta-miR-2957 hsa-miR-152-3p			-
+bta-miR-2957 hsa-miR-152-3p			-
+bta-miR-2957 hsa-miR-152-3p			-
+bta-miR-2957 hsa-miR-152-3p			-
+bta-miR-2957 hsa-miR-152-3p			-
+bta-miR-2957 hsa-miR-152-3p			-
+bta-miR-2957 hsa-miR-152-3p			-
+bta-miR-2957 hsa-miR-152-3p			-
+bta-miR-2957 hsa-miR-152-3p			-
+bta-miR-3600 hsa-miR-22-3p			-
+bta-miR-3600 hsa-miR-22-3p			-
+bta-miR-3600 hsa-miR-22-3p			-
+bta-miR-3600 hsa-miR-22-3p			-
+bta-miR-3600 hsa-miR-22-3p			-
+bta-miR-3600 hsa-miR-22-3p			-
+bta-miR-3600 hsa-miR-22-3p			-
+bta-miR-3600 hsa-miR-22-3p			-
+bta-miR-3600 hsa-miR-22-3p			-
+bta-miR-3600 hsa-miR-22-3p			-
+bta-miR-3604 hsa-miR-199a-3p			-
+bta-miR-3604 hsa-miR-199a-3p			-
+bta-miR-3604 hsa-miR-199a-3p			-
+bta-miR-3604 hsa-miR-199a-3p			-
+bta-miR-3604 hsa-miR-199a-3p			-
+bta-miR-3604 hsa-miR-199a-3p			-
+bta-miR-3604 hsa-miR-199a-3p			-
+bta-miR-3604 hsa-miR-199a-3p			-
+bta-miR-3604 hsa-miR-199a-3p			-
+bta-miR-3604 hsa-miR-199a-3p			-
+hsa-mir-103a-1 hsa-mir-103b-1	100 	77 bp 61 bp 	-
+hsa-mir-103a-2 hsa-mir-103b-2	100 	77 bp 61 bp 	-
+hsa-miR-103a-3p hsa-miR-103b			-
+hsa-miR-103a-3p hsa-miR-103b			-
+hsa-miR-103a-3p hsa-miR-103b			-
+hsa-miR-103a-3p hsa-miR-103b			-
+hsa-miR-103a-3p hsa-miR-103b			-
+hsa-miR-103a-3p hsa-miR-103b			-
+hsa-miR-103a-3p hsa-miR-103b			-
+hsa-miR-103a-3p hsa-miR-103b			-
+hsa-miR-103a-3p hsa-miR-103b			-
+hsa-miR-103a-3p hsa-miR-103b			-
+hsa-mir-122 hsa-mir-3591	100 	84 bp 72 bp 	-
+hsa-mir-1245a hsa-mir-1245b	98 	69 bp 68 bp 	-
+hsa-mir-126 hsaP-mir-126-lk	100 	84 bp 56 bp 	-
+hsa-mir-129-2 hsaP-mir-129	100 	89 bp 64 bp 	-
+hsa-mir-1295a hsa-mir-1295b	100 	78 bp 59 bp 	-
+hsa-mir-152 hsaP-mir-2957	100 	86 bp 70 bp 	-
+hsa-mir-199b hsaP-mir-3604	100 	109 bp 72 bp 	-
+hsa-mir-203a hsa-mir-203b	100 	109 bp 85 bp 	-
+hsa-mir-214 hsa-mir-3120	100 	109 bp 80 bp 	-
+hsa-mir-219a-2 hsa-mir-219b	100 	96 bp 87 bp 	-
+hsa-mir-22 hsaP-mir-3600	100 	84 bp 80 bp 	-
+hsa-mir-3065 hsa-mir-338	100 	78 bp 66 bp 	-
+hsa-mir-3074 hsa-mir-24-1	100 	80 bp 67 bp 	-
+hsa-mir-3116-1 hsa-mir-3116-2	100 	73 bp 67 bp 	-
+hsa-mir-3119-r-l1 hsa-mir-3119-r-l2	98 	84 bp 84 bp 	-
+hsa-mir-3130-r-l1 hsa-mir-3130-r-l2	98 	74 bp 74 bp 	-
+hsa-mir-3150b hsa-mir-3150a	100 	85 bp 79 bp 	-
+hsa-mir-3155a hsa-mir-3155b	100 	81 bp 55 bp 	-
+hsa-mir-3158-r-l1 hsa-mir-3158-r-l2	98 	80 bp 80 bp 	-
+hsa-mir-3160-1 hsa-mir-3160-2	100 	84 bp 80 bp 	-
+hsa-miR-3184-3p hsa-miR-423-5p			-
+hsa-miR-3184-3p hsa-miR-423-5p			-
+hsa-miR-3184-3p hsa-miR-423-5p			-
+hsa-miR-3184-3p hsa-miR-423-5p			-
+hsa-miR-3184-3p hsa-miR-423-5p			-
+hsa-miR-3184-3p hsa-miR-423-5p			-
+hsa-miR-3184-3p hsa-miR-423-5p			-
+hsa-miR-3184-3p hsa-miR-423-5p			-
+hsa-miR-3184-3p hsa-miR-423-5p			-
+hsa-miR-3184-3p hsa-miR-423-5p			-
+hsa-mir-3190 hsa-mir-3191	100 	79 bp 75 bp 	-
+hsa-mir-3199-1 hsa-mir-3199-2	100 	87 bp 85 bp 	-
+hsa-mir-3202-1 hsa-mir-3202-2	100 	80 bp 78 bp 	-
+hsa-mir-3622b hsa-mir-3622a	100 	94 bp 82 bp 	-
+hsa-miR-365a-3p hsa-miR-365b-3p			-
+hsa-miR-365a-3p hsa-miR-365b-3p			-
+hsa-miR-365a-3p hsa-miR-365b-3p			-
+hsa-miR-365a-3p hsa-miR-365b-3p			-
+hsa-miR-365a-3p hsa-miR-365b-3p			-
+hsa-miR-365a-3p hsa-miR-365b-3p			-
+hsa-miR-365a-3p hsa-miR-365b-3p			-
+hsa-miR-365a-3p hsa-miR-365b-3p			-
+hsa-miR-365a-3p hsa-miR-365b-3p			-
+hsa-miR-365a-3p hsa-miR-365b-3p			-
+hsa-miR-3675-3p hsa-miR-3675-3p			-
+hsa-miR-3675-3p hsa-miR-3675-3p			-
+hsa-miR-3675-3p hsa-miR-3675-3p			-
+hsa-miR-3675-3p hsa-miR-3675-3p			-
+hsa-miR-3675-3p hsa-miR-3675-3p			-
+hsa-miR-3675-3p hsa-miR-3675-3p			-
+hsa-miR-3675-3p hsa-miR-3675-3p			-
+hsa-miR-3675-3p hsa-miR-3675-3p			-
+hsa-miR-3675-3p hsa-miR-3675-3p			-
+hsa-miR-3675-3p hsa-miR-3675-3p			-
+hsa-miR-3675-5p hsa-miR-3675-5p			-
+hsa-miR-3675-5p hsa-miR-3675-5p			-
+hsa-miR-3675-5p hsa-miR-3675-5p			-
+hsa-miR-3675-5p hsa-miR-3675-5p			-
+hsa-miR-3675-5p hsa-miR-3675-5p			-
+hsa-miR-3675-5p hsa-miR-3675-5p			-
+hsa-miR-3675-5p hsa-miR-3675-5p			-
+hsa-miR-3675-5p hsa-miR-3675-5p			-
+hsa-miR-3675-5p hsa-miR-3675-5p			-
+hsa-miR-3675-5p hsa-miR-3675-5p			-
+hsa-miR-3689a-5p hsa-miR-3689b-5p			-
+hsa-miR-3689a-5p hsa-miR-3689b-5p			-
+hsa-miR-3689a-5p hsa-miR-3689b-5p			-
+hsa-miR-3689a-5p hsa-miR-3689b-5p			-
+hsa-miR-3689a-5p hsa-miR-3689b-5p			-
+hsa-miR-3689a-5p hsa-miR-3689b-5p			-
+hsa-miR-3689a-5p hsa-miR-3689b-5p			-
+hsa-miR-3689a-5p hsa-miR-3689b-5p			-
+hsa-miR-3689a-5p hsa-miR-3689b-5p			-
+hsa-miR-3689a-5p hsa-miR-3689b-5p			-
+hsa-miR-3689b-3p hsa-miR-3689c			-
+hsa-miR-3689b-3p hsa-miR-3689c			-
+hsa-miR-3689b-3p hsa-miR-3689c			-
+hsa-miR-3689b-3p hsa-miR-3689c			-
+hsa-miR-3689b-3p hsa-miR-3689c			-
+hsa-miR-3689b-3p hsa-miR-3689c			-
+hsa-miR-3689b-3p hsa-miR-3689c			-
+hsa-miR-3689b-3p hsa-miR-3689c			-
+hsa-miR-3689b-3p hsa-miR-3689c			-
+hsa-miR-3689b-3p hsa-miR-3689c			-
+hsa-mir-371a hsa-mir-371b	96 	66 bp 65 bp 	-
+hsa-miR-374b-5p hsa-miR-374c-3p			-
+hsa-miR-374b-5p hsa-miR-374c-3p			-
+hsa-miR-374b-5p hsa-miR-374c-3p			-
+hsa-miR-374b-5p hsa-miR-374c-3p			-
+hsa-miR-374b-5p hsa-miR-374c-3p			-
+hsa-miR-374b-5p hsa-miR-374c-3p			-
+hsa-miR-374b-5p hsa-miR-374c-3p			-
+hsa-miR-374b-5p hsa-miR-374c-3p			-
+hsa-miR-374b-5p hsa-miR-374c-3p			-
+hsa-miR-374b-5p hsa-miR-374c-3p			-
+hsa-mir-374b hsa-mir-374c	100 	71 bp 69 bp 	-
+hsa-mir-3910-1 hsa-mir-3910-2	100 	110 bp 81 bp 	-
+hsa-mir-3913-1 hsa-mir-3913-2	100 	101 bp 99 bp 	-
+hsa-miR-3913-3p hsa-miR-3913-5p			-
+hsa-miR-3913-3p hsa-miR-3913-5p			-
+hsa-miR-3913-3p hsa-miR-3913-5p			-
+hsa-miR-3913-3p hsa-miR-3913-5p			-
+hsa-miR-3913-3p hsa-miR-3913-5p			-
+hsa-miR-3913-3p hsa-miR-3913-5p			-
+hsa-miR-3913-3p hsa-miR-3913-5p			-
+hsa-miR-3913-3p hsa-miR-3913-5p			-
+hsa-miR-3913-3p hsa-miR-3913-5p			-
+hsa-miR-3913-3p hsa-miR-3913-5p			-
+hsa-mir-3914-1 hsa-mir-3914-2	100 	98 bp 94 bp 	-
+hsa-mir-3926-1 hsa-mir-3926-2	100 	72 bp 62 bp 	-
+hsa-mir-423 hsa-mir-3184	100 	93 bp 74 bp 	-
+hsa-miR-4433a-3p hsa-miR-4433b-5p			-
+hsa-miR-4433a-3p hsa-miR-4433b-5p			-
+hsa-miR-4433a-3p hsa-miR-4433b-5p			-
+hsa-miR-4433a-3p hsa-miR-4433b-5p			-
+hsa-miR-4433a-3p hsa-miR-4433b-5p			-
+hsa-miR-4433a-3p hsa-miR-4433b-5p			-
+hsa-miR-4433a-3p hsa-miR-4433b-5p			-
+hsa-miR-4433a-3p hsa-miR-4433b-5p			-
+hsa-miR-4433a-3p hsa-miR-4433b-5p			-
+hsa-mir-4433b hsa-mir-4433-r	100 	101 bp 80 bp 	-
+hsa-miR-4454 hsa-miR-4454			-
+hsa-miR-4454 hsa-miR-4454			-
+hsa-miR-4454 hsa-miR-4454			-
+hsa-miR-4454 hsa-miR-4454			-
+hsa-miR-4454 hsa-miR-4454			-
+hsa-miR-4454 hsa-miR-4454			-
+hsa-miR-4454 hsa-miR-4454			-
+hsa-miR-4454 hsa-miR-4454			-
+hsa-miR-4454 hsa-miR-4454			-
+hsa-mir-4477-r-l1 hsa-mir-4477-r-l2	98 	80 bp 80 bp 	-
+hsa-mir-451a hsa-mir-451b	100 	71 bp 67 bp 	-
+hsa-mir-4520-r-l2 hsa-mir-4520-r-l1	100 	69 bp 53 bp 	-
+hsa-mir-4524b hsa-mir-4524a	100 	114 bp 68 bp 	-
+hsa-mir-4536-r-l1 hsa-mir-4536-r-l2	98 	87 bp 87 bp 	-
+hsa-miR-4537 hsa-miR-4537			-
+hsa-miR-4537 hsa-miR-4537			-
+hsa-miR-4537 hsa-miR-4537			-
+hsa-miR-4537 hsa-miR-4537			-
+hsa-miR-4537 hsa-miR-4537			-
+hsa-miR-4537 hsa-miR-4537			-
+hsa-miR-4537 hsa-miR-4537			-
+hsa-miR-4537 hsa-miR-4537			-
+hsa-miR-4537 hsa-miR-4537			-
+hsa-miR-4537 hsa-miR-4537			-
+hsa-mir-4659a hsa-mir-4659b	100 	80 bp 72 bp 	-
+hsa-mir-4662b hsa-mir-4662a	100 	80 bp 66 bp 	-
+hsa-miR-4670-3p hsa-miR-4670-5p			-
+hsa-miR-4670-3p hsa-miR-4670-5p			-
+hsa-miR-4670-3p hsa-miR-4670-5p			-
+hsa-miR-4670-3p hsa-miR-4670-5p			-
+hsa-miR-4670-3p hsa-miR-4670-5p			-
+hsa-miR-4670-3p hsa-miR-4670-5p			-
+hsa-miR-4670-3p hsa-miR-4670-5p			-
+hsa-miR-4670-3p hsa-miR-4670-5p			-
+hsa-miR-4670-3p hsa-miR-4670-5p			-
+hsa-miR-4670-3p hsa-miR-4670-5p			-
+hsa-mir-4679-2 hsa-mir-4679-1	100 	76 bp 74 bp 	-
+hsa-mir-4773-r-l1 hsa-mir-4773-r-l2	98 	77 bp 77 bp 	-
+hsa-mir-4776-r-l1 hsa-mir-4776-r-l2	98 	79 bp 79 bp 	-
+hsa-mir-486-r hsa-mir-486-2	100 	67 bp 63 bp 	-
+hsa-mir-499a hsa-mir-499b	100 	121 bp 72 bp 	-
+hsa-miR-5096 hsa-miR-5096			-
+hsa-miR-5096 hsa-miR-5096			-
+hsa-miR-5096 hsa-miR-5096			-
+hsa-miR-5096 hsa-miR-5096			-
+hsa-miR-5096 hsa-miR-5096			-
+hsa-miR-5096 hsa-miR-5096			-
+hsa-miR-5096 hsa-miR-5096			-
+hsa-miR-5096 hsa-miR-5096			-
+hsa-miR-5096 hsa-miR-5096			-
+hsa-miR-517a-3p hsa-miR-517b-3p			-
+hsa-miR-517a-3p hsa-miR-517b-3p			-
+hsa-miR-517a-3p hsa-miR-517b-3p			-
+hsa-miR-517a-3p hsa-miR-517b-3p			-
+hsa-miR-517a-3p hsa-miR-517b-3p			-
+hsa-miR-517a-3p hsa-miR-517b-3p			-
+hsa-miR-517a-3p hsa-miR-517b-3p			-
+hsa-miR-517a-3p hsa-miR-517b-3p			-
+hsa-miR-517a-3p hsa-miR-517b-3p			-
+hsa-miR-517a-3p hsa-miR-517b-3p			-
+hsa-miR-518a-5p hsa-miR-527			-
+hsa-miR-518a-5p hsa-miR-527			-
+hsa-miR-518a-5p hsa-miR-527			-
+hsa-miR-518a-5p hsa-miR-527			-
+hsa-miR-518a-5p hsa-miR-527			-
+hsa-miR-518a-5p hsa-miR-527			-
+hsa-miR-518a-5p hsa-miR-527			-
+hsa-miR-518a-5p hsa-miR-527			-
+hsa-miR-518a-5p hsa-miR-527			-
+hsa-miR-518d-5p hsa-miR-520c-5p			-
+hsa-miR-518d-5p hsa-miR-520c-5p			-
+hsa-miR-518d-5p hsa-miR-520c-5p			-
+hsa-miR-518d-5p hsa-miR-520c-5p			-
+hsa-miR-518d-5p hsa-miR-520c-5p			-
+hsa-miR-518d-5p hsa-miR-520c-5p			-
+hsa-miR-518d-5p hsa-miR-520c-5p			-
+hsa-miR-518d-5p hsa-miR-520c-5p			-
+hsa-miR-518d-5p hsa-miR-520c-5p			-
+hsa-miR-518d-5p hsa-miR-520c-5p			-
+hsa-miR-518e-5p hsa-miR-519a-5p			-
+hsa-miR-518e-5p hsa-miR-519a-5p			-
+hsa-miR-518e-5p hsa-miR-519a-5p			-
+hsa-miR-518e-5p hsa-miR-519a-5p			-
+hsa-miR-518e-5p hsa-miR-519a-5p			-
+hsa-miR-518e-5p hsa-miR-519a-5p			-
+hsa-miR-518e-5p hsa-miR-519a-5p			-
+hsa-miR-518e-5p hsa-miR-519a-5p			-
+hsa-miR-518e-5p hsa-miR-519a-5p			-
+hsa-miR-518e-5p hsa-miR-519a-5p			-
+hsa-miR-548aa hsa-miR-548t-3p			-
+hsa-miR-548aa hsa-miR-548t-3p			-
+hsa-miR-548aa hsa-miR-548t-3p			-
+hsa-miR-548aa hsa-miR-548t-3p			-
+hsa-miR-548aa hsa-miR-548t-3p			-
+hsa-miR-548aa hsa-miR-548t-3p			-
+hsa-miR-548aa hsa-miR-548t-3p			-
+hsa-miR-548aa hsa-miR-548t-3p			-
+hsa-miR-548aa hsa-miR-548t-3p			-
+hsa-miR-548aa hsa-miR-548t-3p			-
+hsa-miR-548ad-5p hsa-miR-548ae-5p			-
+hsa-miR-548ad-5p hsa-miR-548ae-5p			-
+hsa-miR-548ad-5p hsa-miR-548ae-5p			-
+hsa-miR-548ad-5p hsa-miR-548ae-5p			-
+hsa-miR-548ad-5p hsa-miR-548ae-5p			-
+hsa-miR-548ad-5p hsa-miR-548ae-5p			-
+hsa-miR-548ad-5p hsa-miR-548ae-5p			-
+hsa-miR-548ad-5p hsa-miR-548ae-5p			-
+hsa-miR-548ad-5p hsa-miR-548ae-5p			-
+hsa-miR-548ai hsa-miR-570-5p			-
+hsa-miR-548ai hsa-miR-570-5p			-
+hsa-miR-548ai hsa-miR-570-5p			-
+hsa-miR-548ai hsa-miR-570-5p			-
+hsa-miR-548ai hsa-miR-570-5p			-
+hsa-miR-548ai hsa-miR-570-5p			-
+hsa-miR-548ai hsa-miR-570-5p			-
+hsa-miR-548ai hsa-miR-570-5p			-
+hsa-miR-548ai hsa-miR-570-5p			-
+hsa-miR-548aj-5p hsa-miR-548g-5p			-
+hsa-miR-548aj-5p hsa-miR-548g-5p			-
+hsa-miR-548aj-5p hsa-miR-548g-5p			-
+hsa-miR-548aj-5p hsa-miR-548g-5p			-
+hsa-miR-548aj-5p hsa-miR-548g-5p			-
+hsa-miR-548aj-5p hsa-miR-548g-5p			-
+hsa-miR-548aj-5p hsa-miR-548g-5p			-
+hsa-miR-548aj-5p hsa-miR-548g-5p			-
+hsa-miR-548aj-5p hsa-miR-548g-5p			-
+hsa-miR-548aj-5p hsa-miR-548g-5p			-
+hsa-miR-548am-5p hsa-miR-548c-5p			-
+hsa-miR-548am-5p hsa-miR-548c-5p			-
+hsa-miR-548am-5p hsa-miR-548c-5p			-
+hsa-miR-548am-5p hsa-miR-548c-5p			-
+hsa-miR-548am-5p hsa-miR-548c-5p			-
+hsa-miR-548am-5p hsa-miR-548c-5p			-
+hsa-miR-548am-5p hsa-miR-548c-5p			-
+hsa-miR-548am-5p hsa-miR-548c-5p			-
+hsa-miR-548am-5p hsa-miR-548c-5p			-
+hsa-miR-548am-5p hsa-miR-548c-5p			-
+hsa-miR-548h-3p hsa-miR-548z			-
+hsa-miR-548h-3p hsa-miR-548z			-
+hsa-miR-548h-3p hsa-miR-548z			-
+hsa-miR-548h-3p hsa-miR-548z			-
+hsa-miR-548h-3p hsa-miR-548z			-
+hsa-miR-548h-3p hsa-miR-548z			-
+hsa-miR-548h-3p hsa-miR-548z			-
+hsa-miR-548h-3p hsa-miR-548z			-
+hsa-miR-548h-3p hsa-miR-548z			-
+hsa-miR-548h-3p hsa-miR-548z			-
+hsa-mir-548-r-l1 hsa-mir-548-r-l4	98 	96 bp 96 bp 	-
+hsa-mir-548-r-l2 hsa-mir-548-r-l5	98 	96 bp 96 bp 	-
+hsa-mir-548-r-l3 hsa-mir-548-r-l6	98 	96 bp 96 bp 	-
+hsa-miR-550a-3p hsa-miR-550b-2-5p			-
+hsa-miR-550a-3p hsa-miR-550b-2-5p			-
+hsa-miR-550a-3p hsa-miR-550b-2-5p			-
+hsa-miR-550a-3p hsa-miR-550b-2-5p			-
+hsa-miR-550a-3p hsa-miR-550b-2-5p			-
+hsa-miR-550a-3p hsa-miR-550b-2-5p			-
+hsa-miR-550a-3p hsa-miR-550b-2-5p			-
+hsa-miR-550a-3p hsa-miR-550b-2-5p			-
+hsa-miR-550a-3p hsa-miR-550b-2-5p			-
+hsa-mir-550-r-l1 hsa-mir-550-r-l3	98 	96 bp 96 bp 	-
+hsa-mir-550-r-l2 hsa-mir-550-r-l4	98 	96 bp 96 bp 	-
+hsa-mir-5583-1 hsa-mir-5583-2	98 	58 bp 58 bp 	-
+hsa-miR-5591-3p hsa-miR-5591-5p			-
+hsa-miR-5591-3p hsa-miR-5591-5p			-
+hsa-miR-5591-3p hsa-miR-5591-5p			-
+hsa-miR-5591-3p hsa-miR-5591-5p			-
+hsa-miR-5591-3p hsa-miR-5591-5p			-
+hsa-miR-5591-3p hsa-miR-5591-5p			-
+hsa-miR-5591-3p hsa-miR-5591-5p			-
+hsa-miR-5591-3p hsa-miR-5591-5p			-
+hsa-miR-5591-3p hsa-miR-5591-5p			-
+hsa-mir-5681a hsa-mir-5681b	100 	74 bp 59 bp 	-
+hsa-miR-642a-3p hsa-miR-642b-5p			-
+hsa-miR-642a-3p hsa-miR-642b-5p			-
+hsa-miR-642a-3p hsa-miR-642b-5p			-
+hsa-miR-642a-3p hsa-miR-642b-5p			-
+hsa-miR-642a-3p hsa-miR-642b-5p			-
+hsa-miR-642a-3p hsa-miR-642b-5p			-
+hsa-miR-642a-3p hsa-miR-642b-5p			-
+hsa-miR-642a-3p hsa-miR-642b-5p			-
+hsa-miR-642a-3p hsa-miR-642b-5p			-
+hsa-mir-642a hsa-mir-642b	100 	96 bp 76 bp 	-
+hsa-mir-6715a hsa-mir-6715b	100 	78 bp 76 bp 	-
+hsa-mir-7-2 hsa-mir-3529	100 	109 bp 77 bp 	-
+hsa-mir-7853 hsa-mir-5683	100 	131 bp 75 bp 	-
+hsa-mir-7973-1 hsa-mir-7973-2	98 	75 bp 75 bp 	-
+hsaP-mir-3578 hsa-mir-382	100 	85 bp 75 bp 	-
+hsaP-mir-9 hsa-mir-9-1	100 	107 bp 88 bp 	-

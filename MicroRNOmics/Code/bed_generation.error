@@ -1,0 +1,10 @@
+# reads processed: 2581
+# reads with at least one reported alignment: 2578 (99.88%)
+# reads that failed to align: 3 (0.12%)
+Reported 133729 alignments to 1 output stream(s)
+# reads processed: 2581
+# reads with at least one reported alignment: 2351 (91.09%)
+# reads that failed to align: 230 (8.91%)
+Reported 2881 alignments to 1 output stream(s)
+[samopen] SAM header is present: 25 sequences.
+[samopen] SAM header is present: 1950 sequences.

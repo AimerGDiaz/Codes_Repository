@@ -1,0 +1,12 @@
+bta-miR-2957 hsa-miR-152-3p	100 	21 bp 21 bp 	-
+bta-miR-3600 hsa-miR-22-3p	100 	22 bp 22 bp 	-
+bta-miR-3604 hsa-miR-199a-3p;hsa-miR-199b-3p	100 	22 bp 22 bp 	-
+hsa-miR-103a-3p hsa-miR-103b	100 	23 bp 23 bp 	-
+hsa-miR-3184-3p hsa-miR-423-5p	100 	23 bp 23 bp 	-
+hsa-miR-374b-5p hsa-miR-374c-3p	100 	22 bp 22 bp 	-
+hsa-miR-3913-3p hsa-miR-3913-5p	100 	22 bp 22 bp 	-
+hsa-miR-4433a-3p hsa-miR-4433b-5p	100 	21 bp 21 bp 	-
+hsa-miR-4670-3p hsa-miR-4670-5p	100 	22 bp 22 bp 	-
+hsa-miR-550a-3p hsa-miR-550b-2-5p	100 	22 bp 22 bp 	-
+hsa-miR-5591-3p hsa-miR-5591-5p	100 	21 bp 21 bp 	-
+hsa-miR-642a-3p hsa-miR-642b-5p	100 	22 bp 22 bp 	-

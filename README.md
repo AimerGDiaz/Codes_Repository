@@ -1,4 +1,4 @@
-Oneliners explained
+One-liners and saved codes explained and commented
 ================
 Aimer G. Diaz
 
@@ -25,13 +25,15 @@ languages, plus markdowns files explaining these codes using small toy
 datasets. Finally in this document you can also find useful one liners
 commented, also with toy examples.
 
-# Awk oneliners
+## Awk oneliners
 
-# Bash oneliners
+## Bash oneliners
 
-# Perl oneliners
+## Perl oneliners
 
-# License
+<!-- https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown-->
+
+## License
 
 My codes are licensed under a [Creative Commons Attribution-ShareAlike
 4.0 International
