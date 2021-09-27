@@ -1,45 +1,57 @@
 ---
-title: "One-liners and saved codes explained and commented"
+title: "Codes repository and Oneliners explained"
 author: "Aimer G. Diaz"
 output: github_document
 ---
 <!---
 Sintaxis propia de github markdown https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+Sintaxis for all the R markdowns in general https://bookdown.org/yihui/rmarkdown-cookbook/raw-latex.html 
 El tema de las licencias https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
-Cuando lanze los paquetes tanto de deteccion de fragmentos como el script de reduccion de librerias https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
+Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de reduccion de librerias https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
 
-
-To edit the github page follow 
-https://resources.github.com/whitepapers/github-and-rstudio/ 
-
-Mejor guia para llegar hasta aca 
-https://rubenfcasal.github.io/post/intro-bookdown/
-
-Problems commiting , pushing and so on? 
-https://stackoverflow.com/questions/5097456/throw-away-local-commits-in-git
 --->
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+Welcome to my code repository, most or all of it I've learned in a very incuslive sense of the word (including copy from internet fourms), following this beautiful logic of public domain I've made these notes available, the idea it's to have a server-independent repository, a repository on the cloud, or should I say, on the bottom of the ocean with several copies in several sites of the world, for today and maybe, just maybe, even avaivlable in a post-apocallyptic ecological disaster. 
+
+I will try to indicate here the structure of all the folders of this repository, with links for instance to where the same code is used but in different projects (all of which would be on bioinformatics next-generation data analysis.). As an example a very basic but useful code I wrote in bash syntax take a given list (better a SRA table from NCBI SRA Data repository) and download it discriminating if the file is single or paired end. Let's explore the latest dataset I was working when I wrote this document: 
+
+SRA_Code | Sequence_Tech | Cell_location_stage | Strain | Total_Sequences | Length | ServerName
+--- | --- | --- | --- | --- | --- | ---
+SRR8859642 | PAIR END | Procyclic | EATRO 1125 | 85,827,714 | 125/125 | Cooper2019_gRNA | Cooper2019_gRNA_E1125PC
+SRR8859640 | PAIR END | Bloodstream | EATRO 1125 | 79,132,567 | 125/125 | Cooper2019_gRNA | Cooper2019_gRNA_E1125BS
+SRR8859641 | PAIR END | Bloodstream + Procyclic MIX | EATRO 1125 | 148935513 | 125/125 | Cooper2019_gRNA | Cooper2019_gRNA_E1125Mix
+
+
 ## Codes repository
 
-Selection of commented and finished codes in bash, awk, perl and R languages, plus markdowns files explaining these codes using small toy datasets. Finally in this document you can also find useful one liners commented, also with toy examples. 
+Selection of commented and finished codes in bash, awk, perl and R format, plus markdowns files explaining these codes using small toy datasets. Finally in this document you can also find useful one liners commented, also with toy examples. 
 
-## Awk oneliners 
-
-
-
-
-## Bash oneliners
+## Awk one-liners 
 
 
 
 
-## Perl oneliners 
-<!-- https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown-->
+## Bash one-liners
+
+* Save routinary codes as bash comands with my own label to called them on the terminal. To start what we need it's do edit the file `~/.bashrc` with favorite text editor [(guide for vim commands)](VIM/README.Rmd)
+
+Fucntions 
+`
+lsad() {
+find $PWD -type f -iname $1
+}
+`
+
+## Perl one-liners 
+
+<!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
+--->
 
 ## License 
 
 My codes are licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/).
-
-[![License: CC BY-NC 4.0](https://licensebuttons.net/l/by-nc/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc/4.0/)
+[![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
