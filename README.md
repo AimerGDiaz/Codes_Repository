@@ -49,7 +49,9 @@ not has the option to download the SRA considering if it’s single or
 paired end. The latest version of it does and it’s on the [Trypanosoma
 repository](https://github.com/AimerGDiaz/Trypanosomes_RNA_editing).
 
-## Codes repository
+------------------------------------------------------------------------
+
+# Codes repository
 
 In order to start, I will comment here sections of the codes and the way
 I apply them to solve specific problems, in other terms, here what you
@@ -81,7 +83,7 @@ with just a handful set of commands, sadly it makes also the code pretty
 dark for the first times, let’s see a toy example:
 
 ``` bash
-#We can create a toy data (td) set showing the same row each time a gene on different chromosomes 
+#We can create a toy data (td) set  with a chromosome location of a given gene
 
 #Chromosome  #Duplicated Gene
 #chr1       geneA
@@ -118,12 +120,12 @@ head -n 25 AWK/classificator.awk
     ## 
     ##  # Omit the first line   
     ## 
-    ##  if(a[$2]) a[$2]=a[$2]" and "$1
+    ##   if(a[$2]) a[$2]=a[$2]" and "$1
     ## 
     ##  # make an array with the second field (column by default splitted by tab)
     ##  # and if the element is already on the array, add extra attributes (first column) as a coment separated with ` and `
     ## 
-    ##  else a[$2]=$1} END  {for (i in a)
+    ##   else a[$2]=$1} END  {for (i in a)
     ## 
     ## # if the element is not on the array, save it as a new element with its related attribute
     ## 
@@ -140,6 +142,8 @@ bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 
     ## The gene geneA, is located on chromosome chr1 and chr3
     ## The gene geneB, is located on chromosome chr2
+    ## The gene geneA, is located on chromosome chr1 and chr3
+    ## The gene geneB, is located on chromosome chr2
 
 What if we include more genes ?
 
@@ -151,17 +155,206 @@ bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 
     ## The gene geneA, is located on chromosome chr1 and chr3 and chr4
     ## The gene geneB, is located on chromosome chr2
+    ## The gene geneA, is located on chromosome chr1 and chr3 and chr4
+    ## The gene geneB, is located on chromosome chr2
 
--   Save routinary codes as bash commands with my own label to called
-    them on the terminal. To start what we need it’s do edit the file
-    `~/.bashrc` with favorite text editor [(guide for vim
-    commands)](VIM/README.md)
+Now let’s see this code applied to real world problems, at least how I
+used, one example is here \*\*\*
 
-Functions
+## Bash
 
-    lsad() {
-    find $PWD -type f -iname $1
-    }
+Here as well as with awk there are many commands that using cleverly you
+can get results with a single one-liner, or post process, clean, adjust
+in/outs for more complicated programs. Bash it’s for me, as you saw
+previously, the main executor, for other people it could be shell, or
+even anythin with command line, by running all in environments like
+this, but VIM + Bash + awk + perl, virtually could do everything on
+structured programming. But before to get into the details of how I used
+recurrent blocks of code, I will introduce a unique aspect of bash:
+
+### Creating comands on Bash
+
+-   Save routinary, alias subroutines, and also alias as bash commands
+    with their own label you want to call them on the terminal. To start
+    what we need it’s do edit the file `~/.bashrc` with your favorite
+    text editor, in my case Vim ([(guide for vim
+    commands)](VIM/README.md)). The difference between alias and the
+    functions is mainly that the functions read arguments, while alias
+    not. My favorite list of alias and functions on .bashrc file
+
+-   Alias
+
+``` bash
+# List the files in human readble format withut writing -lh and
+# organize them by size, from bigger to smaller
+alias lso='ls -lh  --sort=size'
+
+# List the files in human readble format withut writing -lh and 
+# organize them by time of modification, from sooner to later 
+alias lst='ls -lh  --sort=time'
+
+# Delete the files but asking first if that's what you really want 
+alias rm='rm -i'
+# anyway rm -f would delete without asking, but it requires from you an extra
+# time thinking 
+
+# I usually work on servers, I do not like to write ssh hostname@server thousands of time
+alias msuhpc=' ssh -X USER@SERVER'
+
+# First time on the matrix? sometimes is hard to know if you are working on a screen session 
+
+alias iscreen=' echo $TERM ' 
+
+# If you are on a server always work on screens, if you lose connection, the screens nope, 
+# but outside the matrix, the world is harder. 
+
+# Again an useful alias when you do not want to be kick out from the server, but you are not
+# mentally there 
+
+alias waste_time='for f in {1..200}; do echo ------ wasting time minutes $f;  sleep 60; done'
+```
+
+-   Functions
+
+Alias are boring, but save time. Functions are quite interesting, they
+are basically mini software and bash allow you to create commnads as
+variated as a blast of a sequence you want to test against blast
+databases.
+
+``` bash
+# LiSt the Absolut path Directory of a file 
+lsad() {
+find $PWD -type f -iname $1
+}
+
+# List the size of a folder
+lsf(){
+du -ch --max-depth=0  $1
+}
+
+# Search on history a past command 
+hisgrep() {
+history | grep $1
+}
+
+# That's all for today darling screen 
+delete_screen() {
+screen -X -S $1 quit
+}
+
+
+# Adjust the title of a paper to my format of saving it 
+papers() {
+        final=`echo "$1" | tr '\n' '_' | tr -d '–' |tr ' ' '_' | tr -d ',' |tr -d ':' | tr -d '(' | tr -d ')' | tr '/' '-' | awk -F '_$' '{gsub("__","_",$1);print $1}' | awk -F '_$' '{print $1}' `
+echo $2.$final
+}
+
+
+# How many nucleotides do I have
+count_nt() {
+seq=`echo -ne $1 | wc -c`
+echo $seq nucleotides
+}
+
+# Get the reverse complementary sequence of a 
+revcom() {
+ if [ "$1" == "DNA" ]
+ then
+ echo $2 | rev | tr 'ACGTacgt' 'TGCAtgca'
+ elif [ "$1" == "RNA" ]
+ then
+ echo $2 | rev | tr 'ACGUacgu' 'UGCAugca'
+ fi
+ }
+
+# List of single elements, do they have things in common? unique to each? 
+comp_list() {
+sort $1 | uniq -d > $1.temp2
+sort $2 | uniq -d > $2.temp2
+sort $1 | uniq -u > $1.temp1
+sort $2 | uniq -u > $2.temp1
+
+# here the IF test is the file empty? 
+if [ -s $1.temp2  ]
+then
+echo -ne "\n"
+echo Attention your list $1 have duplicate entries
+cat $1.temp2
+elif [ -s $2.temp2  ]
+then
+echo Attention your list $2 have duplicate entries
+fi
+
+echo Common  entries in both lists
+sort $1.temp1 $2.temp1  | uniq -d
+
+echo Uniq entries  of each list
+for f in `sort $1.temp1 $2.temp1  | uniq -u `
+do
+grep $f $1 $2  | head
+done
+rm $1.temp1 $2.temp1 $2.temp2 $1.temp2
+}
+
+# Check how large is the load of a server
+server_status() {
+ssh server free -h
+ssh server  ps aux --sort=-pcpu | egrep -v "root|galaxy" | head
+ssh server  ps aux --sort=-pcpu   | awk 'NR>1{sum+=$3;sum2+=$4}END{print "Cores used "sum "% and RAM used "sum2" %"}'
+}
+
+# Search in a given directory a file by its pattern
+reference(){
+pattern=`echo $1`
+find $2 -iname "*$pattern*"  -print 2>/dev/null #|  awk -F'Desktop/' '{print $2}'
+}
+
+# Search a word in a pdf o thousands of pdfs on a common directory or a single file
+intext(){
+find "$1" -name '*pdf' -exec pdfgrep -i "$2" /dev/null {} \; 2>/dev/null
+}
+```
+
+    ## sort: cannot read: .temp1: No such file or directory
+
+These newly defined codes can be used even into common scripts, however
+you must use the `-i` option, which means:
+
+`-i        If the -i option is present, the shell is interactive.`
+
+Let’s see an example, tell me computer how looks the reverse
+complementary sequence of ACCCCGAGACTAGGTAGAGACA, how many nucleotides
+are there?, and then compare these two gene list of names:
+
+``` bash
+echo -ne "gene1\ngene2\ngene3\ngene3" > BASH/list1.txt 
+
+echo -ne "gene5\ngene0\ngene3\ngene4" > BASH/list2.txt 
+```
+
+This is how looks the script for this:
+
+``` bash
+head BASH/running_bashrc.sh
+
+bash -i  BASH/running_bashrc.sh
+```
+
+    ## revcom DNA ACCCCGAGACTAGGTAGAGACA
+    ## 
+    ## count_nt ACCCCGAGACTAGGTAGAGACA 
+    ## 
+    ## 
+    ## comp_list list1.txt  list2.txt 
+    ## 
+    ## TGTCTCTACCTAGTCTCGGGGT
+    ## 22 nucleotides
+    ## sort: cannot read: list1.txt: No such file or directory
+    ## sort: cannot read: list2.txt: No such file or directory
+    ## sort: cannot read: list1.txt: No such file or directory
+    ## sort: cannot read: list2.txt: No such file or directory
+    ## Common entries in both lists
+    ## Uniq entries of each list
 
 ## Perl one-liners
 

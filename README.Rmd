@@ -31,7 +31,9 @@ SRR8859641 | PAIR END | Bloodstream + Procyclic MIX | EATRO 1125 | 148935513 | 1
 
 The first version of the file is [on the master thesis codes folder](Total_processing/Download_script.sh), however this version did not has the option to download the SRA considering if it's single or paired end. The latest version of it does and it's on the [Trypanosoma repository](https://github.com/AimerGDiaz/Trypanosomes_RNA_editing).
 
-## Codes repository
+***
+
+# Codes repository
 
 In order to start, I will comment here sections of the codes and the way I apply them to solve specific problems, in other terms, here what you will find is a selection of commented and finished codes in bash, awk, perl, python, R and Latex languages, plus R markdowns files explaining these codes using small toy data sets. Finally in this document you can also find useful one liners commented, also with toy examples. 
 
@@ -63,11 +65,9 @@ Sadly, although it seems awk engine is implemented for R markdown, it requires a
 head -n 25 AWK/classificator.awk 
 ``` 
 
-
 Script execution 
 
 ```{bash}
-
  
 bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 
@@ -82,14 +82,131 @@ bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 
 ```
 
-* Save routinary codes as bash commands with my own label to called them on the terminal. To start what we need it's do edit the file `~/.bashrc` with favorite text editor [(guide for vim commands)](VIM/README.md)
+Now let's see this code applied to real world problems, at least how I used, one example is here 
+***
 
-Functions 
+## Bash  
 
+Here as well as with awk there are many commands that using cleverly you can get results with a single one-liner, or post process, clean, adjust in/outs for more complicated programs. Bash it's for me, as you saw previously, the main executor, for other people it could be shell, or even anythin with command line, by running all in environments like this, but VIM + Bash + awk + perl, virtually could do everything on structured programming. But before to get into the details of how I used recurrent blocks of code, I will introduce a unique aspect of bash: 
+
+### Creating comands on Bash 
+
+* Save routinary, alias subroutines, and also alias  as bash commands with their own label you want to call them on the terminal. To start what we need it's do edit the file `~/.bashrc` with your favorite text editor, in my case Vim ([(guide for vim commands)](VIM/README.md)). The difference between alias and the functions is mainly that the functions read arguments, while alias not. My favorite list of alias and functions on .bashrc file
+
+* Alias 
+
+```{bash}
+# List the files in human readble format withut writing -lh and
+# organize them by size, from bigger to smaller
+alias lso='ls -lh  --sort=size'
+
+# List the files in human readble format withut writing -lh and 
+# organize them by time of modification, from sooner to later 
+alias lst='ls -lh  --sort=time'
+
+# Delete the files but asking first if that's what you really want 
+alias rm='rm -i'
+# anyway rm -f would delete without asking, but it requires from you an extra
+# time thinking 
+
+# I usually work on servers, I do not like to write ssh hostname@server thousands of time
+alias msuhpc=' ssh -X USER@SERVER'
+
+# First time on the matrix? sometimes is hard to know if you are working on a screen session 
+
+alias iscreen=' echo $TERM ' 
+
+# If you are on a server always work on screens, if you lose connection, the screens nope, 
+# but outside the matrix, the world is harder. 
+
+# Again an useful alias when you do not want to be kick out from the server, but you are not
+# mentally there 
+
+alias waste_time='for f in {1..200}; do echo ------ wasting time minutes $f;  sleep 60; done'
 ```
+* Functions 
+
+Alias are boring, but save time. Functions are quite interesting, they are basically mini software and bash allow you to create commnads as variated as a blast of a sequence you want to test against blast databases. 
+
+```{bash}
+# LiSt the Absolut path Directory of a file 
 lsad() {
 find $PWD -type f -iname $1
 }
+
+# List the size of a folder
+lsf(){
+du -ch --max-depth=0  $1
+}
+
+# Search on history a past command 
+hisgrep() {
+history | grep $1
+}
+
+# That's all for today darling screen 
+delete_screen() {
+screen -X -S $1 quit
+}
+
+
+# Adjust the title of a paper to my format of saving it 
+papers() {
+        final=`echo "$1" | tr '\n' '_' | tr -d '–' |tr ' ' '_' | tr -d ',' |tr -d ':' | tr -d '(' | tr -d ')' | tr '/' '-' | awk -F '_$' '{gsub("__","_",$1);print $1}' | awk -F '_$' '{print $1}' `
+echo $2.$final
+}
+
+
+# How many nucleotides do I have
+count_nt() {
+seq=`echo -ne $1 | wc -c`
+echo $seq nucleotides
+}
+
+# Get the reverse complementary sequence of a 
+revcom() {
+ if [ "$1" == "DNA" ]
+ then
+ echo $2 | rev | tr 'ACGTacgt' 'TGCAtgca'
+ elif [ "$1" == "RNA" ]
+ then
+ echo $2 | rev | tr 'ACGUacgu' 'UGCAugca'
+ fi
+ }
+
+# Check how large is the load of a server
+server_status() {
+ssh server free -h
+ssh server  ps aux --sort=-pcpu | egrep -v "root|galaxy" | head
+ssh server  ps aux --sort=-pcpu   | awk 'NR>1{sum+=$3;sum2+=$4}END{print "Cores used "sum "% and RAM used "sum2" %"}'
+}
+
+# Search in a given directory a file by its pattern
+reference(){
+pattern=`echo $1`
+find $2 -iname "*$pattern*"  -print 2>/dev/null #|  awk -F'Desktop/' '{print $2}'
+}
+
+# Search a word in a pdf o thousands of pdfs on a common directory or a single file
+intext(){
+find "$1" -name '*pdf' -exec pdfgrep -i "$2" /dev/null {} \; 2>/dev/null
+}
+```
+
+These newly defined codes can be used even into common scripts, however you must use the `-i` option, which means: 
+
+`-i        If the -i option is present, the shell is interactive.`
+
+Let's see an example, tell me computer how looks the reverse complementary sequence of ACCCCGAGACTAGGTAGAGACA, how many nucleotides are there?: 
+
+This is how looks the script for this: 
+
+```{bash}
+head BASH/running_bashrc.sh
+```
+... And here the output: 
+```{bash}
+bash -i  BASH/running_bashrc.sh
 ```
 
 ## Perl one-liners 
