@@ -10,6 +10,8 @@ Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de redu
 
 --->
 
+David es chupapijas
+
 Welcome to my code repository, most or all of it I’ve learned in a very
 inclusive sense of the word (including copy from internet forums),
 following this beautiful logic of public domain I’ve made these notes
