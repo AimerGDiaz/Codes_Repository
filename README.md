@@ -11,16 +11,17 @@ Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de redu
 --->
 
 Welcome to my code repository, most or all of it I’ve learned in a very
-incuslive sense of the word (including copy from internet fourms),
+inclusive sense of the word (including copy from internet forums),
 following this beautiful logic of public domain I’ve made these notes
 available, the idea it’s to have a server-independent repository, a
 repository on the cloud, or should I say, on the bottom of the ocean
 with several copies in several sites of the world, for today and maybe,
-just maybe, even avaivlable in a post-apocallyptic ecological disaster.
+just maybe, even available on a post-global disaster era, available
+physically but not online 🤭.
 
 I will try to indicate here the structure of all the folders of this
-repository, with links for instance to where the same code is used but
-in different projects (all of which would be on bioinformatics
+repository with links for instance to where the same code is used but in
+different projects (all of which would be on bioinformatics
 next-generation data analysis.). As an example a very basic but useful
 code I wrote in bash syntax take a given list (better a SRA table from
 NCBI SRA Data repository) and download it discriminating if the file is
@@ -47,7 +48,7 @@ commented, also with toy examples.
 -   Save routinary codes as bash comands with my own label to called
     them on the terminal. To start what we need it’s do edit the file
     `~/.bashrc` with favorite text editor [(guide for vim
-    commands)](VIM/README.Rmd)
+    commands)](VIM/README.md)
 
 Fucntions
 
