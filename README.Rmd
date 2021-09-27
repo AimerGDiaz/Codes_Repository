@@ -19,11 +19,12 @@ Welcome to my code repository, most or all of it I've learned in a very incusliv
 
 I will try to indicate here the structure of all the folders of this repository, with links for instance to where the same code is used but in different projects (all of which would be on bioinformatics next-generation data analysis.). As an example a very basic but useful code I wrote in bash syntax take a given list (better a SRA table from NCBI SRA Data repository) and download it discriminating if the file is single or paired end. Let's explore the latest dataset I was working when I wrote this document: 
 
-SRA_Code | Sequence_Tech | Cell_location_stage | Strain | Total_Sequences | Length | ServerName
---- | --- | --- | --- | --- | --- | ---
+SRA_Code | Sequence_Tech | Cell_location_stage | Strain | Total_Sequences | Length | Source | ServerName
+--- | --- | --- | --- | --- | --- | --- | ---
 SRR8859642 | PAIR END | Procyclic | EATRO 1125 | 85,827,714 | 125/125 | Cooper2019_gRNA | Cooper2019_gRNA_E1125PC
 SRR8859640 | PAIR END | Bloodstream | EATRO 1125 | 79,132,567 | 125/125 | Cooper2019_gRNA | Cooper2019_gRNA_E1125BS
 SRR8859641 | PAIR END | Bloodstream + Procyclic MIX | EATRO 1125 | 148935513 | 125/125 | Cooper2019_gRNA | Cooper2019_gRNA_E1125Mix
+
 
 
 ## Codes repository
@@ -40,11 +41,11 @@ Selection of commented and finished codes in bash, awk, perl and R format, plus 
 * Save routinary codes as bash comands with my own label to called them on the terminal. To start what we need it's do edit the file `~/.bashrc` with favorite text editor [(guide for vim commands)](VIM/README.Rmd)
 
 Fucntions 
-`
+```
 lsad() {
 find $PWD -type f -iname $1
 }
-`
+```
 
 ## Perl one-liners 
 

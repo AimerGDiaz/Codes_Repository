@@ -1,32 +1,33 @@
----
-title: "VIM useful commmands"
-author: "Aimer G. Diaz"
-date: "9/27/2021"
-output: github_document
----
+VIM useful commmands
+================
+Aimer G. Diaz
+9/27/2021
 
-Vim as a text editor is highly editable or customizable and extensible, meaning provides extensive support to various [plugins](https://linuxhint.com/vim-vundle-tutorial/) in order to enhance the Vim’s functionality. But one of its most important feature, at least, for bioinformatic purpose is that Vim consume fewer system resources than emacs, nano, or especially the graphical editors. Additionally Vim is lightweight and very fast, even when modifying the large numbers of files source code. Even more, you can run it over ssh for various remote operations on any type of server. 
+Vim as a text editor is highly editable or customizable and extensible,
+meaning provides extensive support to various
+[plugins](https://linuxhint.com/vim-vundle-tutorial/) in order to
+enhance the Vim’s functionality. But one of its most important feature,
+at least, for bioinformatic purpose is that Vim consume fewer system
+resources than emacs, nano, or especially the graphical editors.
+Additionally Vim is lightweight and very fast, even when modifying the
+large numbers of files source code. Even more, you can run it over ssh
+for various remote operations on any type of server.
 
+1.  Useful setup of vim on \~/.vimrc
 
-
-1. Useful setup of vim on ~/.vimrc 
-```{bash}
+``` bash
 # Setup for all the vim files of user show the enumeration per line
 set number 
 ```
 
+⋅⋅1. Delete a line or a specific set of lines
 
-⋅⋅1. Delete a line or a specific set of lines 
+    #### A line which number is known 
+    d #  
 
-```
-#### A line which number is known 
-d #  
+    dd 
 
-dd 
-```
-
-⋅⋅1.
-<!---
+⋅⋅1. <!---
 ```{=latex}
 \begin{lstlisting}
 
