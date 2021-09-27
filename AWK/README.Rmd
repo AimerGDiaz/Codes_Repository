@@ -3,3 +3,6 @@ title: "AWK one-liners, codes and adjustments"
 author: "Aimer G. Diaz"
 output: github_document
 ---
+
+AWK Rocks, bioawk even more. 
+

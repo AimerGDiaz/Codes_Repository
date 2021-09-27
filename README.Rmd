@@ -39,7 +39,7 @@ In order to start, I will comment here sections of the codes and the way I apply
 
 Let's starti with the one-liners, it's true they are not the best solution, however they are fast, they avoid us to write or re-adapt whole blocks of code to particular solutions, they are modular and somehow, they are like culture, beyond if it's recommended or not to use them, some people love them and I am one of those. I will introduce them first, because I always started with them to explore the original data, already made analysis, new formats, supplementary material, etc. 
 
-## Awk one-liners 
+## Awk 
 
 Awk codes are my favorite, the one liners are extreamlly useful, fast, weird but incredible, but they can be adapted as bash codes and even using in parallel computing by the amazing GNU parallel software with minor modifications as I will show here. But let's start, the selected awk codes and toy data samples will be [here](AWK/README.md). 
 
@@ -91,7 +91,7 @@ Here as well as with awk there are many commands that using cleverly you can get
 
 ### Creating comands on Bash 
 
-* Save routinary, alias subroutines, and also alias  as bash commands with their own label you want to call them on the terminal. To start what we need it's do edit the file `~/.bashrc` with your favorite text editor, in my case Vim ([(guide for vim commands)](VIM/README.md)). The difference between alias and the functions is mainly that the functions read arguments, while alias not. My favorite list of alias and functions on .bashrc file
+* Save routinary functions and alias as bash commands with the label you want to use it for them on the terminal. To start, what we need it's edit the file `~/.bashrc` with your favorite text editor, in my case Vim ([(guide for vim commands)](VIM/README.md)). The difference between alias and the functions is mainly that the functions read arguments, while alias not. My favorite list of alias and functions on .bashrc file
 
 * Alias 
 
@@ -193,11 +193,16 @@ find "$1" -name '*pdf' -exec pdfgrep -i "$2" /dev/null {} \; 2>/dev/null
 }
 ```
 
-These newly defined codes can be used even into common scripts, however you must use the `-i` option, which means: 
+These newly defined codes can be used even into common scripts, but first it requires installation: 
+
+```{bash}
+source ~/.bashrc
+```
+To running here, I need to use these commands into scripts, and then you must use the `-i` parameter, which means: 
 
 `-i        If the -i option is present, the shell is interactive.`
 
-Let's see an example, tell me computer how looks the reverse complementary sequence of ACCCCGAGACTAGGTAGAGACA, how many nucleotides are there?: 
+Let's see an example, tell me computer how looks the reverse complementary sequence of ACCCCGAGACTAGGTAGAGACA and how many nucleotides are there?: 
 
 This is how looks the script for this: 
 
@@ -208,9 +213,10 @@ head BASH/running_bashrc.sh
 ```{bash}
 bash -i  BASH/running_bashrc.sh
 ```
+*** 
+## Perl
 
-## Perl one-liners 
-
+Perl ate awk once in iths human evolutioanry history, 
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
 

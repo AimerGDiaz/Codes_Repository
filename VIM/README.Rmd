@@ -5,27 +5,32 @@ date: "9/27/2021"
 output: github_document
 ---
 
+VIM as the best text editor for Unix platforms: List of useful commands
+
 Vim as a text editor is highly editable or customizable and extensible, meaning provides extensive support to various [plugins](https://linuxhint.com/vim-vundle-tutorial/) in order to enhance the Vim’s functionality. But one of its most important feature, at least, for bioinformatic purpose is that Vim consume fewer system resources than emacs, nano, or especially the graphical editors. Additionally Vim is lightweight and very fast, even when modifying the large numbers of files source code. Even more, you can run it over ssh for various remote operations on any type of server. 
 
 
 
 1. Useful setup of vim on ~/.vimrc 
 ```{bash}
-# Setup for all the vim files of user show the enumeration per line
+# Must-have configurations for all the vim files of the user:
+
+# Show the enumeration per line
 set number 
+
+# 
 ```
 
-
-⋅⋅1. Delete a line or a specific set of lines 
+2. Delete a line or a specific set of lines 
 
 ```
-#### A line which number is known 
+# A line which number is known 
 d #  
-
+# Remove the line where you are located 
 dd 
 ```
 
-⋅⋅1.
+3. .
 <!---
 ```{=latex}
 \begin{lstlisting}

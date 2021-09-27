@@ -18,7 +18,7 @@ available, the idea it’s to have a server-independent repository, a
 repository on the cloud, or should I say, on the bottom of the ocean
 with several copies in several sites of the world, for today and maybe,
 just maybe, even available on a post-global ecological disaster era,
-available physically but not online 🤭.
+available physically but not online 😮.
 
 I will try to indicate here the structure of all the folders of this
 repository, each folder anyway will have more information with its own R
@@ -68,7 +68,7 @@ them, some people love them and I am one of those. I will introduce them
 first, because I always started with them to explore the original data,
 already made analysis, new formats, supplementary material, etc.
 
-## Awk one-liners
+## Awk
 
 Awk codes are my favorite, the one liners are extreamlly useful, fast,
 weird but incredible, but they can be adapted as bash codes and even
@@ -174,13 +174,13 @@ recurrent blocks of code, I will introduce a unique aspect of bash:
 
 ### Creating comands on Bash
 
--   Save routinary, alias subroutines, and also alias as bash commands
-    with their own label you want to call them on the terminal. To start
-    what we need it’s do edit the file `~/.bashrc` with your favorite
-    text editor, in my case Vim ([(guide for vim
-    commands)](VIM/README.md)). The difference between alias and the
-    functions is mainly that the functions read arguments, while alias
-    not. My favorite list of alias and functions on .bashrc file
+-   Save routinary functions and alias as bash commands with the label
+    you want to use it for them on the terminal. To start, what we need
+    it’s edit the file `~/.bashrc` with your favorite text editor, in my
+    case Vim ([(guide for vim commands)](VIM/README.md)). The difference
+    between alias and the functions is mainly that the functions read
+    arguments, while alias not. My favorite list of alias and functions
+    on .bashrc file
 
 -   Alias
 
@@ -267,35 +267,6 @@ revcom() {
  fi
  }
 
-# List of single elements, do they have things in common? unique to each? 
-comp_list() {
-sort $1 | uniq -d > $1.temp2
-sort $2 | uniq -d > $2.temp2
-sort $1 | uniq -u > $1.temp1
-sort $2 | uniq -u > $2.temp1
-
-# here the IF test is the file empty? 
-if [ -s $1.temp2  ]
-then
-echo -ne "\n"
-echo Attention your list $1 have duplicate entries
-cat $1.temp2
-elif [ -s $2.temp2  ]
-then
-echo Attention your list $2 have duplicate entries
-fi
-
-echo Common  entries in both lists
-sort $1.temp1 $2.temp1  | uniq -d
-
-echo Uniq entries  of each list
-for f in `sort $1.temp1 $2.temp1  | uniq -u `
-do
-grep $f $1 $2  | head
-done
-rm $1.temp1 $2.temp1 $2.temp2 $1.temp2
-}
-
 # Check how large is the load of a server
 server_status() {
 ssh server free -h
@@ -315,29 +286,25 @@ find "$1" -name '*pdf' -exec pdfgrep -i "$2" /dev/null {} \; 2>/dev/null
 }
 ```
 
-    ## sort: cannot read: .temp1: No such file or directory
+These newly defined codes can be used even into common scripts, but
+first it requires installation:
 
-These newly defined codes can be used even into common scripts, however
-you must use the `-i` option, which means:
+``` bash
+source ~/.bashrc
+```
+
+however you must use the `-i` option, which means:
 
 `-i        If the -i option is present, the shell is interactive.`
 
 Let’s see an example, tell me computer how looks the reverse
 complementary sequence of ACCCCGAGACTAGGTAGAGACA, how many nucleotides
-are there?, and then compare these two gene list of names:
-
-``` bash
-echo -ne "gene1\ngene2\ngene3\ngene3" > BASH/list1.txt 
-
-echo -ne "gene5\ngene0\ngene3\ngene4" > BASH/list2.txt 
-```
+are there?:
 
 This is how looks the script for this:
 
 ``` bash
 head BASH/running_bashrc.sh
-
-bash -i  BASH/running_bashrc.sh
 ```
 
     ## revcom DNA ACCCCGAGACTAGGTAGAGACA
@@ -345,8 +312,14 @@ bash -i  BASH/running_bashrc.sh
     ## count_nt ACCCCGAGACTAGGTAGAGACA 
     ## 
     ## 
-    ## comp_list list1.txt  list2.txt 
-    ## 
+    ## comp_list list1.txt  list2.txt
+
+… And here the output:
+
+``` bash
+bash -i  BASH/running_bashrc.sh
+```
+
     ## TGTCTCTACCTAGTCTCGGGGT
     ## 22 nucleotides
     ## sort: cannot read: list1.txt: No such file or directory
@@ -356,7 +329,7 @@ bash -i  BASH/running_bashrc.sh
     ## Common entries in both lists
     ## Uniq entries of each list
 
-## Perl one-liners
+## Perl
 
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
