@@ -1,0 +1,10 @@
+---
+title: "R codes, functions, packages"
+author: "Aimer G. Diaz"
+output: github_document
+---
+
+# Languague interaction 
+
+## Using awk in R 
+https://coderedirect.com/questions/378456/combining-r-awk-bash-commands 

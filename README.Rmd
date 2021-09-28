@@ -9,6 +9,8 @@ Sintaxis propia de github markdown https://github.com/adam-p/markdown-here/wiki/
 Sintaxis for all the R markdowns in general https://bookdown.org/yihui/rmarkdown-cookbook/raw-latex.html 
 El tema de las licencias https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
 Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de reduccion de librerias https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
+git hub pulling pushing and difference https://github.blog/2011-10-21-github-secrets/ 
+SQL too https://www.red-gate.com/hub/product-learning/sql-source-control/github-and-sql-source-control 
 
 --->
 

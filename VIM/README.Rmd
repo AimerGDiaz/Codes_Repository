@@ -31,6 +31,21 @@ dd
 ```
 
 3. .
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+backspace and cursor keys wrap to previous/next line
+CTRL-X and SHIFT-Del are Cut
+CTRL-C and CTRL-Insert are Copy
+CTRL-V and SHIFT-Insert are Paste
+Use CTRL-Q to do what CTRL-V used to do
+Use CTRL-S for saving, also in Insert mode
+CTRL-Z is Undo; not in cmdline though
+CTRL-Y is Redo (although not repeat); not in cmdline though
+Alt-Space is System menu
+CTRL-A is Select all
+CTRL-Tab is Next window
+CTRL-F4 is Close window
 <!---
 ```{=latex}
 \begin{lstlisting}
