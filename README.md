@@ -179,13 +179,15 @@ What happen if we include more genes ?
 </summary>
 
 ``` bash
-echo -ne "Chromosome\tDuplicated Gene\nchr1\tgeneA\nchr2\tgeneB\nchr3\tgeneA\nchr4\tgeneA" > AWK/td_Gene_duplication_per.txt 
+echo -ne "geneA\nchr4\tgeneA" >> AWK/td_Gene_duplication_per.txt 
 
 bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 ```
 
+    ## The gene , is located on chromosome geneA
     ## The gene geneA, is located on chromosome chr1 and chr3 and chr4
     ## The gene geneB, is located on chromosome chr2
+    ## The gene , is located on chromosome geneA
     ## The gene geneA, is located on chromosome chr1 and chr3 and chr4
     ## The gene geneB, is located on chromosome chr2
 
@@ -218,11 +220,12 @@ code, I will introduce a unique aspect of bash:
     between alias and the functions is mainly that the functions read
     arguments, while alias not. My favorite list of alias and functions
     on .bashrc file
-    <details>
-    <summary>
 
-    -   Alias
-        </summary>
+<details>
+<summary>
+
+-   Alias
+    </summary>
 
 ``` bash
 # List the files in human readble format withut writing -lh and

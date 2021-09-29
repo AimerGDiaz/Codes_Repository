@@ -1,5 +1,0 @@
-Chromosome	Duplicated Gene
-chr1	geneA
-chr2	geneB
-chr3	geneA
-chr4	geneA
