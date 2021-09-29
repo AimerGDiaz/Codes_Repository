@@ -1,22 +1,33 @@
 ---
-title: "Codes repository and Oneliners explained"
+title: "Scripts and Oneliners explained"
 author: "Aimer G. Diaz"
 output: github_document
 ---
 <!---
+Github extras 
+
 https://github.com/gayanvoice/github-profile-views-counter
+
 Sintaxis propia de github markdown https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
 Sintaxis for all the R markdowns in general https://bookdown.org/yihui/rmarkdown-cookbook/raw-latex.html 
+https://bookdown.org/yihui/rmarkdown/language-engines.html
+
 El tema de las licencias https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
+
 Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de reduccion de librerias https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
+
 git hub pulling pushing and difference https://github.blog/2011-10-21-github-secrets/ 
+
 SQL too https://www.red-gate.com/hub/product-learning/sql-source-control/github-and-sql-source-control 
+
+Wikis en github https://guides.github.com/features/wikis/
 
 --->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-devtools::install_github("hadley/emo")
+#devtools::install_github("hadley/emo")
 
 ```
 Welcome to my code repository, most or all of it I've learned in a very inclusive sense of the word (including copy from internet forums), following this beautiful logic of public domain I've made these notes available, the idea it's to have a server-independent repository, a repository on the cloud, or should I say, on the bottom of the ocean with several copies in several sites of the world, for today and maybe, just maybe, even available on a post-global ecological disaster era, available physically but not online `r emo::ji("surprise")`. 
@@ -39,7 +50,7 @@ The first version of the file is [on the master thesis codes folder](Total_proce
 
 In order to start, I will comment here sections of the codes and the way I apply them to solve specific problems, in other terms, here what you will find is a selection of commented and finished codes in bash, awk, perl, python, R and Latex languages, plus R markdowns files explaining these codes using small toy data sets. Finally in this document you can also find useful one liners commented, also with toy examples. 
 
-Let's starti with the one-liners, it's true they are not the best solution, however they are fast, they avoid us to write or re-adapt whole blocks of code to particular solutions, they are modular and somehow, they are like culture, beyond if it's recommended or not to use them, some people love them and I am one of those. I will introduce them first, because I always started with them to explore the original data, already made analysis, new formats, supplementary material, etc. 
+Let's start with the one-liners, it's true they are not the best solution, however they are fast, they avoid us to write or re-adapt whole blocks of code to particular solutions, they are modular and somehow, they are like culture, beyond if it's recommended or not to use them, some people love them and I am one of those. I will introduce them first, because I always started with them to explore the original data, already made analysis, new formats, supplementary material, etc. 
 
 ## Awk 
 
@@ -47,8 +58,10 @@ Awk codes are my favorite, the one liners are extreamlly useful, fast, weird but
 
 ### Generalities of my awk codes 
 
-One of my favorite codes made a classificatory tasks extremely fast and with just a handful set of commands, sadly it makes also the code pretty dark for the first times, let's see a toy example: 
+One of my favorite codes made a classificatory tasks extremely fast and with just a handful set of commands, sadly it makes also the code pretty dark for the first times.  
 
+<details> 
+<summary>Let's see a toy example:</summary>
 ```{bash}
 #We can create a toy data (td) set  with a chromosome location of a given gene
 
@@ -60,22 +73,29 @@ One of my favorite codes made a classificatory tasks extremely fast and with jus
 echo -ne "Chromosome\tDuplicated Gene\nchr1\tgeneA\nchr2\tgeneB\nchr3\tgeneA\n" > AWK/td_Gene_duplication_per.txt 
 
 ```
-Sadly, although it seems awk engine is implemented for R markdown, it requires an additional effort to make it work, here the code of how to run awk using [knitr](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.Rmd), and here the [R markdown output](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.md), however after several attempts I could not make awk work here, anyway, awk is integrated as a command on bash, then we can write the comand of awk as a awk script and excecuting with bash: the code is 
- 
-```{bash}
+</details>
 
+Sadly, although it seems awk engine is implemented for R markdown, it requires an additional effort to make it work, here the code of how to run awk using [knitr](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.Rmd), and here the [R markdown output](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.md) of that code, however after several attempts I could not make awk work here, anyway, awk is integrated as a command on bash, then we can write the comand of awk as a awk script and executing with bash. 
+<details> 
+<summary>The code is</summary>
+```{bash}
 head -n 25 AWK/classificator.awk 
 ``` 
+</details> 
 
-Script execution 
+<details> 
+<summary>
+The output of this script</summary>
 
 ```{bash}
  
 bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 
 ```
+</details> 
 
-What if we include more genes ? 
+<details> 
+<summary> What happen if we include more genes ? </summary>
 
 ```{bash}
 echo -ne "Chromosome\tDuplicated Gene\nchr1\tgeneA\nchr2\tgeneB\nchr3\tgeneA\nchr4\tgeneA" > AWK/td_Gene_duplication_per.txt 
@@ -83,19 +103,22 @@ echo -ne "Chromosome\tDuplicated Gene\nchr1\tgeneA\nchr2\tgeneB\nchr3\tgeneA\nch
 bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 
 ```
+</details> 
 
 Now let's see this code applied to real world problems, at least how I used, one example is here 
+PRINT here how it work to make quick table (Mirnomics project) or for database cleaning 
+
 ***
 
 ## Bash  
 
-Here as well as with awk there are many commands that using cleverly you can get results with a single one-liner, or post process, clean, adjust in/outs for more complicated programs. Bash it's for me, as you saw previously, the main executor, for other people it could be shell, or even anythin with command line, by running all in environments like this, but VIM + Bash + awk + perl, virtually could do everything on structured programming. But before to get into the details of how I used recurrent blocks of code, I will introduce a unique aspect of bash: 
+Here as well as with awk there are many commands that using cleverly you can get results with a single one-liner, or post process, clean, adjust ins/outs quickly or to change formats to give to more complicated programs. Bash it's for me, as you saw previously, the main executor, for other people it could be shell, or even anything without command line, by running all in environments like this, but with VIM + Bash + awk + perl virtually you could do everything on structured programming. But before to get into the details of how I used recurrent blocks of code, I will introduce a unique aspect of bash: 
 
 ### Creating comands on Bash 
 
 * Save routinary functions and alias as bash commands with the label you want to use it for them on the terminal. To start, what we need it's edit the file `~/.bashrc` with your favorite text editor, in my case Vim ([(guide for vim commands)](VIM/README.md)). The difference between alias and the functions is mainly that the functions read arguments, while alias not. My favorite list of alias and functions on .bashrc file
-
-* Alias 
+<details>
+<summary>* Alias </summary>
 
 ```{bash}
 # List the files in human readble format withut writing -lh and
@@ -126,14 +149,17 @@ alias iscreen=' echo $TERM '
 
 alias waste_time='for f in {1..200}; do echo ------ wasting time minutes $f;  sleep 60; done'
 ```
-* Functions 
+</details>
+
+<details>
+<summary> * Functions </summary>
 
 Alias are boring, but save time. Functions are quite interesting, they are basically mini software and bash allow you to create commnads as variated as a blast of a sequence you want to test against blast databases. 
 
 ```{bash}
 # LiSt the Absolut path Directory of a file 
 lsad() {
-find $PWD -type f -iname $1
+find $PWD -iname $1
 }
 
 # List the size of a folder
@@ -145,6 +171,10 @@ du -ch --max-depth=0  $1
 hisgrep() {
 history | grep $1
 }
+
+# What if you use a file many times and the previous command shows many boring history
+# You can also check only when the file you are interested in was generated 
+
 
 # That's all for today darling screen 
 delete_screen() {
@@ -194,6 +224,7 @@ intext(){
 find "$1" -name '*pdf' -exec pdfgrep -i "$2" /dev/null {} \; 2>/dev/null
 }
 ```
+</details>
 
 These newly defined codes can be used even into common scripts, but first it requires installation: 
 
@@ -225,4 +256,10 @@ Perl ate awk once in iths human evolutioanry history,
 ## License 
 
 My codes are licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/).
+
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+
+## Viewers 
+
+[![Image of Viewers](https://github.com/AimerGDiaz/Viewers/blob/master/svg/409164432/badge.svg)](https://github.com/AimerGDiaz/Viewers/blob/master/readme/409164432/week.md)
+

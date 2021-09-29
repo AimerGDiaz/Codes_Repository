@@ -1,13 +1,26 @@
-Codes repository and Oneliners explained
+Scripts and Oneliners explained
 ================
 Aimer G. Diaz
 
 <!---
+Github extras 
+
 https://github.com/gayanvoice/github-profile-views-counter
+
 Sintaxis propia de github markdown https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
 Sintaxis for all the R markdowns in general https://bookdown.org/yihui/rmarkdown-cookbook/raw-latex.html 
+https://bookdown.org/yihui/rmarkdown/language-engines.html
+
 El tema de las licencias https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
+
 Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de reduccion de librerias https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
+
+git hub pulling pushing and difference https://github.blog/2011-10-21-github-secrets/ 
+
+SQL too https://www.red-gate.com/hub/product-learning/sql-source-control/github-and-sql-source-control 
+
+Wikis en github https://guides.github.com/features/wikis/
 
 --->
 
@@ -18,7 +31,7 @@ available, the idea it’s to have a server-independent repository, a
 repository on the cloud, or should I say, on the bottom of the ocean
 with several copies in several sites of the world, for today and maybe,
 just maybe, even available on a post-global ecological disaster era,
-available physically but not online 😮.
+available physically but not online 🤭.
 
 I will try to indicate here the structure of all the folders of this
 repository, each folder anyway will have more information with its own R
@@ -60,7 +73,7 @@ perl, python, R and Latex languages, plus R markdowns files explaining
 these codes using small toy data sets. Finally in this document you can
 also find useful one liners commented, also with toy examples.
 
-Let’s starti with the one-liners, it’s true they are not the best
+Let’s start with the one-liners, it’s true they are not the best
 solution, however they are fast, they avoid us to write or re-adapt
 whole blocks of code to particular solutions, they are modular and
 somehow, they are like culture, beyond if it’s recommended or not to use
@@ -80,7 +93,12 @@ awk codes and toy data samples will be [here](AWK/README.md).
 
 One of my favorite codes made a classificatory tasks extremely fast and
 with just a handful set of commands, sadly it makes also the code pretty
-dark for the first times, let’s see a toy example:
+dark for the first times.
+
+<details>
+<summary>
+Let’s see a toy example:
+</summary>
 
 ``` bash
 #We can create a toy data (td) set  with a chromosome location of a given gene
@@ -93,15 +111,20 @@ dark for the first times, let’s see a toy example:
 echo -ne "Chromosome\tDuplicated Gene\nchr1\tgeneA\nchr2\tgeneB\nchr3\tgeneA\n" > AWK/td_Gene_duplication_per.txt 
 ```
 
+</details>
 Sadly, although it seems awk engine is implemented for R markdown, it
 requires an additional effort to make it work, here the code of how to
 run awk using
 [knitr](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.Rmd),
 and here the [R markdown
-output](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.md),
-however after several attempts I could not make awk work here, anyway,
-awk is integrated as a command on bash, then we can write the comand of
-awk as a awk script and excecuting with bash: the code is
+output](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.md)
+of that code, however after several attempts I could not make awk work
+here, anyway, awk is integrated as a command on bash, then we can write
+the comand of awk as a awk script and executing with bash.
+<details>
+<summary>
+The code is
+</summary>
 
 ``` bash
 head -n 25 AWK/classificator.awk 
@@ -133,7 +156,11 @@ head -n 25 AWK/classificator.awk
     ## 
     ##   # Finally a for loop for print array elements with a presenting words
 
-Script execution
+</details>
+<details>
+<summary>
+The output of this script
+</summary>
 
 ``` bash
  
@@ -145,7 +172,11 @@ bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
     ## The gene geneA, is located on chromosome chr1 and chr3
     ## The gene geneB, is located on chromosome chr2
 
-What if we include more genes ?
+</details>
+<details>
+<summary>
+What happen if we include more genes ?
+</summary>
 
 ``` bash
 echo -ne "Chromosome\tDuplicated Gene\nchr1\tgeneA\nchr2\tgeneB\nchr3\tgeneA\nchr4\tgeneA" > AWK/td_Gene_duplication_per.txt 
@@ -158,19 +189,25 @@ bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
     ## The gene geneA, is located on chromosome chr1 and chr3 and chr4
     ## The gene geneB, is located on chromosome chr2
 
+</details>
+
 Now let’s see this code applied to real world problems, at least how I
-used, one example is here \*\*\*
+used, one example is here PRINT here how it work to make quick table
+(Mirnomics project) or for database cleaning
+
+------------------------------------------------------------------------
 
 ## Bash
 
 Here as well as with awk there are many commands that using cleverly you
 can get results with a single one-liner, or post process, clean, adjust
-in/outs for more complicated programs. Bash it’s for me, as you saw
-previously, the main executor, for other people it could be shell, or
-even anythin with command line, by running all in environments like
-this, but VIM + Bash + awk + perl, virtually could do everything on
-structured programming. But before to get into the details of how I used
-recurrent blocks of code, I will introduce a unique aspect of bash:
+ins/outs quickly or to change formats to give to more complicated
+programs. Bash it’s for me, as you saw previously, the main executor,
+for other people it could be shell, or even anything without command
+line, by running all in environments like this, but with VIM + Bash +
+awk + perl virtually you could do everything on structured programming.
+But before to get into the details of how I used recurrent blocks of
+code, I will introduce a unique aspect of bash:
 
 ### Creating comands on Bash
 
@@ -181,8 +218,11 @@ recurrent blocks of code, I will introduce a unique aspect of bash:
     between alias and the functions is mainly that the functions read
     arguments, while alias not. My favorite list of alias and functions
     on .bashrc file
+    <details>
+    <summary>
 
--   Alias
+    -   Alias
+        </summary>
 
 ``` bash
 # List the files in human readble format withut writing -lh and
@@ -214,7 +254,12 @@ alias iscreen=' echo $TERM '
 alias waste_time='for f in {1..200}; do echo ------ wasting time minutes $f;  sleep 60; done'
 ```
 
+</details>
+<details>
+<summary>
+
 -   Functions
+    </summary>
 
 Alias are boring, but save time. Functions are quite interesting, they
 are basically mini software and bash allow you to create commnads as
@@ -224,7 +269,7 @@ databases.
 ``` bash
 # LiSt the Absolut path Directory of a file 
 lsad() {
-find $PWD -type f -iname $1
+find $PWD -iname $1
 }
 
 # List the size of a folder
@@ -236,6 +281,10 @@ du -ch --max-depth=0  $1
 hisgrep() {
 history | grep $1
 }
+
+# What if you use a file many times and the previous command shows many boring history
+# You can also check only when the file you are interested in was generated 
+
 
 # That's all for today darling screen 
 delete_screen() {
@@ -286,6 +335,8 @@ find "$1" -name '*pdf' -exec pdfgrep -i "$2" /dev/null {} \; 2>/dev/null
 }
 ```
 
+</details>
+
 These newly defined codes can be used even into common scripts, but
 first it requires installation:
 
@@ -293,13 +344,14 @@ first it requires installation:
 source ~/.bashrc
 ```
 
-however you must use the `-i` option, which means:
+To running here, I need to use these commands into scripts, and then you
+must use the `-i` parameter, which means:
 
 `-i        If the -i option is present, the shell is interactive.`
 
 Let’s see an example, tell me computer how looks the reverse
-complementary sequence of ACCCCGAGACTAGGTAGAGACA, how many nucleotides
-are there?:
+complementary sequence of ACCCCGAGACTAGGTAGAGACA and how many
+nucleotides are there?:
 
 This is how looks the script for this:
 
@@ -309,10 +361,7 @@ head BASH/running_bashrc.sh
 
     ## revcom DNA ACCCCGAGACTAGGTAGAGACA
     ## 
-    ## count_nt ACCCCGAGACTAGGTAGAGACA 
-    ## 
-    ## 
-    ## comp_list list1.txt  list2.txt
+    ## count_nt ACCCCGAGACTAGGTAGAGACA
 
 … And here the output:
 
@@ -322,15 +371,12 @@ bash -i  BASH/running_bashrc.sh
 
     ## TGTCTCTACCTAGTCTCGGGGT
     ## 22 nucleotides
-    ## sort: cannot read: list1.txt: No such file or directory
-    ## sort: cannot read: list2.txt: No such file or directory
-    ## sort: cannot read: list1.txt: No such file or directory
-    ## sort: cannot read: list2.txt: No such file or directory
-    ## Common entries in both lists
-    ## Uniq entries of each list
+
+------------------------------------------------------------------------
 
 ## Perl
 
+Perl ate awk once in iths human evolutioanry history,
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
 
@@ -338,6 +384,12 @@ bash -i  BASH/running_bashrc.sh
 
 My codes are licensed under a [Creative Commons Attribution-ShareAlike
 4.0 International
-License](https://creativecommons.org/licenses/by-nc/4.0/). [![License:
-CC BY-NC
+License](https://creativecommons.org/licenses/by-nc/4.0/).
+
+[![License: CC BY-NC
 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+
+## Viewers
+
+[![Image of
+Viewers](https://github.com/AimerGDiaz/Viewers/blob/master/svg/409164432/badge.svg)](https://github.com/AimerGDiaz/Viewers/blob/master/readme/409164432/week.md)

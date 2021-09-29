@@ -11,17 +11,26 @@ Vim as a text editor is highly editable or customizable and extensible, meaning 
 
 
 
-1. Useful setup of vim on ~/.vimrc 
+1. Useful configurations of vim on ~/.vimrc 
 ```{bash}
 # Must-have configurations for all the vim files of the user:
 
 # Show the enumeration per line
 set number 
 
+# Have you ever waste time on codes that do not work just because the file encoding was not appropriated 
+set encoding=utf-8 
+
+# Copy and paste files from a text open with vim to wherever you want 
+set clipboard=unnamed
 # 
 ```
 
-2. Delete a line or a specific set of lines 
+Some other vim configurations might be useful for you, but I haven't explored [here](https://www.shortcutfoo.com/blog/top-50-vim-configuration-options/)
+
+2. Useful commands of Vim: 
+
+* Delete a line or a specific set of lines 
 
 ```
 # A line which number is known 
@@ -29,23 +38,8 @@ d #
 # Remove the line where you are located 
 dd 
 ```
-
+More commands [here](http://www.pixelbeat.org/vim.tips.html)
 3. .
-source $VIMRUNTIME/mswin.vim
-behave mswin
-
-backspace and cursor keys wrap to previous/next line
-CTRL-X and SHIFT-Del are Cut
-CTRL-C and CTRL-Insert are Copy
-CTRL-V and SHIFT-Insert are Paste
-Use CTRL-Q to do what CTRL-V used to do
-Use CTRL-S for saving, also in Insert mode
-CTRL-Z is Undo; not in cmdline though
-CTRL-Y is Redo (although not repeat); not in cmdline though
-Alt-Space is System menu
-CTRL-A is Select all
-CTRL-Tab is Next window
-CTRL-F4 is Close window
 <!---
 ```{=latex}
 \begin{lstlisting}
