@@ -1,0 +1,1 @@
+awk -F'_' 'BEGIN { printf "echo -ne \"";} { printf "^"$1",\\n"} END {printf "\""}' $1 
