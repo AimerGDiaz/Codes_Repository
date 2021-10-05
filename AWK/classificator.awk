@@ -1,5 +1,5 @@
 # Welcome my github readers, this an awk script commented, in reality this code can
-# be excecuted as a one liner, even including the print of the file, but R markdown 
+# be excecuted as a one liner, even including saving the process on a new file, but R markdown 
 # does not handle all of the awk power, by now
 #
 # The  One-liner format
@@ -23,8 +23,9 @@
 	 print "The gene "i", is located on chromosome "a[i]}' $1 
 
 	 # Finally a for loop for print array elements with a presenting words
-	 #If you have noted, awk allow me to introduce as many spaces, jumps, and still run :O 
-	 awk 'NR>1{       
-	 if(a[$2]) a[$2]=a[$2]" and "$1
-	 else a[$2]=$1} END  {for (i in a) 
-	 print "The gene "i", is located on chromosome "a[i]}' $1  
+	 #If you have noted, awk allow me to introduce as many spaces, jumps, and still run :O
+	 # It does not have to be clean like this: 
+	# awk 'NR>1{       
+	# if(a[$2]) a[$2]=a[$2]" and "$1
+	# else a[$2]=$1} END  {for (i in a) 
+	# print "The gene "i", is located on chromosome "a[i]}' $1  

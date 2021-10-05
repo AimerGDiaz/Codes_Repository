@@ -15,6 +15,9 @@ https://bookdown.org/yihui/rmarkdown/language-engines.html
 El tema de las licencias https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
 
 Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de reduccion de librerias https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
+https://github.com/LorenzoTa/step-by-step-tutorial-on-perl-module-creation-with-tests-and-git/blob/master/tutorial/tutorial-english.md
+https://fpm.readthedocs.io/en/v1.13.1/intro.html
+https://github.com/jordansissel/fpm/pull/876
 
 git hub pulling pushing and difference https://github.blog/2011-10-21-github-secrets/ 
 
@@ -31,7 +34,7 @@ available, the idea it’s to have a server-independent repository, a
 repository on the cloud, or should I say, on the bottom of the ocean
 with several copies in several sites of the world, for today and maybe,
 just maybe, even available on a post-global ecological disaster era,
-available physically but not online 🤭.
+available physically but not online.
 
 I will try to indicate here the structure of all the folders of this
 repository, each folder anyway will have more information with its own R
@@ -91,9 +94,17 @@ awk codes and toy data samples will be [here](AWK/README.md).
 
 ### Generalities of my awk codes
 
-One of my favorite codes made a classificatory tasks extremely fast and
-with just a handful set of commands, sadly it makes also the code pretty
-dark for the first times.
+All the languague I’ve mentioned before will have the same structure for
+this section: main applications of the main control structures (<for>,
+<while> and <if>), combinations of control structures and most employed
+codes so far.
+
+#### If loops
+
+-   IF in arrays as a classificator: One of my favorite codes made a
+    classificatory tasks extremely fast and with just a handful set of
+    commands, sadly the economy of the codes makes it a little dark,
+    especially for AWK beginners.
 
 <details>
 <summary>
@@ -169,8 +180,6 @@ bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 
     ## The gene geneA, is located on chromosome chr1 and chr3
     ## The gene geneB, is located on chromosome chr2
-    ## The gene geneA, is located on chromosome chr1 and chr3
-    ## The gene geneB, is located on chromosome chr2
 
 </details>
 <details>
@@ -179,15 +188,11 @@ What happen if we include more genes ?
 </summary>
 
 ``` bash
-echo -ne "geneA\nchr4\tgeneA" >> AWK/td_Gene_duplication_per.txt 
+echo -ne "chr4\tgeneA" >> AWK/td_Gene_duplication_per.txt 
 
 bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 ```
 
-    ## The gene , is located on chromosome geneA
-    ## The gene geneA, is located on chromosome chr1 and chr3 and chr4
-    ## The gene geneB, is located on chromosome chr2
-    ## The gene , is located on chromosome geneA
     ## The gene geneA, is located on chromosome chr1 and chr3 and chr4
     ## The gene geneB, is located on chromosome chr2
 
@@ -195,7 +200,82 @@ bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 
 Now let’s see this code applied to real world problems, at least how I
 used, one example is here PRINT here how it work to make quick table
-(Mirnomics project) or for database cleaning
+(Mirnomics project) or for multi-fasta file duplication cleaning
+(gRNAs\_total.fa)
+
+DEVELOP HERE
+
+|                                                       |
+|-------------------------------------------------------|
+| \* IF and arrays as de-duplicated control structures: |
+| DEVELOP HERE                                          |
+| \#\#\#\# For and While                                |
+
+-   While, beigin honest I have never used while loop on awks. But I do
+    use while structure on bash followed by an awk code, which is, awk
+    as line per line variable mining tool, which employ the next code
+    structure:
+
+``` bash
+echo  "This a toy example; with a semicolon separator structure; and I want to show you; hidden variable X 
+that using bash while loop; and awk -F separator command; I can extract pf each line the; hidden variable Y" > toy_structure.txt
+
+head toy_structure.txt
+```
+
+    ## This a toy example; with a semicolon separator structure; and I want to show you; hidden variable X 
+    ## that using bash while loop; and awk -F separator command; I can extract pf each line the; hidden variable Y
+
+``` bash
+counter=1   ### Bash counter - reference here for access from other sites
+while read line 
+do 
+variable=`echo $line | awk -F'; hidden variable' '{print $2}'`
+echo this is the value of the hidden variable: "$variable" on the line: "$counter" 
+let counter=counter+1 
+done < toy_structure.txt 
+
+rm -f toy_structure.txt
+```
+
+    ## this is the value of the hidden variable:  on the line: 
+    ## this is the value of the hidden variable:  on the line:
+
+A real world problem where I use awk inside a bash while loop structure
+is in a fastqc quality information miner script, extracted from
+[NGS\_statistics.sh script](Total_processing/NGS_statistics.sh):
+
+     while read library
+     do
+     FILE="$1"/Fastq/Quality/$library/fastqc_data.txt
+     
+     type_file=`echo $library | egrep -o  "_fastqc|_reduced_cor_fastqc|.reduced_fastqc|_trim_fastqc"`
+     
+     name=`echo $library | awk -v sus="$type_file"  '{gsub(sus,"",$0);print $0}'`
+
+     if [ "$type_file" == "_fastqc" ]
+     then
+     lib_type="raw"
+     elif [ "$type_file" == "_reduced_cor_fastqc" ]
+     then
+     lib_type="ms_reduced"
+     elif [ "$type_file" == ".reduced_fastqc" ]
+     then
+     lib_type="reduced"
+     elif [ "$type_file" == "_trim_fastqc" ]
+     then
+     lib_type="tmm_reduced"
+     fi
+
+     awk '/^Total Sequences/{ts=$3}  /^Sequence length/{print "'$name'" "\t" "'$lib_type'" "\t" $3 "\t" ts}' $FILE   >> $1"Results/Statis    tics/Total_size.txt"
+
+     done < dir_list.txt
+
+------------------------------------------------------------------------
+
+-   For loops on awk are mainly array handlers:
+
+DEVELOP HERE
 
 ------------------------------------------------------------------------
 
@@ -210,6 +290,75 @@ line, by running all in environments like this, but with VIM + Bash +
 awk + perl virtually you could do everything on structured programming.
 But before to get into the details of how I used recurrent blocks of
 code, I will introduce a unique aspect of bash:
+
+### Generalities of my bash codes
+
+Bash as well as AWK is quite flexible, however most of the time I do use
+the three control structures `for`, `while` and `if, then, else` for
+data organization, classification or text processing and quality
+control. But before to enter to each control structure let’s talk some
+other features of Bash beyond the control statements itself.
+
+-   Piping on bash: beyond “\|”
+
+Bash is awesome specially when we talk about pipes, input and output
+immediately re-direction. However for beginners the main command for
+piping is usually “\|”, which limits piping to comands who tolerate
+input redirection in such way, however there are software which cannot
+be piped with “\|” but it might accept “-” for input file declaration,
+specially those who requires a -i parameter to indicate the input file,
+then the piping way for such programs is " \| software -i - " .
+
+DEVELOP HERE - example of - for piping
+
+A less usual piping commands is the combined operator “&lt;( code here
+)”, which could be interpreted as “take the output of the command
+between parenthesis as an input”. This structure could be used to expand
+the capabilities to of grep command but in the option of grepping a list
+of terms (grep -f). Using the -f parameter on a grep search we cannot
+add the single pattern options available also as parameter, for
+instance, searching the list of pattern at the beginning of each line:
+`grep -f "^"`, however using `<()` this task it’s possible. Let’s
+explore using a real world problem.
+
+In a file of small RNAs who target genes for mRNA edition process (U
+deletion or insertion), each line represent a guide RNA, whoever some of
+them has complex gene target assignation, meaning for instance like:
+
+“Unknown\_RPS12”
+
+Where the first category means the guideRNA have gotten a gene target
+after a secondary process, but a gene without a gene target even after
+applying the secondary process, could still lack of a gene assignation.
+Additional patterns like RPS12\_Unknown\_RPS12, make even harder the use
+of auxiliary awk syntax. Therefore, to quantify the exact amount of
+gRNAs with pure Unknown gene targets we can use the `<()` syntax as
+follow:
+
+First generate the desired pattern using the single line grep regular
+expressions as “^” or “$” etc:
+
+    awk -F'_' '{ printf "^"$1",\\n"}' Temp_running_codes/ID_test_RPS12gRNA_file.txt  > tempids.sh
+
+
+    Add it with Begin and END # enter to the file tempids and add ` echo -ne "` at the beginning and ` "`  at the end
+
+With this script we can run the line `bash tempids.sh` inside `<()`
+command as an input for the command grep -f:
+
+    grep -f <(bash tempids.sh)  EatroPCNew_gRNA_number.csv | awk -F',' '{print $7}'  | sort | uniq -c
+
+In such way this code is equivalent to run grep in a for loop as:
+
+    for f in `cat tempids.txt`
+    do
+    grep -w "^"$f"," EatroPCNew_gRNA_number.csv | awk -F',' '{print $7}'  | sort | uniq -c
+    done 
+
+However the first code is much faster as in reality it’s just a single
+grep search.
+
+TEST TIME HERE
 
 ### Creating comands on Bash
 
@@ -287,7 +436,9 @@ history | grep $1
 
 # What if you use a file many times and the previous command shows many boring history
 # You can also check only when the file you are interested in was generated 
-
+hisgrep_gen() {
+hisgrep "-P \>\\s+$1"
+}
 
 # That's all for today darling screen 
 delete_screen() {
@@ -301,8 +452,7 @@ papers() {
 echo $2.$final
 }
 
-
-# How many nucleotides do I have
+# How many nucleotides do a sequence has
 count_nt() {
 seq=`echo -ne $1 | wc -c`
 echo $seq nucleotides
@@ -322,17 +472,18 @@ revcom() {
 # Check how large is the load of a server
 server_status() {
 ssh server free -h
-ssh server  ps aux --sort=-pcpu | egrep -v "root|galaxy" | head
+ssh server  ps aux --sort=-pcpu | egrep -v "root" | head # add any annoying software always coming up from ps 
 ssh server  ps aux --sort=-pcpu   | awk 'NR>1{sum+=$3;sum2+=$4}END{print "Cores used "sum "% and RAM used "sum2" %"}'
 }
 
 # Search in a given directory a file by its pattern
 reference(){
 pattern=`echo $1`
-find $2 -iname "*$pattern*"  -print 2>/dev/null #|  awk -F'Desktop/' '{print $2}'
+find $2 -iname "*$pattern*"  -print 2>/dev/null 
 }
 
 # Search a word in a pdf o thousands of pdfs on a common directory or a single file
+# Of course it does requires the installation of pdfgrep
 intext(){
 find "$1" -name '*pdf' -exec pdfgrep -i "$2" /dev/null {} \; 2>/dev/null
 }
