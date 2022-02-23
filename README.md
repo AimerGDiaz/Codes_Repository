@@ -97,7 +97,66 @@ awk codes and toy data samples will be [here](AWK/README.md).
 All the languague I’ve mentioned before will have the same structure for
 this section: main applications of the main control structures (<for>,
 <while> and <if>), combinations of control structures and most employed
-codes so far.
+codes so far. Before enter to control structres, there are awk specific
+features important to highlight:
+
+-   Non line per line analysis: Awk can work not only line per line,
+    it’s able to integrate as a unit of analysis files which format
+    might have a specific set of lines per element, for instance 2 lines
+    describe a single sequence in a fasta format or 4 lines a fastq
+    file, how to integrate those lines to a single unit of analysis?.
+    The `getline` awk function it’s a faster way to make it, meaning
+    very simple and useful one-liners of awk might be used for files
+    like this.
+
+First example a Fastq to Fasta file converter using the next one-liner:
+
+``` bash
+awk ' BEGIN {OFS = "\n"} {header = $0 ; getline seq ; getline qheader ; getline qseq ; print ">"header,seq}' $1 > $name.fa
+```
+
+A very similar task can be achieved with a derivative code, like change
+the headers of multi-fasta file for a shorter version of it or simply to
+add the sequence length for blast output filters, which can be achieved
+using:
+
+``` bash
+awk  ' BEGIN {OFS = "\n"} {header = $0 ; getline seq  ; gsub(/;Ant.*/,"",header); header=header";length="length(seq);  print header,seq}' $1 > $name.fa
+```
+
+This code is integrated to a function of change suffix on the code
+called [fq2fa.sh](AWK/fq2fa.sh). The function getline must be call as
+many line we want to integrated in a single unity of analysis.
+
+------------------------------------------------------------------------
+
+-   Change delimiters, awk regrex 101 : a related issue to the previous
+    one it’s the case when you want to change the field delimiter of
+    certain lines, but not all, a typical example in bioinformatics of
+    this task it’s transform a multi-fasta file with multiple jump lines
+    into a single line per sequence, graphically:
+
+From
+
+`>1 ACCCAGAGAGTGAG ACCAACACACAGTT`
+
+To
+
+`>1 ACCCAGAGAGTGAGACCAACACACAGTT`
+
+To make it we can use the regrex expression integrated with the
+simplified if control loop of awk:
+
+``` bash
+awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' $1 > $1.ol.fa 
+```
+
+On this awk-oneliner, we first select those lines who do start with &gt;
+`/^>/` anything in between would be separated only by one jump of line
+per each `^>` line found. This code it’s called
+[oneliner.awk](AWK/oneliner.awk)
+
+------------------------------------------------------------------------
 
 #### If loops
 
@@ -141,8 +200,9 @@ The code is
 head -n 25 AWK/classificator.awk 
 ```
 
+    ## #!/bin/bash
     ## # Welcome my github readers, this an awk script commented, in reality this code can
-    ## # be excecuted as a one liner, even including the print of the file, but R markdown 
+    ## # be excecuted as a one liner, even including saving the process on a new file, but R markdown 
     ## # does not handle all of the awk power, by now
     ## #
     ## # The  One-liner format
@@ -150,22 +210,17 @@ head -n 25 AWK/classificator.awk
     ## # awk 'NR>1{if(a[$2])a[$2]=a[$2]" and "$1; else a[$2]=$1;}END{for (i in a) print "The gene "i", is located on chromosome "a[i];}' 
     ## #
     ## # But I will explained as a script here
-    ##   awk 'NR>1{
-    ## 
+    ## #     awk 'NR>1{
     ##  # Omit the first line   
-    ## 
-    ##   if(a[$2]) a[$2]=a[$2]" and "$1
-    ## 
+    ## #     if(a[$2]) a[$2]=a[$2]" and "$1
     ##  # make an array with the second field (column by default splitted by tab)
     ##  # and if the element is already on the array, add extra attributes (first column) as a coment separated with ` and `
-    ## 
-    ##   else a[$2]=$1} END  {for (i in a)
-    ## 
+    ## #     else a[$2]=$1} END  {for (i in a)
     ## # if the element is not on the array, save it as a new element with its related attribute
-    ## 
-    ##   print "The gene "i", is located on chromosome "a[i]}' $1 
-    ## 
+    ## #     print "The gene "i", is located on chromosome "a[i] }' $1
     ##   # Finally a for loop for print array elements with a presenting words
+    ##   # Without commetns clean like this: 
+    ## awk 'NR>1{ if(a[$2]) a[$2]=a[$2]" and "$1; else a[$2]=$1} END  {for (i in a)  print "The gene "i", is located on chromosome "a[i]}' $1
 
 </details>
 <details>
@@ -174,7 +229,6 @@ The output of this script
 </summary>
 
 ``` bash
- 
 bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 ```
 
@@ -205,11 +259,15 @@ used, one example is here PRINT here how it work to make quick table
 
 DEVELOP HERE
 
-|                                                       |
-|-------------------------------------------------------|
-| \* IF and arrays as de-duplicated control structures: |
-| DEVELOP HERE                                          |
-| \#\#\#\# For and While                                |
+------------------------------------------------------------------------
+
+-   IF and arrays as de-duplicated control structures:
+
+DEVELOP HERE
+
+#### For and While
+
+------------------------------------------------------------------------
 
 -   While, beigin honest I have never used while loop on awks. But I do
     use while structure on bash followed by an awk code, which is, awk
@@ -244,6 +302,10 @@ rm -f toy_structure.txt
 A real world problem where I use awk inside a bash while loop structure
 is in a fastqc quality information miner script, extracted from
 [NGS\_statistics.sh script](Total_processing/NGS_statistics.sh):
+<details>
+<summary>
+Non excecutable script
+</summary>
 
      while read library
      do
@@ -267,9 +329,11 @@ is in a fastqc quality information miner script, extracted from
      lib_type="tmm_reduced"
      fi
 
-     awk '/^Total Sequences/{ts=$3}  /^Sequence length/{print "'$name'" "\t" "'$lib_type'" "\t" $3 "\t" ts}' $FILE   >> $1"Results/Statis    tics/Total_size.txt"
+     awk '/^Total Sequences/{ts=$3}  /^Sequence length/{print "'$name'" "\t" "'$lib_type'" "\t" $3 "\t" ts}' $FILE   >> $1"Results/Statistics/Total_size.txt"
 
      done < dir_list.txt
+
+</details>
 
 ------------------------------------------------------------------------
 
@@ -335,30 +399,106 @@ of auxiliary awk syntax. Therefore, to quantify the exact amount of
 gRNAs with pure Unknown gene targets we can use the `<()` syntax as
 follow:
 
-First generate the desired pattern using the single line grep regular
-expressions as “^” or “$” etc:
+First generate the pattern to search using the single line grep regular
+expressions as “^” or “$” or others, for instance starting with a file
+like this:
 
-    awk -F'_' '{ printf "^"$1",\\n"}' Temp_running_codes/ID_test_RPS12gRNA_file.txt  > tempids.sh
+``` bash
+head -n 1 BASH/grep_lists_example.txt
+```
 
+    ## 2481_319857-5
 
-    Add it with Begin and END # enter to the file tempids and add ` echo -ne "` at the beginning and ` "`  at the end
+Where each line represent a single ID, now as this pattern in the file
+we want to search it might be place on more than one column, a exact
+grep (-w) search would not be enough, the file to search looks like:
 
-With this script we can run the line `bash tempids.sh` inside `<()`
-command as an input for the command grep -f:
+``` bash
+head -n 1 BASH/file2search.txt
+```
 
-    grep -f <(bash tempids.sh)  EatroPCNew_gRNA_number.csv | awk -F',' '{print $7}'  | sort | uniq -c
+    ## 2481,319857-5:3775637-1:612463-2:1522040-1:1644068-1:728577-2:1155110-1:2471552-1:3702130-1:2610329-1:2598439-1:3570331-1:1741739-1:3268900-1:3271495-1:1374495-1:1145964-1,94,94,AAATATAACATATCTTATATCTGAATCTAACTTGTAATATGTGAATTTTTTTTTTTTTTTT,AAATATAACATATCTTATATCTGAATCTAACTTGTAATATGTGAA,RPS12_A1,1306,68762-
+
+The pattern we are interested is the first field of this comma separated
+file, as it’s numerical it might happen in many places, then what we
+need to search is a list of ids who start exactly with that number and
+ends with a comma, we can create a list of IDs with these features:
+
+``` bash
+bash AWK/printBeginningEnd.awk BASH/grep_lists_example.txt  > BASH/tempids.sh
+
+head -n 1 BASH/tempids.sh
+```
+
+    ## echo -ne "^2481,\n^68762,\n^28853,\n^54107,\n^68071,\n^68171,\n^115266,\n^24851,\n^37211,\n^102948,\n"
+
+With awk basically we have created a script who writes another script,
+which tells to bash how to print the code, if we excecute this code it
+will look as follow:
+
+``` bash
+bash BASH/tempids.sh | head -n 2
+```
+
+    ## ^2481,
+    ## ^68762,
+
+Now with this script we can run the line `bash tempids.sh` inside `<()`
+command as an input for the command `grep -f`:
+
+``` bash
+time (bash BASH/piping.sh BASH/file2search.txt)
+head BASH/piping.sh
+```
+
+    ##       7 RPS12_A1
+    ##       3 RPS12_A2
+    ## 
+    ## real 0m0.806s
+    ## user 0m0.000s
+    ## sys  0m0.125s
+    ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
 
-    for f in `cat tempids.txt`
-    do
-    grep -w "^"$f"," EatroPCNew_gRNA_number.csv | awk -F',' '{print $7}'  | sort | uniq -c
-    done 
+``` bash
+bash BASH/piping_alternative.sh BASH/file2search.txt
+head BASH/piping_alternative.sh
+```
 
-However the first code is much faster as in reality it’s just a single
-grep search.
+    ##       7 RPS12_A1
+    ##       2 RPS12_A2
+    ## 
+    ## real 0m1.762s
+    ## user 0m0.031s
+    ## sys  0m0.313s
+    ## tempids=()
+    ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
+    ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
 
-TEST TIME HERE
+Even faster than an awk search:
+
+``` bash
+bash BASH/awk_regrex_insideFor.sh BASH/file2search.txt 
+tail -n 1  BASH/awk_regrex_insideFor.sh
+```
+
+    ##       7 RPS12_A1
+    ##       2 RPS12_A2
+    ## 
+    ## real 0m1.930s
+    ## user 0m0.016s
+    ## sys  0m0.359s
+    ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
+
+However the first code is much faster as time command show us, the
+reason of this is because the first is in reality a single grep search
+without control structures.
+
+The second code has the bash array structure and the way it can be feed
+it, also as an alternative to avoid temporary files. Also includes how
+we can access or called in a bash for loop, [more of bash arrays
+here](https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays).
 
 ### Creating comands on Bash
 

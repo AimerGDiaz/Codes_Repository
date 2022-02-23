@@ -12,14 +12,24 @@ Vim as a text editor is highly editable or customizable and extensible, meaning 
 
 
 1. Useful configurations of vim on ~/.vimrc 
-```{bash}
+```{bash eval=FALSE}
 # Must-have configurations for all the vim files of the user:
 
 # Show the enumeration per line
 set number 
 
 # Have you ever waste time on codes that do not work just because the file encoding was not appropriated 
+# Before to get into the details of each language, each time working with new text documents, check first the encoding format by using the command.  
+
+file -bi FILE
+
+# In case of getting a file in a different format than UTF-8, by using vim you can re-format the document
 set encoding=utf-8 
+set bomb 
+# A single command line 
+vim +"argdo se bomb | se fileencoding=utf-8 | w"
+#  Finally  sometimes is needed delete characters like ^M, which can be done with
+dos2unix  
 
 # Copy and paste files from a text open with vim to wherever you want 
 set clipboard=unnamed
@@ -40,8 +50,7 @@ dd
 ```
 More commands [here](http://www.pixelbeat.org/vim.tips.html)
 3. .
-<!---
-```{=latex}
+<!--- ```{=latex}
 \begin{lstlisting}
 
 \item Move to a particular line

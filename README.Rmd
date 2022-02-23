@@ -15,7 +15,9 @@ https://bookdown.org/yihui/rmarkdown/language-engines.html
 
 El tema de las licencias https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
 
-Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de reduccion de librerias https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
+Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de reduccion de librerias
+https://vlado.ca/blog/perl-app.html
+https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
 https://github.com/LorenzoTa/step-by-step-tutorial-on-perl-module-creation-with-tests-and-git/blob/master/tutorial/tutorial-english.md
 https://fpm.readthedocs.io/en/v1.13.1/intro.html
 https://github.com/jordansissel/fpm/pull/876
@@ -274,6 +276,12 @@ In such way this code is equivalent to run grep in a for loop as:
 bash BASH/piping_alternative.sh BASH/file2search.txt
 head BASH/piping_alternative.sh
 ```
+Even faster than an awk search: 
+
+```{bash}
+bash BASH/awk_regrex_insideFor.sh BASH/file2search.txt 
+tail -n 1  BASH/awk_regrex_insideFor.sh
+```
 However the first code is much faster as time command show us, the reason of this is because the first is in reality a single grep search without control structures. 
 
 The second code has the bash array structure and the way it can be feed it, also as an alternative to avoid temporary files. Also includes how we can access or called in a bash for loop, [more of bash arrays  here](https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays). 
@@ -321,7 +329,7 @@ alias waste_time='for f in {1..200}; do echo ------ wasting time minutes $f;  sl
 
 Alias are boring, but save time. Functions are quite interesting, they are basically mini software and bash allow you to create commnads as variated as a blast of a sequence you want to test against blast databases. 
 
-```{bash}
+```{bash eval=FALSE}
 # LiSt the Absolut path Directory of a file 
 lsad() {
 find $PWD -iname $1

@@ -234,7 +234,7 @@ Bash as well as AWK is quite flexible, however most of the time I do use the thr
 
 Bash is awesome specially when we talk about pipes, input and output immediately re-direction. However for beginners the main command for piping is usually "|", which limits piping to comands who tolerate input redirection in such way, however there are software which cannot be piped with "|" but it might accept "-" for input file declaration, specially those who requires a -i parameter to indicate the input file, then the piping way for such programs is " | software -i - " . 
 
-DEVELOP HERE - example of - for piping 
+DEVELOP HERE - example of "-" for piping 
 
 A less usual piping commands is the combined operator "<( code here )", which could be interpreted as "take the output of the command between parenthesis as an input". This structure could be used to expand the capabilities to of grep command but in the option of grepping a list of terms (grep -f). Using the -f parameter on a grep search we cannot add the single pattern options available also as parameter, for instance, searching the list of pattern at the beginning of each line: `grep -f "^" `, however using `<()` this task it's possible. Let's explore using a real world problem. 
 
