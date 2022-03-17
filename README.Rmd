@@ -286,6 +286,20 @@ However the first code is much faster as time command show us, the reason of thi
 
 The second code has the bash array structure and the way it can be feed it, also as an alternative to avoid temporary files. Also includes how we can access or called in a bash for loop, [more of bash arrays  here](https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays). 
 
+#### Folder syncronization with rsync 
+
+Specially useful command for servers with file deletion programs, this command will ensure you data security: 
+
+```{bash,  eval=FALSE}
+rsync -av /mnt/ls15/scratch/users/gutie190/MaxiCircles/ /mnt/home/gutie190/Trypanosomes_RNA_editing/MaxiCircles/NewMaxiCircles/
+```
+This command will copy all files from the scratch directory to the safe local directory, where there is not deletion policty, but disk space limitations. [Source ](https://www.tutorialspoint.com/unix_commands/rsync.htm)
+
+`-a` means The files are transferred in "archive" mode, which ensures that symbolic links, devices, attributes, permissions, ownerships, etc. are preserved in the transfer.
+
+Each time the mother folder is modified, you should run again the commnad, rsync remote-update protocol will  update the file by sending only those different to the already syncronized files. 
+
+
 ### Creating comands on Bash 
 
 * Save routinary functions and alias as bash commands with the label you want to use it for them on the terminal. To start, what we need it's edit the file `~/.bashrc` with your favorite text editor, in my case Vim ([(guide for vim commands)](VIM/README.md)). The difference between alias and the functions is mainly that the functions read arguments, while alias not. My favorite list of alias and functions on .bashrc file
@@ -424,7 +438,7 @@ bash -i  BASH/running_bashrc.sh
 *** 
 ## Perl
 
-Perl ate awk once in iths human evolutioanry history, 
+Perl ate awk once in its human evolutioanry history, 
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
 

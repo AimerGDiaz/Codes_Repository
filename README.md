@@ -14,7 +14,9 @@ https://bookdown.org/yihui/rmarkdown/language-engines.html
 
 El tema de las licencias https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
 
-Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de reduccion de librerias https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
+Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de reduccion de librerias
+https://vlado.ca/blog/perl-app.html
+https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
 https://github.com/LorenzoTa/step-by-step-tutorial-on-perl-module-creation-with-tests-and-git/blob/master/tutorial/tutorial-english.md
 https://fpm.readthedocs.io/en/v1.13.1/intro.html
 https://github.com/jordansissel/fpm/pull/876
@@ -454,9 +456,9 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0.806s
-    ## user 0m0.000s
-    ## sys  0m0.125s
+    ## real 0m0.686s
+    ## user 0m0.031s
+    ## sys  0m0.109s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -469,9 +471,9 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       2 RPS12_A2
     ## 
-    ## real 0m1.762s
-    ## user 0m0.031s
-    ## sys  0m0.313s
+    ## real 0m1.435s
+    ## user 0m0.016s
+    ## sys  0m0.141s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -486,9 +488,9 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       2 RPS12_A2
     ## 
-    ## real 0m1.930s
+    ## real 0m1.621s
     ## user 0m0.016s
-    ## sys  0m0.359s
+    ## sys  0m0.250s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the
@@ -499,6 +501,28 @@ The second code has the bash array structure and the way it can be feed
 it, also as an alternative to avoid temporary files. Also includes how
 we can access or called in a bash for loop, [more of bash arrays
 here](https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays).
+
+#### Folder syncronization with rsync
+
+Specially useful command for servers with file deletion programs, this
+command will ensure you data security:
+
+``` bash
+rsync -av /mnt/ls15/scratch/users/gutie190/MaxiCircles/ /mnt/home/gutie190/Trypanosomes_RNA_editing/MaxiCircles/NewMaxiCircles/
+```
+
+This command will copy all files from the scratch directory to the safe
+local directory, where there is not deletion policty, but disk space
+limitations.
+[Source](https://www.tutorialspoint.com/unix_commands/rsync.htm)
+
+`-a` means The files are transferred in “archive” mode, which ensures
+that symbolic links, devices, attributes, permissions, ownerships, etc.
+are preserved in the transfer.
+
+Each time the mother folder is modified, you should run again the
+commnad, rsync remote-update protocol will update the file by sending
+only those different to the already syncronized files.
 
 ### Creating comands on Bash
 
@@ -670,7 +694,7 @@ bash -i  BASH/running_bashrc.sh
 
 ## Perl
 
-Perl ate awk once in iths human evolutioanry history,
+Perl ate awk once in its human evolutioanry history,
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
 

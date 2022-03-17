@@ -50,6 +50,9 @@ dd
 ```
 More commands [here](http://www.pixelbeat.org/vim.tips.html)
 3. .
+
+Pattern keep and replace 
+https://unix.stackexchange.com/questions/35206/replace-using-vim-reuse-part-of-the-search-pattern
 <!--- ```{=latex}
 \begin{lstlisting}
 
