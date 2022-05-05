@@ -3,7 +3,7 @@ title: "Scripts and Oneliners explained"
 author: "Aimer G. Diaz"
 output: github_document
 ---
-<!---
+<!--- Central Folfer
 Github extras 
 
 https://github.com/gayanvoice/github-profile-views-counter
@@ -33,7 +33,6 @@ Wikis en github https://guides.github.com/features/wikis/
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 #devtools::install_github("hadley/emo")
-
 ```
 Welcome to my code repository, most or all of it I've learned in a very inclusive sense of the word (including copy from internet forums), following this beautiful logic of public domain I've made these notes available, the idea it's to have a server-independent repository, a repository on the cloud, or should I say, on the bottom of the ocean with several copies in several sites of the world, for today and maybe, just maybe, even available on a post-global ecological disaster era, available physically but not online. 
 
@@ -65,7 +64,9 @@ Awk codes are my favorite, the one liners are extreamlly useful, fast, weird but
 
 All the languague I've mentioned before will have the same structure for this section: main applications of the main control structures (<for>, <while> and <if>),  combinations of control structures and most employed codes so far. Before enter to control structres, there are awk specific features important to highlight: 
 
-* Non line per line analysis: Awk can work not only line per line, it's able to integrate as a unit of analysis files which format might have a specific set of lines per element, for instance 2 lines describe a single sequence in a fasta format or 4 lines a fastq file, how to integrate those lines to a single unit of analysis?. The `getline` awk function it's a faster way to make it, meaning very simple and useful one-liners of awk might be used for files like this. 
+#### Reducing multiples lines into a single line to analyse -getline command-: 
+
+Awk can work not only line per line, it's able to integrate as a unit of analysis files which format might have a specific set of lines per element, for instance 2 lines describe a single sequence in a fasta format or 4 lines a fastq file, how to integrate those lines to a single unit of analysis?. The `getline` awk function it's a faster way to make it, meaning very simple and useful one-liners of awk might be used for files like this. 
 
 First example a Fastq to Fasta file converter using the next one-liner: 
 
@@ -81,18 +82,22 @@ awk  ' BEGIN {OFS = "\n"} {header = $0 ; getline seq  ; gsub(/;Ant.*/,"",header)
 This code is integrated to a function of change suffix on the code called [fq2fa.sh](AWK/fq2fa.sh). The function getline must be call as many line we want to integrated in a single unity of analysis. 
 
 *** 
-* Change delimiters, awk regrex 101 : a related issue to the previous one it's the case when you want to change the field delimiter of certain lines, but not all, a typical example in bioinformatics of this task it's transform a multi-fasta file with multiple jump lines into a single line per sequence, graphically: 
+#### Change delimiters, regrex in awk 101:
+
+A related issue to the previous one it's the case when you want to change the field delimiter of certain lines, but not all, a typical example in bioinformatics of this task it's transform a multi-fasta file with multiple jump lines into a single line per sequence, graphically: 
 
 From 
 
-`>1
+```
+>1
 ACCCAGAGAGTGAG
 ACCAACACACAGTT`
-
+```
 To 
-
-`>1
+```
+>1
 ACCCAGAGAGTGAGACCAACACACAGTT`
+```
 
 To make it we can use the regrex expression integrated with the simplified if control loop of awk: 
 ```{bash eval=FALSE}
@@ -100,10 +105,38 @@ awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}'
 ```
 On this awk-oneliner, we first select those lines who do start with > `/^>/` anything in between would be separated only by one jump of line per each `^>` line found. This code it's called [oneliner.awk](AWK/oneliner.awk)
 
-***
-#### If loops
+#### Read files separated by comma, -F and gsub commnad 
 
-* IF in arrays as a classificator: One of my favorite codes made a classificatory tasks extremely fast and with just a handful set of commands, sadly the economy of the codes makes it a little dark, especially for AWK beginners.  
+There is not better fast and time-saving file separator as awk's -F commnad, let's start with a common issue analyzing common bioinformatics files as CSV files, haven't you face that annoying CSV files with text in the same field where is also commas there?, usually this : 
+
+NCBI gen omnibus dataset has such problem and awk has the solution: 
+
+```{bash,  eval=FALSE}
+awk -F',' 'OFS="\t"{gsub("\"","",$0);gsub(" |, ","_",$0);print $1,$2,$4,$8}' $1 
+```
+```{bash,  eval=TRUE, include=TRUE}
+cat AWK/sentence.temp 
+#Run in terminal 
+# dos2unix AWK/separator.awk
+bash AWK/separator.awk AWK/sentence.temp "gsub"
+``` 
+
+Another great solution is by using awk -F command, whihc allow us to split flieds using regrex expression, in this case :
+```{bash,  eval=FALSE}
+awk -F'(,"|",)' 'OFS="\t"{gsub(" ","_",$0); print $1,$2,$4,$8}' $1
+```
+```{bash,  eval=TRUE, include=TRUE}
+bash AWK/separator.awk AWK/sentence.temp "F"
+``` 
+
+
+bash AWK/separator.awk AWK/sentence.temp "F"
+***
+### If loops
+
+#### IF in arrays as a classificator: 
+
+One of my favorite codes made a classificatory tasks extremely fast and with just a handful set of commands, sadly the economy of the codes makes it a little dark, especially for AWK beginners.  
 
 <details> 
 <summary>Let's see a toy example:</summary>

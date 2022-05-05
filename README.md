@@ -2,7 +2,7 @@ Scripts and Oneliners explained
 ================
 Aimer G. Diaz
 
-<!---
+<!--- Central Folfer
 Github extras 
 
 https://github.com/gayanvoice/github-profile-views-counter
@@ -102,14 +102,15 @@ this section: main applications of the main control structures (<for>,
 codes so far. Before enter to control structres, there are awk specific
 features important to highlight:
 
--   Non line per line analysis: Awk can work not only line per line,
-    it’s able to integrate as a unit of analysis files which format
-    might have a specific set of lines per element, for instance 2 lines
-    describe a single sequence in a fasta format or 4 lines a fastq
-    file, how to integrate those lines to a single unit of analysis?.
-    The `getline` awk function it’s a faster way to make it, meaning
-    very simple and useful one-liners of awk might be used for files
-    like this.
+#### Reducing multiples lines into a single line to analyse -getline command-:
+
+Awk can work not only line per line, it’s able to integrate as a unit of
+analysis files which format might have a specific set of lines per
+element, for instance 2 lines describe a single sequence in a fasta
+format or 4 lines a fastq file, how to integrate those lines to a single
+unit of analysis?. The `getline` awk function it’s a faster way to make
+it, meaning very simple and useful one-liners of awk might be used for
+files like this.
 
 First example a Fastq to Fasta file converter using the next one-liner:
 
@@ -132,19 +133,23 @@ many line we want to integrated in a single unity of analysis.
 
 ------------------------------------------------------------------------
 
--   Change delimiters, awk regrex 101 : a related issue to the previous
-    one it’s the case when you want to change the field delimiter of
-    certain lines, but not all, a typical example in bioinformatics of
-    this task it’s transform a multi-fasta file with multiple jump lines
-    into a single line per sequence, graphically:
+#### Change delimiters, regrex in awk 101:
+
+A related issue to the previous one it’s the case when you want to
+change the field delimiter of certain lines, but not all, a typical
+example in bioinformatics of this task it’s transform a multi-fasta file
+with multiple jump lines into a single line per sequence, graphically:
 
 From
 
-`>1 ACCCAGAGAGTGAG ACCAACACACAGTT`
+    >1
+    ACCCAGAGAGTGAG
+    ACCAACACACAGTT`
 
 To
 
-`>1 ACCCAGAGAGTGAGACCAACACACAGTT`
+    >1
+    ACCCAGAGAGTGAGACCAACACACAGTT`
 
 To make it we can use the regrex expression integrated with the
 simplified if control loop of awk:
@@ -158,14 +163,55 @@ On this awk-oneliner, we first select those lines who do start with &gt;
 per each `^>` line found. This code it’s called
 [oneliner.awk](AWK/oneliner.awk)
 
-------------------------------------------------------------------------
+#### Read files separated by comma, -F and gsub commnad
 
-#### If loops
+There is not better fast and time-saving file separator as awk’s -F
+commnad, let’s start with a common issue analyzing common bioinformatics
+files as CSV files, haven’t you face that annoying CSV files with text
+in the same field where is also commas there?, usually this :
 
--   IF in arrays as a classificator: One of my favorite codes made a
-    classificatory tasks extremely fast and with just a handful set of
-    commands, sadly the economy of the codes makes it a little dark,
-    especially for AWK beginners.
+NCBI gen omnibus dataset has such problem and awk has the solution:
+
+``` bash
+awk -F',' 'OFS="\t"{gsub("\"","",$0);gsub(" |, ","_",$0);print $1,$2,$4,$8}' $1 
+```
+
+``` bash
+cat AWK/sentence.temp 
+#Run in terminal 
+# dos2unix AWK/separator.awk
+bash AWK/separator.awk AWK/sentence.temp "gsub"
+```
+
+    ## "PRJNA272807","In plants, decapping prevents RDR6-dependent production of small interfering RNAs from endogenous mRNAs",3702,"Arabidopsis thaliana","Eukaryota; Plants; Land Plants",,"Primary submission","Transcriptome or Gene expression","Yes","Yes","2015-01-16"
+    ## 
+    ## Extracting only the fields 1,2,4 and 8 
+    ## 
+    ## PRJNA272807  In_plants_decapping_prevents_RDR6-dependent_production_of_small_interfering_RNAs_from_endogenous_mRNAs  Arabidopsis_thaliana    Transcriptome_or_Gene_expression
+
+Another great solution is by using awk -F command, whihc allow us to
+split flieds using regrex expression, in this case :
+
+``` bash
+awk -F'(,"|",)' 'OFS="\t"{gsub(" ","_",$0); print $1,$2,$4,$8}' $1
+```
+
+``` bash
+bash AWK/separator.awk AWK/sentence.temp "F"
+```
+
+    ## 
+    ## Extracting only the fields 1,2,4 and 8 
+    ## 
+    ## "PRJNA272807 "In_plants,_decapping_prevents_RDR6-dependent_production_of_small_interfering_RNAs_from_endogenous_mRNAs    Arabidopsis_thaliana    "Transcriptome_or_Gene_expression
+
+bash AWK/separator.awk AWK/sentence.temp “F” \*\*\* \#\#\# If loops
+
+#### IF in arrays as a classificator:
+
+One of my favorite codes made a classificatory tasks extremely fast and
+with just a handful set of commands, sadly the economy of the codes
+makes it a little dark, especially for AWK beginners.
 
 <details>
 <summary>
@@ -456,9 +502,9 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0.686s
-    ## user 0m0.031s
-    ## sys  0m0.109s
+    ## real 0m1.104s
+    ## user 0m0.000s
+    ## sys  0m0.188s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -471,9 +517,9 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       2 RPS12_A2
     ## 
-    ## real 0m1.435s
+    ## real 0m1.842s
     ## user 0m0.016s
-    ## sys  0m0.141s
+    ## sys  0m0.344s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -488,9 +534,9 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       2 RPS12_A2
     ## 
-    ## real 0m1.621s
-    ## user 0m0.016s
-    ## sys  0m0.250s
+    ## real 0m1.731s
+    ## user 0m0.047s
+    ## sys  0m0.266s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the
