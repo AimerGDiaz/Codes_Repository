@@ -131,6 +131,17 @@ This code is integrated to a function of change suffix on the code
 called [fq2fa.sh](AWK/fq2fa.sh). The function getline must be call as
 many line we want to integrated in a single unity of analysis.
 
+#### Focus on user defined lines `NR%` command
+
+Individual read length and total quantity of nucleotides
+
+``` bash
+echo -ne "@seq1\nACGAGGAGGACGTACGTAGCTAGCGAGCGATCTATCGATGCTAC\n+\nACGAGGAGGACGTACGTAGCTAGCGAGCGATCTATCGATGCTAC\n@seq2\nACGAGCGAGCATCGAGCTAGCTGACTAGCTTAGCTATCG\n+\nnCGAGCGAGCATCGAGCTAGCTGACTAGCTTAGCTATCG\n"  > file.fastq
+awk '{ if(NR%4==2){print length($0);} }'  file.fastq  
+
+awk 'BEGIN{sum=0;}{if(NR%4==2){sum+=length($0);}}END{print sum;}'  file.fastq 
+```
+
 ------------------------------------------------------------------------
 
 #### Change delimiters, regrex in awk 101:
@@ -189,8 +200,8 @@ bash AWK/separator.awk AWK/sentence.temp "gsub"
     ## 
     ## PRJNA272807  In_plants_decapping_prevents_RDR6-dependent_production_of_small_interfering_RNAs_from_endogenous_mRNAs  Arabidopsis_thaliana    Transcriptome_or_Gene_expression
 
-Another great solution is by using awk -F command, whihc allow us to
-split flieds using regrex expression, in this case :
+Another great solution is by using awk -F command, which allow us to
+split fields using regrex expression, in this case :
 
 ``` bash
 awk -F'(,"|",)' 'OFS="\t"{gsub(" ","_",$0); print $1,$2,$4,$8}' $1
@@ -203,7 +214,7 @@ bash AWK/separator.awk AWK/sentence.temp "F"
     ## 
     ## Extracting only the fields 1,2,4 and 8 
     ## 
-    ## "PRJNA272807 "In_plants,_decapping_prevents_RDR6-dependent_production_of_small_interfering_RNAs_from_endogenous_mRNAs    Arabidopsis_thaliana    "Transcriptome_or_Gene_expression
+    ## PRJNA272807  In_plants,_decapping_prevents_RDR6-dependent_production_of_small_interfering_RNAs_from_endogenous_mRNAs Arabidopsis_thaliana    Transcriptome_or_Gene_expression
 
 bash AWK/separator.awk AWK/sentence.temp “F” \*\*\* \#\#\# If loops
 
@@ -311,9 +322,37 @@ DEVELOP HERE
 
 -   IF and arrays as de-duplicated control structures:
 
+Sum a particular column
+
+``` bash
+awk '{sum+=$7} END {print sum}'  
+```
+
+sum non duplicated rows as an example of the UNDEVELOPED code here
+
 DEVELOP HERE
 
 #### For and While
+
+Sum all columns
+
+``` bash
+awk 'BEGIN{FS=OFS=","}
+     NR==1{print}
+     NR>1{for (i=1;i<=NF;i++) a[i]+=$i}
+     END{for (i=1;i<=NF;i++) printf a[i] OFS; printf "\n"}' file
+```
+
+<!-- POSSIBLE awk commands forgotten 
+/mnt/g/My\ Drive/Bioinformatica/0_Tesis\ Maestria/Code/Analysis_miR/Create_and_filter_anotation_file.txt 
+
+/mnt/g/My\ Drive/Bioinformatica/0_Tesis\ 
+./Code/Blockbuster_parsearch/Clust2Block/No_blocks_loci/blockbuster_test.txt
+
+./EGlab_Code/Trimmomatic/trimmomatic_behaviour.txt
+
+/mnt/g/My\ Drive/Bioinformatica/0_Tesis\ Maestria/Precise_counting/Readme.txt
+-->
 
 ------------------------------------------------------------------------
 
@@ -411,7 +450,7 @@ data organization, classification or text processing and quality
 control. But before to enter to each control structure let’s talk some
 other features of Bash beyond the control statements itself.
 
--   Piping on bash: beyond “\|”
+#### Piping on bash: beyond “\|”
 
 Bash is awesome specially when we talk about pipes, input and output
 immediately re-direction. However for beginners the main command for
@@ -502,9 +541,9 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m1.104s
+    ## real 0m0.323s
     ## user 0m0.000s
-    ## sys  0m0.188s
+    ## sys  0m0.016s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -517,9 +556,9 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       2 RPS12_A2
     ## 
-    ## real 0m1.842s
+    ## real 0m0.605s
     ## user 0m0.016s
-    ## sys  0m0.344s
+    ## sys  0m0.109s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -534,9 +573,9 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       2 RPS12_A2
     ## 
-    ## real 0m1.731s
-    ## user 0m0.047s
-    ## sys  0m0.266s
+    ## real 0m0.616s
+    ## user 0m0.000s
+    ## sys  0m0.109s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the
@@ -569,6 +608,129 @@ are preserved in the transfer.
 Each time the mother folder is modified, you should run again the
 commnad, rsync remote-update protocol will update the file by sending
 only those different to the already syncronized files.
+
+#### Grep with perl regrex
+
+Grep command is one of the most famous search software known, it’s so
+powerful thank it’s possible to use together with other languague as
+perl, for instance, in a complex data set as the following:
+
+``` bash
+head -n 8 BASH/complex_formatting.txt
+```
+
+    ## 1. The Arabidopsis F-box protein FBW2 degrades AGO1 to avoid spurious loading of illegitimate small RNA [PARE-seq]
+    ## (Submitter supplied) RNA silencing is a conserved mechanism in eukaryotes and is involved in development, heterochromatin maintenance and defense against viruses. In plants, ARGONAUTE1 (AGO1) protein plays a central role in both microRNA (miRNA) and small interfering RNA (siRNA)-directed silencing and its expression is regulated at multiple levels. Here we report that the F-box protein FBW2 targets proteolysis of AGO1 by a CDC48-mediated autophagy mechanism. more...
+    ## Organism:       Arabidopsis thaliana
+    ## Type:           Non-coding RNA profiling by high throughput sequencing; Other
+    ## Platform: GPL17639 18 Samples
+    ## FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE169nnn/GSE169433/
+    ## SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA716605
+    ## Series          Accession: GSE169433    ID: 200169433
+
+For each entry there are 7 lines of information, to extract an specific
+query, non separated information, with only alphanumeric characters
+match, including connector characters as "\_" or, we can use grep -oP
+command and perl
+[“\\w+”](https://stackoverflow.com/questions/47361430/about-the-meaning-of-perl-w)
+expression to include the whole word, as follow :
+
+``` bash
+grep -oP "Accession: \w+"  BASH/complex_formatting.txt
+```
+
+    ## Accession: GSE169433
+    ## Accession: GSE169324
+
+The information include in perl matching characters as + can be
+displayed using:
+
+``` bash
+unichars -a -u '\w' | wc -l 
+```
+
+To check the difference in perl matching characters, we can use unichars
+and diff command, however they are not available in all unix systems
+
+``` bash
+diff -u  <( unichars -a -u '\w' )  <( unichars -a -u '\d' )
+```
+
+#### Use defined match delimiters
+
+A more intuitive, versatile and controllable way for the same task is
+the perl “?” and “(?=)” regrex pairs, which allow us to define the
+limits of character exploration. Let’s use an aburd example, such as
+matching any characters before a defined word (“abc”) is found, without
+including the define word as an output.
+
+``` bash
+ echo addfadfaabc1234 | grep -oP "(.+?)(?=abc)"
+ #One liner perl version of this is
+ # perl -ne ' $_ =~ s/(.+?)(?=abc)/$1/; print $1;' 
+```
+
+    ## addfadfa
+
+Using the previous complex formatting text:
+
+``` bash
+grep -oP "Type:(.+?)(?=[\n|;])"  BASH/complex_formatting.txt
+```
+
+    ## Type:           Non-coding RNA profiling by high throughput sequencing
+
+An equivalent expression to “\\w+” examples
+
+``` bash
+grep -oP "(Accession:.+?)(?=ID)"  BASH/complex_formatting.txt
+```
+
+The equivalent \#\#\#\# Find and bash commands
+
+Find command is one of the most useful tools in unix systems, it’s the
+google inside this beautiful operative system, not only because it does
+allow us to find any file or folder using regrex, but also because it’s
+able to search inside the files, including pdfs files (in case pdfgrep
+is installed).
+
+1.  The basics, search for all the files with common extension and list
+    their sizes and time of origin
+
+``` bash
+find . -name '*.sh'  -exec ls -lht  {} \; 
+```
+
+keep in mind just “\*” is enough for global search, “.” in find it’s a
+non-special character
+
+1.  Grep inside a file providing the name of the file
+
+``` bash
+find . -name '*.txt' -exec grep -H "perl \-ne"  {} \;
+```
+
+### Bask parallelizing 101:
+
+#### Measuring excecution time
+
+[check execution time of process whose id is
+known](https://www.2daygeek.com/how-to-check-how-long-a-process-has-been-running-in-linux/)
+
+``` bash
+ps -p 16337 -o etime
+```
+
+#### Forks and CPUs work distribution
+
+#### Parallel
+
+### Soft and Hard links (ln)
+
+A hard link acts as a copy (mirrored) of the selected file, while soft
+or symbolic links acts as a pointer or a reference to the file name,
+however keep in mind, deleting a pointer is also deleting the original
+folder. A situation taht does not happen with hard links.
 
 ### Creating comands on Bash
 
@@ -740,7 +902,46 @@ bash -i  BASH/running_bashrc.sh
 
 ## Perl
 
-Perl ate awk once in its human evolutioanry history,
+Perl engulf awk in its language evolutionary history,
+
+### Oneliners or -ne command
+
+In previous sections I’ve already shown how versatile is perl’s regrex,
+using them with grep or the ones shared between perl and awk, however if
+we want to manipulate a file and not only detect, the most precise way
+before running into formatting-scripts is the use of perl oneliners. The
+next example shows a perl one-liner script with a economic writing or
+non-strict style, starting with:
+
+1.  `chomp $_`, dispensable but used to remove the last trailing newline
+    from the input string.
+2.  `@F = split /\t/` , feed the environment array F with each part of
+    the text separated by tab or any other character.
+3.  `if ($N[1] ne "hsaP-") {$F[3] =~ s/(hsaP)[a-z].*-([let|mir].*)/$1-$2/;`
+    control structure, restricting the substitution to only those
+    entries with different name to “hsaP-”
+4.  `$string=join ("\t", @F); print "$string\n";}`, re join split and
+    modified fields and close control structure.
+
+<!--, eval=FALSE}-->
+
+``` bash
+echo -ne "chr1\t115215\t115320\ttesting-syntax_hsaPmmu-mir-23a\nchr1\t115215\t115320\ttesting-syntax_hsaP-let-23a\n-Previous to perl edition-\n" 
+tail -n 1 Perl/oneliner_search-replace.sh
+```
+
+    ## chr1 115215  115320  testing-syntax_hsaPmmu-mir-23a
+    ## chr1 115215  115320  testing-syntax_hsaP-let-23a
+    ## -Previous to perl edition-
+    ## perl -ne 'chomp($_); @F = split /\t/, $_; @N = split /_/, $F[3]; if ($N[1] ne "hsaP-") {$F[3] =~ s/(hsaP)[a-z].*-([let|mir].*)/$1-$2/; $string=join ("\t", @F); print "$string\n";}'
+
+``` bash
+bash Perl/oneliner_search-replace.sh 
+```
+
+    ## chr1 115215  115320  testing-syntax_hsaP-mir-23a
+    ## chr1 115215  115320  testing-syntax_hsaP-let-23a
+
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
 

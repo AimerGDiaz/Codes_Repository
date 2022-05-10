@@ -1,0 +1,2 @@
+echo -ne "chr1\t115215\t115320\ttesting-syntax_hsaPmmu-mir-23a\nchr1\t115215\t115320\ttesting-syntax_hsaP-let-23a\n" |\
+perl -ne 'chomp($_); @F = split /\t/, $_; @N = split /_/, $F[3]; if ($N[1] ne "hsaP-") {$F[3] =~ s/(hsaP)[a-z].*-([let|mir].*)/$1-$2/; $string=join ("\t", @F); print "$string\n";}'

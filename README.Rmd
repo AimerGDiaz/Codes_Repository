@@ -81,6 +81,17 @@ awk  ' BEGIN {OFS = "\n"} {header = $0 ; getline seq  ; gsub(/;Ant.*/,"",header)
 
 This code is integrated to a function of change suffix on the code called [fq2fa.sh](AWK/fq2fa.sh). The function getline must be call as many line we want to integrated in a single unity of analysis. 
 
+#### Focus on user defined lines `NR%` command
+
+Individual read length and total quantity of nucleotides 
+
+```{bash, eval=FALSE}
+echo -ne "@seq1\nACGAGGAGGACGTACGTAGCTAGCGAGCGATCTATCGATGCTAC\n+\nACGAGGAGGACGTACGTAGCTAGCGAGCGATCTATCGATGCTAC\n@seq2\nACGAGCGAGCATCGAGCTAGCTGACTAGCTTAGCTATCG\n+\nnCGAGCGAGCATCGAGCTAGCTGACTAGCTTAGCTATCG\n"  > file.fastq
+awk '{ if(NR%4==2){print length($0);} }'  file.fastq  
+
+awk 'BEGIN{sum=0;}{if(NR%4==2){sum+=length($0);}}END{print sum;}'  file.fastq 
+```
+
 *** 
 #### Change delimiters, regrex in awk 101:
 
@@ -121,7 +132,7 @@ cat AWK/sentence.temp
 bash AWK/separator.awk AWK/sentence.temp "gsub"
 ``` 
 
-Another great solution is by using awk -F command, whihc allow us to split flieds using regrex expression, in this case :
+Another great solution is by using awk -F command, which allow us to split fields using regrex expression, in this case :
 ```{bash,  eval=FALSE}
 awk -F'(,"|",)' 'OFS="\t"{gsub(" ","_",$0); print $1,$2,$4,$8}' $1
 ```
@@ -180,8 +191,8 @@ bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 echo -ne "chr4\tgeneA" >> AWK/td_Gene_duplication_per.txt 
 
 bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
-
 ```
+
 ```{bash, include=FALSE}
 rm -f AWK/td_Gene_duplication_per.txt 
 ```
@@ -195,9 +206,35 @@ DEVELOP HERE
 ***
 * IF and arrays as de-duplicated control structures: 
 
+Sum a particular column  
+```{bash, eval=FALSE}
+awk '{sum+=$7} END {print sum}'  
+```
+sum non duplicated rows as an example of the UNDEVELOPED code here
+
 DEVELOP HERE 
 
 #### For and While 
+
+Sum all columns
+```{bash, eval=FALSE}
+awk 'BEGIN{FS=OFS=","}
+     NR==1{print}
+     NR>1{for (i=1;i<=NF;i++) a[i]+=$i}
+     END{for (i=1;i<=NF;i++) printf a[i] OFS; printf "\n"}' file
+```
+
+
+<!-- POSSIBLE awk commands forgotten 
+/mnt/g/My\ Drive/Bioinformatica/0_Tesis\ Maestria/Code/Analysis_miR/Create_and_filter_anotation_file.txt 
+
+/mnt/g/My\ Drive/Bioinformatica/0_Tesis\ 
+./Code/Blockbuster_parsearch/Clust2Block/No_blocks_loci/blockbuster_test.txt
+
+./EGlab_Code/Trimmomatic/trimmomatic_behaviour.txt
+
+/mnt/g/My\ Drive/Bioinformatica/0_Tesis\ Maestria/Precise_counting/Readme.txt
+--> 
 ***
 * While, beigin honest I have never used while loop on awks. But I do use while structure on bash followed by an awk code, which is, awk as line per line variable mining tool, which employ the next code structure: 
 
@@ -265,7 +302,7 @@ Here as well as with awk there are many commands that using cleverly you can get
 
 Bash as well as AWK is quite flexible, however most of the time I do use the three control structures `for`, `while` and `if, then, else` for data organization, classification or text processing and quality control. But before to enter to each control structure let's talk some other features of Bash beyond the control statements itself. 
 
-* Piping on bash: beyond "|"
+#### Piping on bash: beyond "|"
 
 Bash is awesome specially when we talk about pipes, input and output immediately re-direction. However for beginners the main command for piping is usually "|", which limits piping to comands who tolerate input redirection in such way, however there are software which cannot be piped with "|" but it might accept "-" for input file declaration, specially those who requires a -i parameter to indicate the input file, then the piping way for such programs is " | software -i - " . 
 
@@ -332,6 +369,81 @@ This command will copy all files from the scratch directory to the safe local di
 
 Each time the mother folder is modified, you should run again the commnad, rsync remote-update protocol will  update the file by sending only those different to the already syncronized files. 
 
+#### Grep with perl regrex
+
+Grep command is one of the most famous search software known, it's so powerful thank it's possible to use together with other languague as perl, for instance, in a complex data set as the following: 
+```{bash}
+head -n 8 BASH/complex_formatting.txt
+```
+For each entry there are 7 lines of information, to extract an specific query, non separated information, with only alphanumeric characters match, including connector characters as "_" or,  we can use grep -oP command and perl ["\\w+"](https://stackoverflow.com/questions/47361430/about-the-meaning-of-perl-w) expression to include the whole word, as  follow : 
+
+```{bash}
+grep -oP "Accession: \w+"  BASH/complex_formatting.txt
+```
+The information include in perl matching characters as \w+ can be displayed using: 
+
+```{bash, eval=FALSE}
+unichars -a -u '\w' | wc -l 
+```
+
+To check the difference in perl matching characters, we can use unichars and diff command, however they are not available in all unix systems 
+
+```{bash, eval=FALSE}
+diff -u  <( unichars -a -u '\w' )  <( unichars -a -u '\d' )
+```
+
+#### Use defined match delimiters 
+
+A more intuitive, versatile and controllable way for the same task is the perl "?" and "(?=)" regrex pairs, which allow us to define the limits of character exploration. Let's use an aburd example, such as matching any characters before a defined word ("abc") is found, without including the define word as an output. 
+```{bash}
+ echo addfadfaabc1234 | grep -oP "(.+?)(?=abc)"
+ #One liner perl version of this is
+ # perl -ne ' $_ =~ s/(.+?)(?=abc)/$1/; print $1;' 
+```
+Using the previous complex formatting text: 
+```{bash}
+grep -oP "Type:(.+?)(?=[\n|;])"  BASH/complex_formatting.txt
+``` 
+An equivalent expression to "\\w+" examples
+```{bash, eval=FALSE}
+grep -oP "(Accession:.+?)(?=ID)"  BASH/complex_formatting.txt
+```
+
+The equivalent 
+#### Find and bash commands 
+
+Find command is one of the most useful tools in unix systems, it's the google inside this beautiful operative system, not only because it does allow us to find any file or folder using regrex, but also because it's able to search inside the files, including pdfs files (in case pdfgrep is installed). 
+
+1. The basics, search for all the files with common extension and list their sizes and time of origin 
+
+```{bash, eval=FALSE}
+find . -name '*.sh'  -exec ls -lht  {} \; 
+```
+
+keep in mind just "\*" is enough for global search, "." in find it's a non-special character
+
+1. Grep inside a file providing the name of the file
+```{bash, eval=FALSE}
+find . -name '*.txt' -exec grep -H "perl \-ne"  {} \;
+```
+
+### Bask parallelizing 101: 
+
+#### Measuring excecution time 
+
+[check execution time of process whose id is known](https://www.2daygeek.com/how-to-check-how-long-a-process-has-been-running-in-linux/)
+
+```{bash, eval=FALSE}
+ps -p 16337 -o etime
+```
+
+#### Forks and CPUs work distribution
+
+#### Parallel 
+
+### Soft and Hard links (ln)
+
+A hard link acts as a copy (mirrored) of the selected file, while soft or symbolic links acts as a pointer or a reference to the file name, however keep in mind, deleting a pointer is also deleting the original folder. A situation taht does not happen with hard links. 
 
 ### Creating comands on Bash 
 
@@ -471,7 +583,27 @@ bash -i  BASH/running_bashrc.sh
 *** 
 ## Perl
 
-Perl ate awk once in its human evolutioanry history, 
+Perl engulf awk in its language evolutionary history,  
+
+### Oneliners or -ne command 
+
+In previous sections I've already shown how versatile is perl's regrex, using them with grep or the ones shared between perl and awk, however if we want to manipulate a file and not only detect, the most precise way before running into formatting-scripts is the use of perl oneliners. The next example shows a perl one-liner script with a economic writing or non-strict style, starting with: 
+
+ 1. `chomp $_`, dispensable but used to remove the last trailing newline from the input string.
+ 1. `@F = split /\t/` , feed the environment array F with each part of the text separated by tab or any other character. 
+ 1. `if ($N[1] ne "hsaP-") {$F[3] =~ s/(hsaP)[a-z].*-([let|mir].*)/$1-$2/;` control structure, restricting the substitution to only those entries with different name to "hsaP-"
+ 1. `$string=join ("\t", @F); print "$string\n";}`, re join split and modified fields and close control structure.
+
+<!--, eval=FALSE}-->
+```{bash} 
+echo -ne "chr1\t115215\t115320\ttesting-syntax_hsaPmmu-mir-23a\nchr1\t115215\t115320\ttesting-syntax_hsaP-let-23a\n-Previous to perl edition-\n" 
+tail -n 1 Perl/oneliner_search-replace.sh
+```
+
+```{bash, eval=TRUE}
+bash Perl/oneliner_search-replace.sh 
+```
+
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
 

@@ -1,0 +1,17 @@
+1. The Arabidopsis F-box protein FBW2 degrades AGO1 to avoid spurious loading of illegitimate small RNA [PARE-seq]
+(Submitter supplied) RNA silencing is a conserved mechanism in eukaryotes and is involved in development, heterochromatin maintenance and defense against viruses. In plants, ARGONAUTE1 (AGO1) protein plays a central role in both microRNA (miRNA) and small interfering RNA (siRNA)-directed silencing and its expression is regulated at multiple levels. Here we report that the F-box protein FBW2 targets proteolysis of AGO1 by a CDC48-mediated autophagy mechanism. more...
+Organism:       Arabidopsis thaliana
+Type:           Non-coding RNA profiling by high throughput sequencing; Other
+Platform: GPL17639 18 Samples
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE169nnn/GSE169433/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA716605
+Series          Accession: GSE169433    ID: 200169433
+
+2. The Arabidopsis F-box protein FBW2 degrades AGO1 to avoid spurious loading of illegitimate small RNA [ncRNA-Seq]
+(Submitter supplied) RNA silencing is a conserved mechanism in eukaryotes and is involved in development, heterochromatin maintenance and defense against viruses. In plants, ARGONAUTE1 (AGO1) protein plays a central role in both microRNA (miRNA) and small interfering RNA (siRNA)-directed silencing and its expression is regulated at multiple levels. Here we report that the F-box protein FBW2 targets proteolysis of AGO1 by a CDC48-mediated autophagy mechanism. more...
+Organism:       Arabidopsis thaliana
+Type:           Non-coding RNA profiling by high throughput sequencing
+Platform: GPL24270 36 Samples
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE169nnn/GSE169324/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA716276
+Series          Accession: GSE169324    ID: 200169324
