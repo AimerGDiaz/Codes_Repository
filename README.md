@@ -207,16 +207,49 @@ split fields using regrex expression, in this case :
 awk -F'(,"|",)' 'OFS="\t"{gsub(" ","_",$0); print $1,$2,$4,$8}' $1
 ```
 
+A more complicated case comes from SraRunTable.txt formatting, which
+might have at the same time, comma separated fields, but not "
+demarcation, a annoying solution is to homogenize the header and the
+fields with such characteristic, as here the original file now includes
+" in the header, to be able to run with the same syntax
+
 ``` bash
-bash AWK/separator.awk AWK/sentence.temp "F"
+head -n 1 AWK/SraRunTable_edited.txt 
+
+bash AWK/separator.awk AWK/SraRunTable_edited.txt "SRA"
 ```
 
+    ## Run,Assay Type,AvgSpotLen,Bases,BioProject,BioSample,Bytes,Center Name,Consent,"DATASTORE filetype","DATASTORE provider","DATASTORE region",days_past_infection,ecotype_background,Experiment,Genotype,Instrument,Library Name,LibraryLayout,LibrarySelection,LibrarySource,Organism,Plant_age,Platform,ReleaseDate,Sample Name,source_name,SRA Study,treatment
     ## 
-    ## Extracting only the fields 1,2,4 and 8 
+    ## Extracting most informative fields 
     ## 
-    ## PRJNA272807  In_plants,_decapping_prevents_RDR6-dependent_production_of_small_interfering_RNAs_from_endogenous_mRNAs Arabidopsis_thaliana    Transcriptome_or_Gene_expression
+    ## Run,LibraryLayout,Assay_Type,Organism,ecotype_background,source_name,Plant_age,days_past_infection,Genotype,AvgSpotLen,Bases,treatment
+    ## SRR17697100,PAIRED,smallRNA-Seq,Arabidopsis_thaliana,Col-0,rosette,39_days,21,dcp5-1/rdr6-15,102,4009784628,CaMV_(CM184I)_infected
 
-bash AWK/separator.awk AWK/sentence.temp “F” \*\*\* \#\#\# If loops
+For this situation a double separation using both previous criteria:
+
+### If loops
+
+#### Conditional evaluation
+
+Using the same previous example, this time without modifiend the header
+of the SRA original file, but using if structure to indicate
+differential processing of first line vs the complementary text:
+
+``` bash
+awk -F',' -v OFS="," '{if (NR == "1") {$10=$11=$12=""; print  } else {gsub("ncRNA-Seq","smallRNA-Seq",$2);print  }}'
+```
+
+``` bash
+bash AWK/separator.awk AWK/SraRunTable.txt "IF"
+```
+
+    ## Run,LibraryLayout,Assay_Type,Organism,ecotype_background,source_name,Plant_age,days_past_infection,Genotype,AvgSpotLen,Bases,treatment
+    ## SRR17697100,PAIRED,smallRNA-Seq,Arabidopsis_thaliana,Col-0,rosette,39_days,21,dcp5-1/rdr6-15,102,4009784628,CaMV_(CM184I)_infected
+
+This code has an additional unneeded feature, the deletion of three
+fields, but it works to illustrate differential processing depending of
+an If condition.
 
 #### IF in arrays as a classificator:
 
@@ -541,9 +574,9 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0.323s
+    ## real 0m0.230s
     ## user 0m0.000s
-    ## sys  0m0.016s
+    ## sys  0m0.031s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -556,9 +589,9 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       2 RPS12_A2
     ## 
-    ## real 0m0.605s
-    ## user 0m0.016s
-    ## sys  0m0.109s
+    ## real 0m0.483s
+    ## user 0m0.000s
+    ## sys  0m0.047s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -573,8 +606,8 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       2 RPS12_A2
     ## 
-    ## real 0m0.616s
-    ## user 0m0.000s
+    ## real 0m0.581s
+    ## user 0m0.031s
     ## sys  0m0.109s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
@@ -675,7 +708,7 @@ including the define word as an output.
 Using the previous complex formatting text:
 
 ``` bash
-grep -oP "Type:(.+?)(?=[\n|;])"  BASH/complex_formatting.txt
+cat BASH/complex_formatting.txt | grep -oP "Type:(.+?)(?=[\n|;])"  
 ```
 
     ## Type:           Non-coding RNA profiling by high throughput sequencing
@@ -686,7 +719,7 @@ An equivalent expression to “\\w+” examples
 grep -oP "(Accession:.+?)(?=ID)"  BASH/complex_formatting.txt
 ```
 
-The equivalent \#\#\#\# Find and bash commands
+#### Find and bash commands
 
 Find command is one of the most useful tools in unix systems, it’s the
 google inside this beautiful operative system, not only because it does

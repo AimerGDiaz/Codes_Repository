@@ -136,14 +136,31 @@ Another great solution is by using awk -F command, which allow us to split field
 ```{bash,  eval=FALSE}
 awk -F'(,"|",)' 'OFS="\t"{gsub(" ","_",$0); print $1,$2,$4,$8}' $1
 ```
+
+A more complicated case comes from SraRunTable.txt formatting, which might have at the same time, comma separated fields, but not \" demarcation, a annoying solution is to homogenize the header and the fields with such characteristic, as here the original file now includes \" in the header, to be able to run with the same syntax
+
 ```{bash,  eval=TRUE, include=TRUE}
-bash AWK/separator.awk AWK/sentence.temp "F"
+head -n 1 AWK/SraRunTable_edited.txt 
+
+bash AWK/separator.awk AWK/SraRunTable_edited.txt "SRA"
 ``` 
 
+For this situation a double separation using both previous criteria: 
 
-bash AWK/separator.awk AWK/sentence.temp "F"
-***
 ### If loops
+
+#### Conditional evaluation 
+
+Using the same previous example, this time without modifiend the header of the SRA original file, but using if structure to indicate differential processing of first line vs the complementary text: 
+
+```{bash, eval=FALSE}
+awk -F',' -v OFS="," '{if (NR == "1") {$10=$11=$12=""; print  } else {gsub("ncRNA-Seq","smallRNA-Seq",$2);print  }}'
+```
+
+```{bash,  eval=TRUE, include=TRUE}
+bash AWK/separator.awk AWK/SraRunTable.txt "IF"
+``` 
+This code has an additional unneeded feature, the deletion of three fields, but it works to illustrate differential processing depending of an If condition. 
 
 #### IF in arrays as a classificator: 
 
@@ -402,14 +419,13 @@ A more intuitive, versatile and controllable way for the same task is the perl "
 ```
 Using the previous complex formatting text: 
 ```{bash}
-grep -oP "Type:(.+?)(?=[\n|;])"  BASH/complex_formatting.txt
+cat BASH/complex_formatting.txt | grep -oP "Type:(.+?)(?=[\n|;])"  
 ``` 
 An equivalent expression to "\\w+" examples
 ```{bash, eval=FALSE}
 grep -oP "(Accession:.+?)(?=ID)"  BASH/complex_formatting.txt
 ```
 
-The equivalent 
 #### Find and bash commands 
 
 Find command is one of the most useful tools in unix systems, it's the google inside this beautiful operative system, not only because it does allow us to find any file or folder using regrex, but also because it's able to search inside the files, including pdfs files (in case pdfgrep is installed). 
