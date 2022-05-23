@@ -590,7 +590,7 @@ head BASH/piping_alternative.sh
     ##       3 RPS12_A2
     ## 
     ## real 0m0.006s
-    ## user 0m0.007s
+    ## user 0m0.008s
     ## sys  0m0.000s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
@@ -607,8 +607,8 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       3 RPS12_A2
     ## 
     ## real 0m0.005s
-    ## user 0m0.004s
-    ## sys  0m0.002s
+    ## user 0m0.006s
+    ## sys  0m0.000s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the
@@ -937,7 +937,7 @@ head BASH/running_bashrc.sh
 bash -i  BASH/running_bashrc.sh
 ```
 
-    ## bash: cannot set terminal process group (123917): Inappropriate ioctl for device
+    ## bash: cannot set terminal process group (144128): Inappropriate ioctl for device
     ## bash: no job control in this shell
     ## TGTCTCTACCTAGTCTCGGGGT
     ## 22 nucleotides
@@ -988,6 +988,19 @@ bash Perl/oneliner_search-replace.sh
 
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
+
+## GitHub
+
+### Reconnecting from a new repository
+
+[Pushing to github with
+ssh-authentication](https://www.r-bloggers.com/2014/05/rstudio-pushing-to-github-with-ssh-authentication/)
+
+The current project was syncronized by this method using the command
+
+``` bash
+git config remote.origin.url git@github.com:AimerGDiaz/Codes_Repository
+```
 
 ## License
 

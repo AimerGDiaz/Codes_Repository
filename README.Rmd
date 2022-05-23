@@ -628,6 +628,17 @@ bash Perl/oneliner_search-replace.sh
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
 
+## GitHub 
+
+### Reconnecting from a new repository 
+
+[Pushing to github with ssh-authentication](https://www.r-bloggers.com/2014/05/rstudio-pushing-to-github-with-ssh-authentication/)
+
+The current project was syncronized by this method using the command
+```{bash, eval=TRUE}
+git config remote.origin.url git@github.com:AimerGDiaz/Codes_Repository
+```
+
 ## License 
 
 My codes are licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/).
