@@ -55,11 +55,11 @@ the latest data set I was working when I wrote this document, from the
 [SRA
 site](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRP190362&o=acc_s%3Aa):
 
-| SRA\_Code  | Sequence\_Tech | Cell\_location\_stage       | Strain     | Total\_Sequences | Length  | Source           | ServerName                 |
-|------------|----------------|-----------------------------|------------|------------------|---------|------------------|----------------------------|
-| SRR8859642 | PAIR END       | Procyclic                   | EATRO 1125 | 85,827,714       | 125/125 | Cooper2019\_gRNA | Cooper2019\_gRNA\_E1125PC  |
-| SRR8859640 | PAIR END       | Bloodstream                 | EATRO 1125 | 79,132,567       | 125/125 | Cooper2019\_gRNA | Cooper2019\_gRNA\_E1125BS  |
-| SRR8859641 | PAIR END       | Bloodstream + Procyclic MIX | EATRO 1125 | 148935513        | 125/125 | Cooper2019\_gRNA | Cooper2019\_gRNA\_E1125Mix |
+| SRA_Code   | Sequence_Tech | Cell_location_stage         | Strain     | Total_Sequences | Length  | Source          | ServerName               |
+|------------|---------------|-----------------------------|------------|-----------------|---------|-----------------|--------------------------|
+| SRR8859642 | PAIR END      | Procyclic                   | EATRO 1125 | 85,827,714      | 125/125 | Cooper2019_gRNA | Cooper2019_gRNA_E1125PC  |
+| SRR8859640 | PAIR END      | Bloodstream                 | EATRO 1125 | 79,132,567      | 125/125 | Cooper2019_gRNA | Cooper2019_gRNA_E1125BS  |
+| SRR8859641 | PAIR END      | Bloodstream + Procyclic MIX | EATRO 1125 | 148935513       | 125/125 | Cooper2019_gRNA | Cooper2019_gRNA_E1125Mix |
 
 The first version of the file is [on the master thesis codes
 folder](Total_processing/Download_script.sh), however this version did
@@ -169,7 +169,7 @@ simplified if control loop of awk:
 awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' $1 > $1.ol.fa 
 ```
 
-On this awk-oneliner, we first select those lines who do start with &gt;
+On this awk-oneliner, we first select those lines who do start with \>
 `/^>/` anything in between would be separated only by one jump of line
 per each `^>` line found. This code it’s called
 [oneliner.awk](AWK/oneliner.awk)
@@ -347,7 +347,7 @@ bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 Now let’s see this code applied to real world problems, at least how I
 used, one example is here PRINT here how it work to make quick table
 (Mirnomics project) or for multi-fasta file duplication cleaning
-(gRNAs\_total.fa)
+(gRNAs_total.fa)
 
 DEVELOP HERE
 
@@ -416,12 +416,12 @@ done < toy_structure.txt
 rm -f toy_structure.txt
 ```
 
-    ## this is the value of the hidden variable:  on the line: 
-    ## this is the value of the hidden variable:  on the line:
+    ## this is the value of the hidden variable:  X on the line: 1
+    ## this is the value of the hidden variable:  Y on the line: 2
 
 A real world problem where I use awk inside a bash while loop structure
 is in a fastqc quality information miner script, extracted from
-[NGS\_statistics.sh script](Total_processing/NGS_statistics.sh):
+[NGS_statistics.sh script](Total_processing/NGS_statistics.sh):
 <details>
 <summary>
 Non excecutable script
@@ -491,17 +491,17 @@ piping is usually “\|”, which limits piping to comands who tolerate
 input redirection in such way, however there are software which cannot
 be piped with “\|” but it might accept “-” for input file declaration,
 specially those who requires a -i parameter to indicate the input file,
-then the piping way for such programs is " \| software -i - " .
+then the piping way for such programs is ” \| software -i - ” .
 
 DEVELOP HERE - example of - for piping
 
-A less usual piping commands is the combined operator “&lt;( code here
-)”, which could be interpreted as “take the output of the command
-between parenthesis as an input”. This structure could be used to expand
-the capabilities to of grep command but in the option of grepping a list
-of terms (grep -f). Using the -f parameter on a grep search we cannot
-add the single pattern options available also as parameter, for
-instance, searching the list of pattern at the beginning of each line:
+A less usual piping commands is the combined operator “\<( code here )”,
+which could be interpreted as “take the output of the command between
+parenthesis as an input”. This structure could be used to expand the
+capabilities to of grep command but in the option of grepping a list of
+terms (grep -f). Using the -f parameter on a grep search we cannot add
+the single pattern options available also as parameter, for instance,
+searching the list of pattern at the beginning of each line:
 `grep -f "^"`, however using `<()` this task it’s possible. Let’s
 explore using a real world problem.
 
@@ -509,12 +509,12 @@ In a file of small RNAs who target genes for mRNA edition process (U
 deletion or insertion), each line represent a guide RNA, whoever some of
 them has complex gene target assignation, meaning for instance like:
 
-“Unknown\_RPS12”
+“Unknown_RPS12”
 
 Where the first category means the guideRNA have gotten a gene target
 after a secondary process, but a gene without a gene target even after
 applying the secondary process, could still lack of a gene assignation.
-Additional patterns like RPS12\_Unknown\_RPS12, make even harder the use
+Additional patterns like RPS12_Unknown_RPS12, make even harder the use
 of auxiliary awk syntax. Therefore, to quantify the exact amount of
 gRNAs with pure Unknown gene targets we can use the `<()` syntax as
 follow:
@@ -574,9 +574,9 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0.230s
-    ## user 0m0.000s
-    ## sys  0m0.031s
+    ## real 0m0.002s
+    ## user 0m0.004s
+    ## sys  0m0.000s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -587,11 +587,11 @@ head BASH/piping_alternative.sh
 ```
 
     ##       7 RPS12_A1
-    ##       2 RPS12_A2
+    ##       3 RPS12_A2
     ## 
-    ## real 0m0.483s
-    ## user 0m0.000s
-    ## sys  0m0.047s
+    ## real 0m0.006s
+    ## user 0m0.007s
+    ## sys  0m0.000s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -604,11 +604,11 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
 ```
 
     ##       7 RPS12_A1
-    ##       2 RPS12_A2
+    ##       3 RPS12_A2
     ## 
-    ## real 0m0.581s
-    ## user 0m0.031s
-    ## sys  0m0.109s
+    ## real 0m0.005s
+    ## user 0m0.004s
+    ## sys  0m0.002s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the
@@ -639,8 +639,17 @@ that symbolic links, devices, attributes, permissions, ownerships, etc.
 are preserved in the transfer.
 
 Each time the mother folder is modified, you should run again the
-commnad, rsync remote-update protocol will update the file by sending
-only those different to the already syncronized files.
+command, rsync remote-update protocol will update the file by sending
+only those different to the already synchronized files.
+
+By default `rsync` only add files to the destination folder that have
+been added to the source folder, changing files that have been changed
+in the source folder but does NOT delete any files. To delete files in
+the target, add the –delete option to your command.
+
+``` bash
+rsync -avh source/ dest/ --delete
+```
 
 #### Grep with perl regrex
 
@@ -663,7 +672,7 @@ head -n 8 BASH/complex_formatting.txt
 
 For each entry there are 7 lines of information, to extract an specific
 query, non separated information, with only alphanumeric characters
-match, including connector characters as "\_" or, we can use grep -oP
+match, including connector characters as “\_” or, we can use grep -oP
 command and perl
 [“\\w+”](https://stackoverflow.com/questions/47361430/about-the-meaning-of-perl-w)
 expression to include the whole word, as follow :
@@ -928,6 +937,8 @@ head BASH/running_bashrc.sh
 bash -i  BASH/running_bashrc.sh
 ```
 
+    ## bash: cannot set terminal process group (123917): Inappropriate ioctl for device
+    ## bash: no job control in this shell
     ## TGTCTCTACCTAGTCTCGGGGT
     ## 22 nucleotides
 
