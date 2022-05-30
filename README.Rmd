@@ -386,11 +386,18 @@ This command will copy all files from the scratch directory to the safe local di
 
 Each time the mother folder is modified, you should run again the command, rsync remote-update protocol will  update the file by sending only those different to the already synchronized files. 
 
-By default `rsync` only add files to the destination folder that have been added to the source folder, changing files that have been changed in the source folder but does NOT delete any files. To delete files in the target, add the --delete option to your command.
+By default `rsync` only add files to the destination folder that have been added to the source folder, adding or modifying files that have been changed in the source folder but does NOT delete any files if they have been deleted in the source. To delete files in the target, add the --delete option to your command.
 
 ```{bash,  eval=FALSE}
 rsync -avh source/ dest/ --delete
 ``` 
+
+Sometimes previous to rsyn it's important to delete empty folders, whic may be done with find:
+
+```{bash,  eval=FALSE}
+find . -type d -empty -delete
+```
+
 #### Grep with perl regrex
 
 Grep command is one of the most famous search software known, it's so powerful thank it's possible to use together with other languague as perl, for instance, in a complex data set as the following: 
@@ -598,8 +605,8 @@ This is how looks the script for this:
 head BASH/running_bashrc.sh
 ```
 ... And here the output: 
-```{bash}
-bash -i  BASH/running_bashrc.sh
+```{bash, eval=FALSE}
+bash BASH/running_bashrc.sh
 ```
 *** 
 ## Perl
@@ -615,7 +622,7 @@ In previous sections I've already shown how versatile is perl's regrex, using th
  1. `if ($N[1] ne "hsaP-") {$F[3] =~ s/(hsaP)[a-z].*-([let|mir].*)/$1-$2/;` control structure, restricting the substitution to only those entries with different name to "hsaP-"
  1. `$string=join ("\t", @F); print "$string\n";}`, re join split and modified fields and close control structure.
 
-<!--, eval=FALSE}-->
+<!--, -->
 ```{bash} 
 echo -ne "chr1\t115215\t115320\ttesting-syntax_hsaPmmu-mir-23a\nchr1\t115215\t115320\ttesting-syntax_hsaP-let-23a\n-Previous to perl edition-\n" 
 tail -n 1 Perl/oneliner_search-replace.sh

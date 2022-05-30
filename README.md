@@ -574,9 +574,9 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0.002s
-    ## user 0m0.004s
-    ## sys  0m0.000s
+    ## real 0m0,003s
+    ## user 0m0,005s
+    ## sys  0m0,000s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -589,9 +589,9 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0.006s
-    ## user 0m0.008s
-    ## sys  0m0.000s
+    ## real 0m0,007s
+    ## user 0m0,008s
+    ## sys  0m0,001s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -606,9 +606,9 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0.005s
-    ## user 0m0.006s
-    ## sys  0m0.000s
+    ## real 0m0,009s
+    ## user 0m0,010s
+    ## sys  0m0,001s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the
@@ -643,12 +643,20 @@ command, rsync remote-update protocol will update the file by sending
 only those different to the already synchronized files.
 
 By default `rsync` only add files to the destination folder that have
-been added to the source folder, changing files that have been changed
-in the source folder but does NOT delete any files. To delete files in
-the target, add the –delete option to your command.
+been added to the source folder, adding or modifying files that have
+been changed in the source folder but does NOT delete any files if they
+have been deleted in the source. To delete files in the target, add the
+–delete option to your command.
 
 ``` bash
 rsync -avh source/ dest/ --delete
+```
+
+Sometimes previous to rsyn it’s important to delete empty folders, whic
+may be done with find:
+
+``` bash
+find . -type d -empty -delete
 ```
 
 #### Grep with perl regrex
@@ -927,6 +935,7 @@ This is how looks the script for this:
 head BASH/running_bashrc.sh
 ```
 
+    ## 
     ## revcom DNA ACCCCGAGACTAGGTAGAGACA
     ## 
     ## count_nt ACCCCGAGACTAGGTAGAGACA
@@ -934,13 +943,8 @@ head BASH/running_bashrc.sh
 … And here the output:
 
 ``` bash
-bash -i  BASH/running_bashrc.sh
+bash BASH/running_bashrc.sh
 ```
-
-    ## bash: cannot set terminal process group (144128): Inappropriate ioctl for device
-    ## bash: no job control in this shell
-    ## TGTCTCTACCTAGTCTCGGGGT
-    ## 22 nucleotides
 
 ------------------------------------------------------------------------
 
@@ -967,7 +971,7 @@ non-strict style, starting with:
 4.  `$string=join ("\t", @F); print "$string\n";}`, re join split and
     modified fields and close control structure.
 
-<!--, eval=FALSE}-->
+<!--, -->
 
 ``` bash
 echo -ne "chr1\t115215\t115320\ttesting-syntax_hsaPmmu-mir-23a\nchr1\t115215\t115320\ttesting-syntax_hsaP-let-23a\n-Previous to perl edition-\n" 
