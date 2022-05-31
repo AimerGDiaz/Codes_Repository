@@ -102,6 +102,25 @@ this section: main applications of the main control structures (<for>,
 codes so far. Before enter to control structres, there are awk specific
 features important to highlight:
 
+#### Printing header line -Begin command-:
+
+Generating a header row, while modifying the content that follows, for
+instance, by substituting an element of a field:
+
+``` bash
+awk -v OFS="\t" -F'\t'  'NR==1 {print "ID","NGenes","Genes"} {split($2,a," "); gsub(" ",",", $2);print $1,length(a),$2}'  
+```
+
+In case there is already a header line, a new one can be generated as
+follow:
+
+``` bash
+awk -F','  -v n=1 -v OFS="\t" 'NR==1 {print "#chrom","pos","rsid","ref","alt","neg_log_pvalue","maf","score","alt_allele_freq" } NR>2{print "Chr"$1,$2,"rs"n,"A","T","0.01",$3,$4,"."} ' GWAS_CaMV.csv 
+```
+
+The newly generated line count as a 1, then to ignore the previous
+header we would need `NR>2`
+
 #### Reducing multiples lines into a single line to analyse -getline command-:
 
 Awk can work not only line per line, it’s able to integrate as a unit of
@@ -166,7 +185,7 @@ To make it we can use the regrex expression integrated with the
 simplified if control loop of awk:
 
 ``` bash
-awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' $1 > $1.ol.fa 
+awk '/^>/{printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' $1 > $1.ol.fa 
 ```
 
 On this awk-oneliner, we first select those lines who do start with \>
@@ -575,7 +594,7 @@ head BASH/piping.sh
     ##       3 RPS12_A2
     ## 
     ## real 0m0,003s
-    ## user 0m0,005s
+    ## user 0m0,004s
     ## sys  0m0,000s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
@@ -589,9 +608,9 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,007s
-    ## user 0m0,008s
-    ## sys  0m0,001s
+    ## real 0m0,009s
+    ## user 0m0,006s
+    ## sys  0m0,006s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -606,8 +625,8 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,009s
-    ## user 0m0,010s
+    ## real 0m0,005s
+    ## user 0m0,006s
     ## sys  0m0,001s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 

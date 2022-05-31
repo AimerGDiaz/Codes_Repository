@@ -64,6 +64,21 @@ Awk codes are my favorite, the one liners are extreamlly useful, fast, weird but
 
 All the languague I've mentioned before will have the same structure for this section: main applications of the main control structures (<for>, <while> and <if>),  combinations of control structures and most employed codes so far. Before enter to control structres, there are awk specific features important to highlight: 
 
+#### Printing header line -Begin command-:
+
+Generating a header row, while modifying the content that follows, for instance,  by substituting an element of a field: 
+
+```{bash eval=FALSE}
+awk -v OFS="\t" -F'\t'  'NR==1 {print "ID","NGenes","Genes"} {split($2,a," "); gsub(" ",",", $2);print $1,length(a),$2}'  
+``` 
+
+In case there is already a header line, a new one can be generated as follow: 
+```{bash eval=FALSE}
+awk -F','  -v n=1 -v OFS="\t" 'NR==1 {print "#chrom","pos","rsid","ref","alt","neg_log_pvalue","maf","score","alt_allele_freq" } NR>2{print "Chr"$1,$2,"rs"n,"A","T","0.01",$3,$4,"."} ' GWAS_CaMV.csv 
+```
+
+The newly generated line count as a 1, then to ignore the previous header we would need `NR>2` 
+
 #### Reducing multiples lines into a single line to analyse -getline command-: 
 
 Awk can work not only line per line, it's able to integrate as a unit of analysis files which format might have a specific set of lines per element, for instance 2 lines describe a single sequence in a fasta format or 4 lines a fastq file, how to integrate those lines to a single unit of analysis?. The `getline` awk function it's a faster way to make it, meaning very simple and useful one-liners of awk might be used for files like this. 
@@ -112,7 +127,7 @@ ACCCAGAGAGTGAGACCAACACACAGTT`
 
 To make it we can use the regrex expression integrated with the simplified if control loop of awk: 
 ```{bash eval=FALSE}
-awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' $1 > $1.ol.fa 
+awk '/^>/{printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' $1 > $1.ol.fa 
 ```
 On this awk-oneliner, we first select those lines who do start with > `/^>/` anything in between would be separated only by one jump of line per each `^>` line found. This code it's called [oneliner.awk](AWK/oneliner.awk)
 
