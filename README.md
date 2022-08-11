@@ -208,13 +208,37 @@ awk -F',' 'OFS="\t"{gsub("\"","",$0);gsub(" |, ","_",$0);print $1,$2,$4,$8}' $1
 
 ``` bash
 cat AWK/sentence.temp 
+cat AWK/separator.awk
 #Run in terminal 
 # dos2unix AWK/separator.awk
 bash AWK/separator.awk AWK/sentence.temp "gsub"
 ```
 
     ## "PRJNA272807","In plants, decapping prevents RDR6-dependent production of small interfering RNAs from endogenous mRNAs",3702,"Arabidopsis thaliana","Eukaryota; Plants; Land Plants",,"Primary submission","Transcriptome or Gene expression","Yes","Yes","2015-01-16"
+    ## if [ "$2" == "gsub" ]
+    ## then
     ## 
+    ## echo -ne "\nExtracting only the fields 1,2,4 and 8 \n\n"
+    ## 
+    ## awk -F',' 'OFS="\t"{gsub("\"","",$0);gsub(" |, ","_",$0);print $1,$2,$4,$8}' $1 
+    ## elif [ "$2" == "F" ]
+    ## then 
+    ## 
+    ## awk -F'(,"|",)' 'OFS="\t"{gsub(" ","_",$0); print $1,$2,$4,$8}' $1 | tr -d '"'
+    ## 
+    ## elif [ "$2" == "SRA" ]
+    ## then
+    ## 
+    ## echo -ne "\nExtracting most informative fields \n\n"
+    ## 
+    ## awk -F'(,"|",)' -v OFS="," '{ print $1,$5 }' $1  | awk -F',' -v OFS="," '{gsub(" ","_",$0);gsub("ncRNA-Seq","smallRNA-Seq",$2); print $1,$16,$2,$19,$11,$24,$20,$10,$13,$3,$4,$26}'
+    ## 
+    ## elif [ "$2" == "IF" ]
+    ## then
+    ## 
+    ## awk -F'(,"|",)' -v OFS=","  '{gsub(" ","_",$0); print $1,$5 }' $1  | awk -F',' -v OFS="," '{if (NR == "1") {$10=$11=$12=""; print $1,$19,$2,$22,$14,$27,$23,$13,$16,$3,$4,$29 } else {gsub("ncRNA-Seq","smallRNA-Seq",$2);print  $1,$16,$2,$19,$11,$24,$20,$10,$13,$3,$4,$26}}'
+    ## 
+    ## fi
     ## Extracting only the fields 1,2,4 and 8 
     ## 
     ## PRJNA272807  In_plants_decapping_prevents_RDR6-dependent_production_of_small_interfering_RNAs_from_endogenous_mRNAs  Arabidopsis_thaliana    Transcriptome_or_Gene_expression
@@ -246,6 +270,80 @@ bash AWK/separator.awk AWK/SraRunTable_edited.txt "SRA"
     ## SRR17697100,PAIRED,smallRNA-Seq,Arabidopsis_thaliana,Col-0,rosette,39_days,21,dcp5-1/rdr6-15,102,4009784628,CaMV_(CM184I)_infected
 
 For this situation a double separation using both previous criteria:
+
+#### Text reformatting or search and save function //
+
+The previous detailed command `getline`, applied on structured format
+might help to reformat complex files in simpler single lines formats.
+However if the text have not a regular and constant number of lines per
+object, this approach is not longer suitable. As alternative, awk has a
+saving command for regrex search, who might use conserved features of
+each entry as an organizer anchor, an example of it, it’s the messy file
+of tasiRNAs from [plantsrnas](https://www.plantsrnas.org/) :
+
+``` bash
+grep  -n -B 1 -A 20  atTAS3a  AWK/tasiRNA_generating_loci.txt
+```
+
+    ## 185-TAS ID:      10
+    ## 186:Discription: atTAS3a(At3g17185)
+    ## 187-Coordinate:  Chr3:5861491..5862437
+    ## 188-Transcript:  atcccaccgtttcttaagactctctctctttctgttttctatttctctctctctcaaatg
+    ## 189-                 aaagagagagaagagctcccatggatgaaattagcgagaccgaagtttctccaaggtgat
+    ## 190-                 atgtctatctgtatatgtgatacgaagagttagggttttgtcatttcgaagtcaattttt
+    ## 191-                 gtttgtttgtcaataatgatatctgaatgatgaagaacacgtaactaagatatgttactg
+    ## 192-                 aactatataatacatatgtgtgtttttctgtatctatttctatatatatgtagatgtagt
+    ## 193-                 gtaagtctgttatatagacattattcatgtgtacatgcattataccaacataaatttgta
+    ## 194-                 tcaatactacttttgatttacgatgatggatgttcttagatatcttcatacgtttgtttc
+    ## 195-                 cacatgtatttacaactacatatatatttggaatcacatatatacttgattattatagtt
+    ## 196-                 gtaaagagtaacaagttcttttttcaggcattaaggaaaacataacctccgtgatgcata
+    ## 197-                 gagattattggatccgctgtgctgagacattgagtttttcttcggcattccagtttcaat
+    ## 198-                 gataaagcggtgttatcctatctgagcttttagtcggattttttcttttcaattattgtg
+    ## 199-                 ttttatctagatgatgcatttcattattctctttt[tcttgaccttgtaaggccttttct
+    ## 200-                 tgaccttgtaagaccccatctctttctaaacgttttattattttctcgttttacagattc
+    ## 201-                 tattctatctcttctcaatatagaatagatatctatctctacctctaattcgttcgagtc
+    ## 202-                 attttctcctaccttgtctatccc]tcctgagctaatctccacatatatcttttgtttgt
+    ## 203-                 tattgatgtatggttgacataaattcaataaagaagttgacgtttttct
+    ## 204-TAS region:  696..863
+    ## 205-m/siR TAR1:  CTTGTCTATCCCTCCTGAGCTA
+    ## 206-m/siR TAR2:  ggtgttatcctatctgagctt
+    ## --
+    ## 3525-TAS ID:         68
+    ## 3526:Discription:    atTAS3a(At3g17185)
+    ## 3527-Coordinate:     Chr3:5861491..5862437
+    ## 3528-Transcript:     atcccaccgtttcttaagactctctctctttctgttttctatttctctctctctcaaatg
+    ## 3529-                aaagagagagaagagctcccatggatgaaattagcgagaccgaagtttctccaaggtgat
+    ## 3530-                atgtctatctgtatatgtgatacgaagagttagggttttgtcatttcgaagtcaattttt
+    ## 3531-                gtttgtttgtcaataatgatatctgaatgatgaagaacacgtaactaagatatgttactg
+    ## 3532-                aactatataatacatatgtgtgtttttctgtatctatttctatatatatgtagatgtagt
+    ## 3533-                gtaagtctgttatatagacattattcatgtgtacatgcattataccaacataaatttgta
+    ## 3534-                tcaatactacttttgatttacgatgatggatgttcttagatatcttcatacgtttgtttc
+    ## 3535-                cacatgtatttacaactacatatatatttggaatcacatatatacttgattattatagtt
+    ## 3536-                gtaaagagtaacaagttcttttttcaggcattaaggaaaacataacctccgtgatgcata
+    ## 3537-                gagattattggatccgctgtgctgagacattgagtttttcttcggcattccagtttcaat
+    ## 3538-                gataaagcggtgttatcctatctgagcttttagtcggattttttcttttcaattattgtg
+    ## 3539-                ttttatctagatgatgcatttcattattctctttttcttgacc[ttgtaaggccttttct
+    ## 3540-                tgaccttgtaagaccccatctctttctaaacgttttattattttctcgttttacagattc
+    ## 3541-                tattctatctcttctcaatatagaatagatatctatctctacctctaatt]cgttcgagt
+    ## 3542-                cattttctcctaccttgtctatccctcctgagctaatctccacatatatcttttgtttgt
+    ## 3543-                tattgatgtatggttgacataaattcaataaagaagttgacgtttttct
+    ## 3544-TAS region:     704..829
+    ## 3545-m/siR TAR:      tacctctaattcgttcgagtc
+    ## 3546-TAR Method:     Degradome analysis
+
+As the sequence length change depending on each loci, an approach to
+extract each row of interest using awk is:
+
+``` bash
+awk '/^Discription:/{d=$2};/^Coordinate/{c=$2};/^TAS region:/{s=$3}/^TAR/ {print d,c,s}'  AWK/tasiRNA_generating_loci.txt | grep atTAS3a
+```
+
+``` bash
+bash AWK/reformatting.sh  AWK/tasiRNA_generating_loci.txt | grep atTAS3a
+```
+
+    ## atTAS3a(At3g17185) Chr3:5861491..5862437 696..863
+    ## atTAS3a(At3g17185) Chr3:5861491..5862437 704..829
 
 ### If loops
 
@@ -593,9 +691,9 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,003s
-    ## user 0m0,004s
-    ## sys  0m0,000s
+    ## real 0m0,002s
+    ## user 0m0,002s
+    ## sys  0m0,002s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -608,9 +706,9 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,009s
-    ## user 0m0,006s
-    ## sys  0m0,006s
+    ## real 0m0,006s
+    ## user 0m0,007s
+    ## sys  0m0,001s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -627,7 +725,7 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ## 
     ## real 0m0,005s
     ## user 0m0,006s
-    ## sys  0m0,001s
+    ## sys  0m0,000s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the

@@ -142,6 +142,7 @@ awk -F',' 'OFS="\t"{gsub("\"","",$0);gsub(" |, ","_",$0);print $1,$2,$4,$8}' $1
 ```
 ```{bash,  eval=TRUE, include=TRUE}
 cat AWK/sentence.temp 
+cat AWK/separator.awk
 #Run in terminal 
 # dos2unix AWK/separator.awk
 bash AWK/separator.awk AWK/sentence.temp "gsub"
@@ -162,6 +163,19 @@ bash AWK/separator.awk AWK/SraRunTable_edited.txt "SRA"
 
 For this situation a double separation using both previous criteria: 
 
+#### Text reformatting or search and save function //{}
+
+The previous detailed command `getline`, applied on structured format might help to reformat complex files in simpler single lines formats. However if the text have not a regular and constant number of lines per object, this approach is not longer suitable. As alternative, awk has a saving command for regrex search, who might use conserved features of each entry as an organizer anchor, an example of it, it's the messy file of tasiRNAs from [plantsrnas](https://www.plantsrnas.org/) : 
+```{bash,  eval=TRUE, include=TRUE}
+grep  -n -B 1 -A 20  atTAS3a  AWK/tasiRNA_generating_loci.txt
+``` 
+As the sequence length change depending on each loci, an approach to extract each row of interest using awk is: 
+```{bash,  eval=FALSE, include=TRUE}
+awk '/^Discription:/{d=$2};/^Coordinate/{c=$2};/^TAS region:/{s=$3}/^TAR/ {print d,c,s}'  AWK/tasiRNA_generating_loci.txt | grep atTAS3a
+```
+```{bash,  eval=TRUE}
+bash AWK/reformatting.sh  AWK/tasiRNA_generating_loci.txt | grep atTAS3a
+```
 ### If loops
 
 #### Conditional evaluation 

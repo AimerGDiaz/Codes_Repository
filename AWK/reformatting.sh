@@ -1,0 +1,1 @@
+awk '/^Discription:/{d=$2};/^Coordinate/{c=$2};/^TAS region:/{s=$3}/^TAR/ {print d,c,s}'  $1 | grep atTAS3a | awk 'OFS="\t"{ gsub("c","C",$2); split($2,a,":|\.\."); split($3,b,"\.\."); print a[1],a[2],a[3],$1,b[1],b[2],$2}'
