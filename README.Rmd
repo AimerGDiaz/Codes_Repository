@@ -165,7 +165,7 @@ For this situation a double separation using both previous criteria:
 
 #### Text reformatting or search and save function //{}
 
-The previous detailed command `getline`, applied on structured format might help to reformat complex files in simpler single lines formats. However if the text have not a regular and constant number of lines per object, this approach is not longer suitable. As alternative, awk has a saving command for regrex search, who might use conserved features of each entry as an organizer anchor, an example of it, it's the messy file of tasiRNAs from [plantsrnas](https://www.plantsrnas.org/) : 
+The previous detailed command `getline`, applied on structured format might help to reformat complex files in simpler single lines formats. However if the text have not a regular and constant number of lines per object, this approach is not longer suitable. As alternative, awk has a saving command for regrex search, who might use conserved features of each entry as an organizer anchor, an example of it, it's the messy file of tasiRNAs from [Small RNAs Carrington](ftp://ftp.arabidopsis.org/Genes/SmallRNAsCarrington/Carrington_MIRNA_TAS_data.xls) : 
 ```{bash,  eval=TRUE, include=TRUE}
 grep  -n -B 1 -A 20  atTAS3a  AWK/tasiRNA_generating_loci.txt
 ``` 
@@ -421,7 +421,7 @@ By default `rsync` only add files to the destination folder that have been added
 rsync -avh source/ dest/ --delete
 ``` 
 
-Sometimes previous to rsyn it's important to delete empty folders, whic may be done with find:
+Sometimes previous to rsync it's important to delete empty folders, which may be done with find:
 
 ```{bash,  eval=FALSE}
 find . -type d -empty -delete
@@ -478,6 +478,11 @@ find . -name '*.sh'  -exec ls -lht  {} \;
 ```
 
 keep in mind just "\*" is enough for global search, "." in find it's a non-special character
+
+What if you want to copy those files to a new folder? 
+```{bash, eval=FALSE}
+find  BlastNT/ -iname "*sb" -print -exec  cp {}  ~/GS21/BLAST_DB/ \;
+```
 
 1. Grep inside a file providing the name of the file
 ```{bash, eval=FALSE}

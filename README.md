@@ -279,7 +279,9 @@ However if the text have not a regular and constant number of lines per
 object, this approach is not longer suitable. As alternative, awk has a
 saving command for regrex search, who might use conserved features of
 each entry as an organizer anchor, an example of it, it’s the messy file
-of tasiRNAs from [plantsrnas](https://www.plantsrnas.org/) :
+of tasiRNAs from [Small RNAs
+Carrington](ftp://ftp.arabidopsis.org/Genes/SmallRNAsCarrington/Carrington_MIRNA_TAS_data.xls)
+:
 
 ``` bash
 grep  -n -B 1 -A 20  atTAS3a  AWK/tasiRNA_generating_loci.txt
@@ -342,8 +344,8 @@ awk '/^Discription:/{d=$2};/^Coordinate/{c=$2};/^TAS region:/{s=$3}/^TAR/ {print
 bash AWK/reformatting.sh  AWK/tasiRNA_generating_loci.txt | grep atTAS3a
 ```
 
-    ## atTAS3a(At3g17185) Chr3:5861491..5862437 696..863
-    ## atTAS3a(At3g17185) Chr3:5861491..5862437 704..829
+    ## Chr3 5861491 5862437 atTAS3a(At3g17185)  696 863 Chr3:5861491..5862437
+    ## Chr3 5861491 5862437 atTAS3a(At3g17185)  704 829 Chr3:5861491..5862437
 
 ### If loops
 
@@ -692,8 +694,8 @@ head BASH/piping.sh
     ##       3 RPS12_A2
     ## 
     ## real 0m0,002s
-    ## user 0m0,002s
-    ## sys  0m0,002s
+    ## user 0m0,004s
+    ## sys  0m0,000s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -723,9 +725,9 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,005s
-    ## user 0m0,006s
-    ## sys  0m0,000s
+    ## real 0m0,007s
+    ## user 0m0,007s
+    ## sys  0m0,001s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the
@@ -769,8 +771,8 @@ have been deleted in the source. To delete files in the target, add the
 rsync -avh source/ dest/ --delete
 ```
 
-Sometimes previous to rsyn it’s important to delete empty folders, whic
-may be done with find:
+Sometimes previous to rsync it’s important to delete empty folders,
+which may be done with find:
 
 ``` bash
 find . -type d -empty -delete
@@ -870,6 +872,12 @@ find . -name '*.sh'  -exec ls -lht  {} \;
 
 keep in mind just “\*” is enough for global search, “.” in find it’s a
 non-special character
+
+What if you want to copy those files to a new folder?
+
+``` bash
+find  BlastNT/ -iname "*sb" -print -exec  cp {}  ~/GS21/BLAST_DB/ \;
+```
 
 1.  Grep inside a file providing the name of the file
 
