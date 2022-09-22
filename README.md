@@ -347,6 +347,12 @@ bash AWK/reformatting.sh  AWK/tasiRNA_generating_loci.txt | grep atTAS3a
     ## Chr3 5861491 5862437 atTAS3a(At3g17185)  696 863 Chr3:5861491..5862437
     ## Chr3 5861491 5862437 atTAS3a(At3g17185)  704 829 Chr3:5861491..5862437
 
+### Substrings
+
+``` bash
+awk ' BEGIN {OFS = "\n"} {header = $0 ; getline seq ; if (seq ~ /Y[A-Z]$/){ taa=substr(seq,length(seq)-1,length(seq)) ;  print header"\n"taa}}'  multi.fa > 2aa.fa
+```
+
 ### If loops
 
 #### Conditional evaluation
@@ -693,8 +699,8 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,002s
-    ## user 0m0,004s
+    ## real 0m0,003s
+    ## user 0m0,005s
     ## sys  0m0,000s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
@@ -708,9 +714,9 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,006s
-    ## user 0m0,007s
-    ## sys  0m0,001s
+    ## real 0m0,007s
+    ## user 0m0,009s
+    ## sys  0m0,000s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -725,8 +731,8 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,007s
-    ## user 0m0,007s
+    ## real 0m0,009s
+    ## user 0m0,010s
     ## sys  0m0,001s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
@@ -1117,6 +1123,61 @@ bash Perl/oneliner_search-replace.sh
 
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
+
+## R
+
+### Using grepl to merge dataframes
+
+1.  Using collapsed search terms
+
+``` r
+merge_criteria <- paste(gsub(pattern = " ", replacement = "", gene_main_interest$TAIR),collapse ="|")
+CaMV_Mock_GSE36457_interest <- CaMV_Mock_GSE36457[grepl(ignore.case = T, merge_criteria, CaMV_Mock_GSE36457$AGI.CODE),]
+```
+
+The previous command it’s different to merge R function, in the sense
+taht tolerates strings variations
+
+``` r
+exact_match <- merge(CaMV_Mock_GSE36457,gene_main_interest, by.x = "AGI.CODE", by.y = "TAIR", all.y = T)
+# Comparing two dataframes 
+CaMV_Mock_GSE36457_interest$AGI.CODE[! CaMV_Mock_GSE36457_interest$AGI.CODE %in% exact_match$AGI.CODE]
+```
+
+1.  Using grepl in a for loop
+
+``` r
+# First generate a Null entry to keep track of those unmatched features 
+ CaMV_Mock_GSE36457 [ nrow(CaMV_Mock_GSE36457) + 1 , ] <- NA 
+ empty_raw <- CaMV_Mock_GSE36457[nrow(CaMV_Mock_GSE36457),]
+# Call the DF to generate the output fist and feed it with both match and unmatched queries
+CaMV_Mock_GSE36457_interest <- NULL 
+for (f in gene_main_interest$TAIR) {
+   g <- CaMV_Mock_GSE36457[grepl(ignore.case = T, f, CaMV_Mock_GSE36457$AGI.CODE),]
+   h <- gene_main_interest[grepl(ignore.case = T, f, gene_main_interest$TAIR),]
+   if(nrow(g)>0){
+   i <- data.frame(h,g)
+   } else {
+   i <- data.frame(h, empty_raw)   
+   }
+   CaMV_Mock_GSE36457_interest <- rbind(CaMV_Mock_GSE36457_interest, i)
+ }
+```
+
+### Multiple substitutions
+
+``` r
+mgsub <- function(pattern, replacement, x, ...) {
+  if (length(pattern)!=length(replacement)) {
+    stop("pattern and replacement do not have the same length.")
+  }
+  result <- x
+  for (i in 1:length(pattern)) {
+    result <- gsub(pattern[i], replacement[i], result, ...)
+  }
+  result
+}
+```
 
 ## GitHub
 
