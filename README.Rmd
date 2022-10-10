@@ -657,11 +657,11 @@ Perl engulf awk in its language evolutionary history,
 In previous sections I've already shown how versatile is perl's regrex, using them with grep or the ones shared between perl and awk, however if we want to manipulate a file and not only detect, the most precise way before running into formatting-scripts is the use of perl oneliners. The next example shows a perl one-liner script with a economic writing or non-strict style, starting with: 
 
  1. `chomp $_`, dispensable but used to remove the last trailing newline from the input string.
- 1. `@F = split /\t/` , feed the environment array F with each part of the text separated by tab or any other character. 
+ 1. `@F = split /\t/, $_` , feed the environment array F with each part of the text separated by tab or any other character. 
  1. `if ($N[1] ne "hsaP-") {$F[3] =~ s/(hsaP)[a-z].*-([let|mir].*)/$1-$2/;` control structure, restricting the substitution to only those entries with different name to "hsaP-"
  1. `$string=join ("\t", @F); print "$string\n";}`, re join split and modified fields and close control structure.
 
-<!--, -->
+#### Search and modify in a specific column 
 ```{bash} 
 echo -ne "chr1\t115215\t115320\ttesting-syntax_hsaPmmu-mir-23a\nchr1\t115215\t115320\ttesting-syntax_hsaP-let-23a\n-Previous to perl edition-\n" 
 tail -n 1 Perl/oneliner_search-replace.sh
@@ -671,8 +671,21 @@ tail -n 1 Perl/oneliner_search-replace.sh
 bash Perl/oneliner_search-replace.sh 
 ```
 
+### Pop for cleaning multiple separators inside a single column 
+
+It's quite often I use "_" to differentiate, annotate or provide depper detail for a given entry, however usually, this would be added in addition to previous uses of the same character, as in the next example: 
+```{bash} 
+echo -ne "MH899121.1_ALV1.2\nNC_001557.1_TMVsat\n"  
+grep -oP "perl.*" Perl/reduce_delimeters.sh 
+```
+In this example there is an entry with double "_" as name, `NC_001557.1_TMVsat` however the initial one have nothing to do with the second use of it, introducing complexities to the format, a way to remove is by using pop perl function which takes off the last element of an array.
+```{bash, eval=TRUE}
+bash Perl/reduce_delimeters.sh
+```
+Note the [perl oneliner](Perl/reduce_delimeters.sh) delete the first "_" while conserving the indicative function of the second "_" 
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
+
 ## R 
 
 ### Using grepl to merge dataframes 

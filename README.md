@@ -699,8 +699,8 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,003s
-    ## user 0m0,005s
+    ## real 0m0,002s
+    ## user 0m0,004s
     ## sys  0m0,000s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
@@ -715,8 +715,8 @@ head BASH/piping_alternative.sh
     ##       3 RPS12_A2
     ## 
     ## real 0m0,007s
-    ## user 0m0,009s
-    ## sys  0m0,000s
+    ## user 0m0,008s
+    ## sys  0m0,002s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -731,9 +731,9 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,009s
-    ## user 0m0,010s
-    ## sys  0m0,001s
+    ## real 0m0,005s
+    ## user 0m0,007s
+    ## sys  0m0,000s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the
@@ -1094,15 +1094,15 @@ non-strict style, starting with:
 
 1.  `chomp $_`, dispensable but used to remove the last trailing newline
     from the input string.
-2.  `@F = split /\t/` , feed the environment array F with each part of
-    the text separated by tab or any other character.
+2.  `@F = split /\t/, $_` , feed the environment array F with each part
+    of the text separated by tab or any other character.
 3.  `if ($N[1] ne "hsaP-") {$F[3] =~ s/(hsaP)[a-z].*-([let|mir].*)/$1-$2/;`
     control structure, restricting the substitution to only those
     entries with different name to “hsaP-”
 4.  `$string=join ("\t", @F); print "$string\n";}`, re join split and
     modified fields and close control structure.
 
-<!--, -->
+#### Search and modify in a specific column
 
 ``` bash
 echo -ne "chr1\t115215\t115320\ttesting-syntax_hsaPmmu-mir-23a\nchr1\t115215\t115320\ttesting-syntax_hsaP-let-23a\n-Previous to perl edition-\n" 
@@ -1121,6 +1121,36 @@ bash Perl/oneliner_search-replace.sh
     ## chr1 115215  115320  testing-syntax_hsaP-mir-23a
     ## chr1 115215  115320  testing-syntax_hsaP-let-23a
 
+### Pop for cleaning multiple separators inside a single column
+
+It’s quite often I use “\_” to differentiate, annotate or provide depper
+detail for a given entry, however usually, this would be added in
+addition to previous uses of the same character, as in the next example:
+
+``` bash
+echo -ne "MH899121.1_ALV1.2\nNC_001557.1_TMVsat\n"  
+grep -oP "perl.*" Perl/reduce_delimeters.sh 
+```
+
+    ## MH899121.1_ALV1.2
+    ## NC_001557.1_TMVsat
+    ## perl -ne 'chomp($_);  @F = split /_/, $_;  $last = pop(@F) ; $new = join("_",@F); $new =~ s/_// ; print $new."_".$last."\n";'
+
+In this example there is an entry with double “\_” as name,
+`NC_001557.1_TMVsat` however the initial one have nothing to do with the
+second use of it, introducing complexities to the format, a way to
+remove is by using pop perl function which takes off the last element of
+an array.
+
+``` bash
+bash Perl/reduce_delimeters.sh
+```
+
+    ## MH899121.1_ALV1.2
+    ## NC001557.1_TMVsat
+
+Note the [perl oneliner](Perl/reduce_delimeters.sh) delete the first “*”
+while conserving the indicative function of the second ”*”
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
 

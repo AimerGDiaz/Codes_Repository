@@ -1,0 +1,1 @@
+echo -ne "MH899121.1_ALV1.2\nNC_001557.1_TMVsat\n"   | perl -ne 'chomp($_);  @F = split /_/, $_;  $last = pop(@F) ; $new = join("_",@F); $new =~ s/_// ; print $new."_".$last."\n";' 
