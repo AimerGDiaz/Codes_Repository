@@ -501,6 +501,13 @@ awk 'BEGIN{FS=OFS=","}
      END{for (i=1;i<=NF;i++) printf a[i] OFS; printf "\n"}' file
 ```
 
+#### From blast out to Bed file
+
+awk -v i=1 ‘OFS=“{if ($9 \< $10) {sense=”+“; S=$9} else
+{sense=”-“;S=$10}; if ($9 \< $10) E=$10; else E=$9; print
+$2,S,E,”viral2TAIR_hit\_“i,sense, E-S , $1,”id:“$3”;aln:“$4”;nind:“$15 ;
+i++ }’ collection2TAIR.out \| sort -k1,1 -k2,2n \> collection2TAIR.bed
+
 <!-- POSSIBLE awk commands forgotten 
 /mnt/g/My\ Drive/Bioinformatica/0_Tesis\ Maestria/Code/Analysis_miR/Create_and_filter_anotation_file.txt 
 
@@ -608,6 +615,23 @@ data organization, classification or text processing and quality
 control. But before to enter to each control structure let’s talk some
 other features of Bash beyond the control statements itself.
 
+#### Sort command for bionformatics format
+
+Sort unix command is viable and quite frequent way to organize
+annotation files, bed or gff formats:
+
+1.  For bed files :
+
+<!-- -->
+
+    sort -k1,1 -k2,2n
+
+2.  For gff files
+
+<!-- -->
+
+    (grep ^"#" <gff file> ; grep -v ^"#" <gff file> | grep -v "^$" | grep "\t" | sort -k1,1 -k4,4n)
+
 #### Piping on bash: beyond “\|”
 
 Bash is awesome specially when we talk about pipes, input and output
@@ -700,8 +724,8 @@ head BASH/piping.sh
     ##       3 RPS12_A2
     ## 
     ## real 0m0,002s
-    ## user 0m0,004s
-    ## sys  0m0,000s
+    ## user 0m0,003s
+    ## sys  0m0,001s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -716,7 +740,7 @@ head BASH/piping_alternative.sh
     ## 
     ## real 0m0,007s
     ## user 0m0,008s
-    ## sys  0m0,002s
+    ## sys  0m0,001s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -731,9 +755,9 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,005s
+    ## real 0m0,006s
     ## user 0m0,007s
-    ## sys  0m0,000s
+    ## sys  0m0,001s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the

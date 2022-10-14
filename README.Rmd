@@ -275,6 +275,21 @@ awk 'BEGIN{FS=OFS=","}
      END{for (i=1;i<=NF;i++) printf a[i] OFS; printf "\n"}' file
 ```
 
+#### From blast out to Bed file 
+
+Awk is a powerful text processor and there is not a very frequent task in bioinformatics than blast results cleaning. It's important to know the field you want to use for text parsing, a practical way to get this information is: 
+```{bash, eval=FALSE}
+head -n 1 <FILE> | tr '\t' '\n' | awk '{print NR"\t"$0}'
+```
+I usually work with a modified version of the output format 6, declaring all the name of the fields I'm interested and including `nident` or number of identical matches: 
+```{bash, eval=FALSE}
+blastn  -query <QUERY> -db <SUBJECT> -outfmt   "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen nident" -perc_identity 10 -task blastn -word_size 10 -out 
+```
+If there is not interest in filtering the blast result, reusing it as an annotation file, the next command would be quite useful
+```{bash, eval=FALSE}
+awk -v i=1 'OFS="\t"{if ($9 < $10) {sense="+"; S=$9} else {sense="-";S=$10}; if ($9 < $10) E=$10; else E=$9; print $2,S,E,"viral2TAIR_hit_"i,sense, E-S , $1, "id:"$3";aln:"$4";nind:"$15 ; i++ }' collection2TAIR.out | sort -k1,1 -k2,2n  > collection2TAIR.bed 
+```
+
 
 <!-- POSSIBLE awk commands forgotten 
 /mnt/g/My\ Drive/Bioinformatica/0_Tesis\ Maestria/Code/Analysis_miR/Create_and_filter_anotation_file.txt 
@@ -353,6 +368,20 @@ Here as well as with awk there are many commands that using cleverly you can get
 
 Bash as well as AWK is quite flexible, however most of the time I do use the three control structures `for`, `while` and `if, then, else` for data organization, classification or text processing and quality control. But before to enter to each control structure let's talk some other features of Bash beyond the control statements itself. 
 
+#### Sort command for bionformatics format 
+
+Sort unix command is viable and quite frequent way to organize annotation files, bed or gff formats: 
+
+1. For bed files : 
+
+```
+sort -k1,1 -k2,2n
+```
+
+2. For gff files
+```
+(grep ^"#" <gff file> ; grep -v ^"#" <gff file> | grep -v "^$" | grep "\t" | sort -k1,1 -k4,4n)
+```
 #### Piping on bash: beyond "|"
 
 Bash is awesome specially when we talk about pipes, input and output immediately re-direction. However for beginners the main command for piping is usually "|", which limits piping to comands who tolerate input redirection in such way, however there are software which cannot be piped with "|" but it might accept "-" for input file declaration, specially those who requires a -i parameter to indicate the input file, then the piping way for such programs is " | software -i - " . 
