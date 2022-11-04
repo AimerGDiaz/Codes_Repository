@@ -108,7 +108,7 @@ Generating a header row, while modifying the content that follows, for
 instance, by substituting an element of a field:
 
 ``` bash
-awk -v OFS="\t" -F'\t'  'NR==1 {print "ID","NGenes","Genes"} {split($2,a," "); gsub(" ",",", $2);print $1,length(a),$2}'  
+awk -v OFS="\t" -F'\t'  'NR==1 {print "ID","NGenes","Genes"} {split($2,a," "); gsub(" ",",", $2);print $1,length(a),$2}'  | grep -v "^$"
 ```
 
 In case there is already a header line, a new one can be generated as
@@ -503,11 +503,37 @@ awk 'BEGIN{FS=OFS=","}
 
 #### From blast out to Bed file
 
-awk -v i=1 ‘OFS=“{if ($9 \< $10) {sense=”+“; S=$9} else
-{sense=”-“;S=$10}; if ($9 \< $10) E=$10; else E=$9; print
-$2,S,E,”viral2TAIR_hit\_“i,sense, E-S , $1,”id:“$3”;aln:“$4”;nind:“$15 ;
-i++ }’ collection2TAIR.out \| sort -k1,1 -k2,2n \> collection2TAIR.bed
+Awk is a powerful text processor and there is not a very frequent task
+in bioinformatics than blast results cleaning. It’s important to know
+the field you want to use for text parsing, a practical way to get this
+information is:
 
+``` bash
+head -n 1 <FILE> | tr '\t' '\n' | awk '{print NR"\t"$0}'
+```
+
+I usually work with a modified version of the output format 6, declaring
+all the name of the fields I’m interested and including `nident` or
+number of identical matches:
+
+``` bash
+blastn  -query <QUERY> -db <SUBJECT> -outfmt   "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen nident" -perc_identity 10 -task blastn -word_size 10 -out 
+```
+
+If there is not interest in filtering the blast result, reusing it as an
+annotation file, the next command would be quite useful
+
+``` bash
+awk -v i=1 'OFS="\t"{if ($9 < $10) {sense="+"; S=$9} else {sense="-";S=$10}; if ($9 < $10) E=$10; else E=$9; print $2,S,E,"viral2TAIR_hit_"i,sense, E-S , $1, "id:"$3";aln:"$4";nind:"$15 ; i++ }' collection2TAIR.out | sort -k1,1 -k2,2n  > collection2TAIR.bed
+```
+
+<!--
+Annotation of sequences hits 
+intersectBed  -wo  -a  ../../Arabidopsis/TAIR10.1_NCBI.gff3 -b collection2TAIR.bed   | awk '$3 !~ /^region$/' | cut -f 3 | sort | uniq -c
+
+Genes of interest 
+intersectBed  -wo  -a  ../../Arabidopsis/TAIR10.1_NCBI.gff3 -b collection2TAIR.bed   | awk '$3 ~ /^CDS$/' | egrep -i "AT1G19120|AT3G14080|AT1G08370|AT5G13570|AT1G26110|AT5G45330|AT4G19360|AT3G13300|AT3G13290|AT1G54490|AT5G47010|AT5G23570|AT1G09700|AT3G62800|AT3G26932|AT5G41070|AT2G28380|AT1G01760|AT1G14790|AT4G11130|AT3G49500|AT2G19910|AT2G19930|AT2G19920|AT1G01040|AT3G03300|AT3G43920|AT5G20320|AT4G15417|AT3G20420|AT1G48410|AT5G43810|AT2G27880|AT2G32940|AT5G21150|AT1G69440|AT2G27040|AT5G21030|AT1G31280|AT1G31290|AT1G74700 |AT2G04530|AT1G52160|AT3G16260|AT2G02990|AT1G14220|AT1G26820 |AT2G39780 |AT1G14210 |AT5G17290|AT5G45900|AT2G45170|AT4G24690|AT1G28470|AT1G06670|AT1G05660|AT1G01800|AT1G78390|AT4G13000|AT4G13130|AT4G13180|AT5G49130|AT5G42325|AT1G17910|AT1G62670|AT3G42830|AT3G57157|AT4G17780|AT4G17760|AT5G59120|AT5G43840|AT1G58602|AT4G18350|AT3G14440|AT1G30100|AT1G23070|AT5G48650|AT1G13730|AT1G69250|AT2G03640|AT3G07250|AT3G25150|AT5G43960|AT5G60980|AT3G55540|AT1G34140|AT4G34110|AT1G22760|AT2G23350|AT1G71770|AT3G16380|AT2G36660|AT1G49760|AT5G54900|AT1G11650|AT4G27000|AT1G49600|AT3G19130|AT1G47490|AT1G47500|AT1G54080|AT1G17370|AT3G14100|AT1G54270|AT3G13920|AT1G72730|AT3G19760|AT3G61240|AT4G00660|AT2G45810|AT3G58570|AT1G16280|AT4G09730|AT4G15850|AT3G11400|AT5G06000|AT3G60240|AT4G18040|AT5G07350|AT5G61780|AT2G25900|AT2G19810|AT3G02830|AT2G47850|AT5G16540|AT3G06410|AT1G04990|AT5G18550|AT3G48440|AT2G32930|AT1G01510|AT1G64720|AT5G02500|AT5G20700|AT2G39730|AT1G59870|AT3G18780|AT2G30520|AT1G20620|AT5G13630|AT2G21330|AT3G54890|AT1G29930|AT2G34430|AT1G56070|AT1G10170|AT5G46470|AT5G19400|AT2G27400|AT1G50055|AT2G39675|AT2G39681" | grep -oP "TAIR:.*," 
+-->
 <!-- POSSIBLE awk commands forgotten 
 /mnt/g/My\ Drive/Bioinformatica/0_Tesis\ Maestria/Code/Analysis_miR/Create_and_filter_anotation_file.txt 
 
@@ -724,8 +750,8 @@ head BASH/piping.sh
     ##       3 RPS12_A2
     ## 
     ## real 0m0,002s
-    ## user 0m0,003s
-    ## sys  0m0,001s
+    ## user 0m0,004s
+    ## sys  0m0,000s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -738,8 +764,8 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,007s
-    ## user 0m0,008s
+    ## real 0m0,006s
+    ## user 0m0,007s
     ## sys  0m0,001s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
@@ -885,7 +911,34 @@ An equivalent expression to “\\w+” examples
 grep -oP "(Accession:.+?)(?=ID)"  BASH/complex_formatting.txt
 ```
 
-#### Find and bash commands
+#### Generate egrep pattern
+
+Using the previous syntax allow us to generate a multiple egrep pattern
+generator, a commonly use term with several applications as single gene
+protein isoform quantification, for instance. In a file with Uniprot Ids
+for each gene with this format (`TAIRid2Uniprot.txt`):
+
+| TAIR      | Uniprot    |
+|-----------|------------|
+| AT1G13730 | AEE29061.1 |
+| AT1G69250 | AEE34901.1 |
+| AT1G69250 | AEE34902.1 |
+
+The next command would be able to generate the combined non-redundant
+search term “AEE29061.1\|AEE34901.1\|AEE34902.1”
+
+``` bash
+for g3bp  in  AT1G13730 AT1G69250 
+do
+uniprot=`grep -w $g3bp TAIRid2Uniprot.txt | awk '{gsub(" ","",$2);printf $2"|"}' | grep -oP "(.+?)(?=\|)" \|
+perl -ne 'chomp $_; print $_ ' `
+echo $uniprot 
+# Beyond the interest of print the modification, we can also print the sequence associated with both ids 
+#  zcat TAIR10.1_protein.ol.fa.gz |  egrep  -A 1 --no-group-separator $uniprot | awk -v tair="$g3bp" ' BEGIN {OFS = "\n"} {header = $0 ; getline seq ; gsub(">",">"tair"_",header) ;  print header,seq}'
+done
+```
+
+#### Find and other bash commands
 
 Find command is one of the most useful tools in unix systems, it’s the
 google inside this beautiful operative system, not only because it does
@@ -1145,6 +1198,13 @@ bash Perl/oneliner_search-replace.sh
     ## chr1 115215  115320  testing-syntax_hsaP-mir-23a
     ## chr1 115215  115320  testing-syntax_hsaP-let-23a
 
+### Search and save multiple hits in a single line
+
+NCBI headers zcat TAIR10.1_cds.ol.fa.gz \| grep “protein_id=” \| perl
+-ne ’ $\_ =\~
+s/TAIR:(\[a-zA-Z0-9\]++)\].\*protein_id=(\[a-zA-Z0-9\]++.\[0-9\])/$1/;
+print $1.”.$2.”“;’ \| sort \| uniq \> TAIRid2Uniprot.txt
+
 ### Pop for cleaning multiple separators inside a single column
 
 It’s quite often I use “\_” to differentiate, annotate or provide depper
@@ -1177,6 +1237,10 @@ Note the [perl oneliner](Perl/reduce_delimeters.sh) delete the first “*”
 while conserving the indicative function of the second ”*”
 <!-- Usar perl en R markdown, se puede https://stackoverflow.com/questions/45857934/executing-perl-6-code-in-rmarkdown 
 --->
+
+### Search until
+
+grep “\*” true_adapter_r.fa.clstr \| grep -Po “\>.+?(?=.)”
 
 ## R
 
