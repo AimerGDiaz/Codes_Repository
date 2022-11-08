@@ -69,7 +69,7 @@ All the languague I've mentioned before will have the same structure for this se
 Generating a header row, while modifying the content that follows, for instance,  by substituting an element of a field: 
 
 ```{bash eval=FALSE}
-awk -v OFS="\t" -F'\t'  'NR==1 {print "ID","NGenes","Genes"} {split($2,a," "); gsub(" ",",", $2);print $1,length(a),$2}'  | grep -v "^$"
+awk -v OFS="\t" -F'\t'  'NR==1 {print "ID","NGenes","Genes"} {split($2,a," "); gsub(" ",",", $2);print $1,length(a),$2}'  
 ``` 
 
 In case there is already a header line, a new one can be generated as follow: 
@@ -110,7 +110,7 @@ awk 'BEGIN{sum=0;}{if(NR%4==2){sum+=length($0);}}END{print sum;}'  file.fastq
 *** 
 #### Change delimiters, regrex in awk 101:
 
-A related issue to the previous one it's the case when you want to change the field delimiter of certain lines, but not all, a typical example in bioinformatics of this task it's transform a multi-fasta file with multiple jump lines into a single line per sequence, graphically: 
+A related issue to the previous one it's the case when you want to change the field delimiter of certain lines, but not all, a typical example in bioinformatics of this task it's transform a multi-fasta file with multiple jump lines into a single oneline sequence per feature, graphically: 
 
 From 
 
@@ -127,7 +127,7 @@ ACCCAGAGAGTGAGACCAACACACAGTT`
 
 To make it we can use the regrex expression integrated with the simplified if control loop of awk: 
 ```{bash eval=FALSE}
-awk '/^>/{printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' $1 > $1.ol.fa 
+awk '/^>/{printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' $1 | grep -v "^$" > $1.ol.fa 
 ```
 On this awk-oneliner, we first select those lines who do start with > `/^>/` anything in between would be separated only by one jump of line per each `^>` line found. This code it's called [oneliner.awk](AWK/oneliner.awk)
 

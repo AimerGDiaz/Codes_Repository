@@ -108,7 +108,7 @@ Generating a header row, while modifying the content that follows, for
 instance, by substituting an element of a field:
 
 ``` bash
-awk -v OFS="\t" -F'\t'  'NR==1 {print "ID","NGenes","Genes"} {split($2,a," "); gsub(" ",",", $2);print $1,length(a),$2}'  | grep -v "^$"
+awk -v OFS="\t" -F'\t'  'NR==1 {print "ID","NGenes","Genes"} {split($2,a," "); gsub(" ",",", $2);print $1,length(a),$2}'  
 ```
 
 In case there is already a header line, a new one can be generated as
@@ -168,7 +168,8 @@ awk 'BEGIN{sum=0;}{if(NR%4==2){sum+=length($0);}}END{print sum;}'  file.fastq
 A related issue to the previous one it’s the case when you want to
 change the field delimiter of certain lines, but not all, a typical
 example in bioinformatics of this task it’s transform a multi-fasta file
-with multiple jump lines into a single line per sequence, graphically:
+with multiple jump lines into a single oneline sequence per feature,
+graphically:
 
 From
 
@@ -185,7 +186,7 @@ To make it we can use the regrex expression integrated with the
 simplified if control loop of awk:
 
 ``` bash
-awk '/^>/{printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' $1 > $1.ol.fa 
+awk '/^>/{printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' $1 | grep -v "^$" > $1.ol.fa 
 ```
 
 On this awk-oneliner, we first select those lines who do start with \>
@@ -749,9 +750,9 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,002s
-    ## user 0m0,004s
-    ## sys  0m0,000s
+    ## real 0m0,003s
+    ## user 0m0,002s
+    ## sys  0m0,002s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -781,8 +782,8 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,006s
-    ## user 0m0,007s
+    ## real 0m0,005s
+    ## user 0m0,006s
     ## sys  0m0,001s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
