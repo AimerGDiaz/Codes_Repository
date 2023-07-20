@@ -4,21 +4,30 @@ Aimer G. Diaz
 
 <!--- Central Folfer
 Github extras 
-&#10;https://github.com/gayanvoice/github-profile-views-counter
-&#10;Sintaxis propia de github markdown https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
-&#10;Sintaxis for all the R markdowns in general https://bookdown.org/yihui/rmarkdown-cookbook/raw-latex.html 
+
+https://github.com/gayanvoice/github-profile-views-counter
+
+Sintaxis propia de github markdown https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+Sintaxis for all the R markdowns in general https://bookdown.org/yihui/rmarkdown-cookbook/raw-latex.html 
 https://bookdown.org/yihui/rmarkdown/language-engines.html
-&#10;El tema de las licencias https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
-&#10;Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de reduccion de librerias
+
+El tema de las licencias https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
+
+Cuando lanze los pauetes tanto de deteccion de fragmentos como el script de reduccion de librerias
 https://vlado.ca/blog/perl-app.html
 https://docs.github.com/en/enterprise-server@2.22/packages/quickstart  
 https://github.com/LorenzoTa/step-by-step-tutorial-on-perl-module-creation-with-tests-and-git/blob/master/tutorial/tutorial-english.md
 https://fpm.readthedocs.io/en/v1.13.1/intro.html
 https://github.com/jordansissel/fpm/pull/876
-&#10;git hub pulling pushing and difference https://github.blog/2011-10-21-github-secrets/ 
-&#10;SQL too https://www.red-gate.com/hub/product-learning/sql-source-control/github-and-sql-source-control 
-&#10;Wikis en github https://guides.github.com/features/wikis/
-&#10;--->
+
+git hub pulling pushing and difference https://github.blog/2011-10-21-github-secrets/ 
+
+SQL too https://www.red-gate.com/hub/product-learning/sql-source-control/github-and-sql-source-control 
+
+Wikis en github https://guides.github.com/features/wikis/
+
+--->
 
 Welcome to my code repository, most or all of it I’ve learned in a very
 inclusive sense of the word (including copy from internet forums),
@@ -206,6 +215,35 @@ cat AWK/separator.awk
 bash AWK/separator.awk AWK/sentence.temp "gsub"
 ```
 
+    ## "PRJNA272807","In plants, decapping prevents RDR6-dependent production of small interfering RNAs from endogenous mRNAs",3702,"Arabidopsis thaliana","Eukaryota; Plants; Land Plants",,"Primary submission","Transcriptome or Gene expression","Yes","Yes","2015-01-16"
+    ## if [ "$2" == "gsub" ]
+    ## then
+    ## 
+    ## echo -ne "\nExtracting only the fields 1,2,4 and 8 \n\n"
+    ## 
+    ## awk -F',' 'OFS="\t"{gsub("\"","",$0);gsub(" |, ","_",$0);print $1,$2,$4,$8}' $1 
+    ## elif [ "$2" == "F" ]
+    ## then 
+    ## 
+    ## awk -F'(,"|",)' 'OFS="\t"{gsub(" ","_",$0); print $1,$2,$4,$8}' $1 | tr -d '"'
+    ## 
+    ## elif [ "$2" == "SRA" ]
+    ## then
+    ## 
+    ## echo -ne "\nExtracting most informative fields \n\n"
+    ## 
+    ## awk -F'(,"|",)' -v OFS="," '{ print $1,$5 }' $1  | awk -F',' -v OFS="," '{gsub(" ","_",$0);gsub("ncRNA-Seq","smallRNA-Seq",$2); print $1,$16,$2,$19,$11,$24,$20,$10,$13,$3,$4,$26}'
+    ## 
+    ## elif [ "$2" == "IF" ]
+    ## then
+    ## 
+    ## awk -F'(,"|",)' -v OFS=","  '{gsub(" ","_",$0); print $1,$5 }' $1  | awk -F',' -v OFS="," '{if (NR == "1") {$10=$11=$12=""; print $1,$19,$2,$22,$14,$27,$23,$13,$16,$3,$4,$29 } else {gsub("ncRNA-Seq","smallRNA-Seq",$2);print  $1,$16,$2,$19,$11,$24,$20,$10,$13,$3,$4,$26}}'
+    ## 
+    ## fi
+    ## Extracting only the fields 1,2,4 and 8 
+    ## 
+    ## PRJNA272807  In_plants_decapping_prevents_RDR6-dependent_production_of_small_interfering_RNAs_from_endogenous_mRNAs  Arabidopsis_thaliana    Transcriptome_or_Gene_expression
+
 Another great solution is by using awk -F command, which allow us to
 split fields using regrex expression, in this case :
 
@@ -224,6 +262,13 @@ head -n 1 AWK/SraRunTable_edited.txt
 
 bash AWK/separator.awk AWK/SraRunTable_edited.txt "SRA"
 ```
+
+    ## Run,Assay Type,AvgSpotLen,Bases,BioProject,BioSample,Bytes,Center Name,Consent,"DATASTORE filetype","DATASTORE provider","DATASTORE region",days_past_infection,ecotype_background,Experiment,Genotype,Instrument,Library Name,LibraryLayout,LibrarySelection,LibrarySource,Organism,Plant_age,Platform,ReleaseDate,Sample Name,source_name,SRA Study,treatment
+    ## 
+    ## Extracting most informative fields 
+    ## 
+    ## Run,LibraryLayout,Assay_Type,Organism,ecotype_background,source_name,Plant_age,days_past_infection,Genotype,AvgSpotLen,Bases,treatment
+    ## SRR17697100,PAIRED,smallRNA-Seq,Arabidopsis_thaliana,Col-0,rosette,39_days,21,dcp5-1/rdr6-15,102,4009784628,CaMV_(CM184I)_infected
 
 For this situation a double separation using both previous criteria:
 
@@ -326,6 +371,9 @@ awk -F',' -v OFS="," '{if (NR == "1") {$10=$11=$12=""; print  } else {gsub("ncRN
 bash AWK/separator.awk AWK/SraRunTable.txt "IF"
 ```
 
+    ## Run,LibraryLayout,Assay_Type,Organism,ecotype_background,source_name,Plant_age,days_past_infection,Genotype,AvgSpotLen,Bases,treatment
+    ## SRR17697100,PAIRED,smallRNA-Seq,Arabidopsis_thaliana,Col-0,rosette,39_days,21,dcp5-1/rdr6-15,102,4009784628,CaMV_(CM184I)_infected
+
 This code has an additional unneeded feature, the deletion of three
 fields, but it works to illustrate differential processing depending of
 an If condition.
@@ -353,15 +401,17 @@ echo -ne "Chromosome\tDuplicated Gene\nchr1\tgeneA\nchr2\tgeneB\nchr3\tgeneA\n" 
 ```
 
 </details>
+
 Sadly, although it seems awk engine is implemented for R markdown, it
 requires an additional effort to make it work, here the code of how to
 run awk using
-[knitr](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.Rmd)
-, and here the [R markdown
+[knitr](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.Rmd),
+and here the [R markdown
 output](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.md)
 of that code, however after several attempts I could not make awk work
 here, anyway, awk is integrated as a command on bash, then we can write
 the comand of awk as a awk script and executing with bash.
+
 <details>
 <summary>
 The code is
@@ -432,7 +482,7 @@ DEVELOP HERE
 
 ------------------------------------------------------------------------
 
-- IF and arrays as de-duplicated control structures:
+-   IF and arrays as de-duplicated control structures:
 
 Sum a particular column
 
@@ -484,23 +534,27 @@ awk -v i=1 'OFS="\t"{if ($9 < $10) {sense="+"; S=$9} else {sense="-";S=$10}; if 
 <!--
 Annotation of sequences hits 
 intersectBed  -wo  -a  ../../Arabidopsis/TAIR10.1_NCBI.gff3 -b collection2TAIR.bed   | awk '$3 !~ /^region$/' | cut -f 3 | sort | uniq -c
-&#10;Genes of interest 
+
+Genes of interest 
 intersectBed  -wo  -a  ../../Arabidopsis/TAIR10.1_NCBI.gff3 -b collection2TAIR.bed   | awk '$3 ~ /^CDS$/' | egrep -i "AT1G19120|AT3G14080|AT1G08370|AT5G13570|AT1G26110|AT5G45330|AT4G19360|AT3G13300|AT3G13290|AT1G54490|AT5G47010|AT5G23570|AT1G09700|AT3G62800|AT3G26932|AT5G41070|AT2G28380|AT1G01760|AT1G14790|AT4G11130|AT3G49500|AT2G19910|AT2G19930|AT2G19920|AT1G01040|AT3G03300|AT3G43920|AT5G20320|AT4G15417|AT3G20420|AT1G48410|AT5G43810|AT2G27880|AT2G32940|AT5G21150|AT1G69440|AT2G27040|AT5G21030|AT1G31280|AT1G31290|AT1G74700 |AT2G04530|AT1G52160|AT3G16260|AT2G02990|AT1G14220|AT1G26820 |AT2G39780 |AT1G14210 |AT5G17290|AT5G45900|AT2G45170|AT4G24690|AT1G28470|AT1G06670|AT1G05660|AT1G01800|AT1G78390|AT4G13000|AT4G13130|AT4G13180|AT5G49130|AT5G42325|AT1G17910|AT1G62670|AT3G42830|AT3G57157|AT4G17780|AT4G17760|AT5G59120|AT5G43840|AT1G58602|AT4G18350|AT3G14440|AT1G30100|AT1G23070|AT5G48650|AT1G13730|AT1G69250|AT2G03640|AT3G07250|AT3G25150|AT5G43960|AT5G60980|AT3G55540|AT1G34140|AT4G34110|AT1G22760|AT2G23350|AT1G71770|AT3G16380|AT2G36660|AT1G49760|AT5G54900|AT1G11650|AT4G27000|AT1G49600|AT3G19130|AT1G47490|AT1G47500|AT1G54080|AT1G17370|AT3G14100|AT1G54270|AT3G13920|AT1G72730|AT3G19760|AT3G61240|AT4G00660|AT2G45810|AT3G58570|AT1G16280|AT4G09730|AT4G15850|AT3G11400|AT5G06000|AT3G60240|AT4G18040|AT5G07350|AT5G61780|AT2G25900|AT2G19810|AT3G02830|AT2G47850|AT5G16540|AT3G06410|AT1G04990|AT5G18550|AT3G48440|AT2G32930|AT1G01510|AT1G64720|AT5G02500|AT5G20700|AT2G39730|AT1G59870|AT3G18780|AT2G30520|AT1G20620|AT5G13630|AT2G21330|AT3G54890|AT1G29930|AT2G34430|AT1G56070|AT1G10170|AT5G46470|AT5G19400|AT2G27400|AT1G50055|AT2G39675|AT2G39681" | grep -oP "TAIR:.*," 
 -->
 <!-- POSSIBLE awk commands forgotten 
 /mnt/g/My\ Drive/Bioinformatica/0_Tesis\ Maestria/Code/Analysis_miR/Create_and_filter_anotation_file.txt 
-&#10;/mnt/g/My\ Drive/Bioinformatica/0_Tesis\ 
+
+/mnt/g/My\ Drive/Bioinformatica/0_Tesis\ 
 ./Code/Blockbuster_parsearch/Clust2Block/No_blocks_loci/blockbuster_test.txt
-&#10;./EGlab_Code/Trimmomatic/trimmomatic_behaviour.txt
-&#10;/mnt/g/My\ Drive/Bioinformatica/0_Tesis\ Maestria/Precise_counting/Readme.txt
+
+./EGlab_Code/Trimmomatic/trimmomatic_behaviour.txt
+
+/mnt/g/My\ Drive/Bioinformatica/0_Tesis\ Maestria/Precise_counting/Readme.txt
 -->
 
 ------------------------------------------------------------------------
 
-- While, beigin honest I have never used while loop on awks. But I do
-  use while structure on bash followed by an awk code, which is, awk as
-  line per line variable mining tool, which employ the next code
-  structure:
+-   While, beigin honest I have never used while loop on awks. But I do
+    use while structure on bash followed by an awk code, which is, awk
+    as line per line variable mining tool, which employ the next code
+    structure:
 
 ``` bash
 echo  "This a toy example; with a semicolon separator structure; and I want to show you; hidden variable X 
@@ -524,8 +578,8 @@ done < toy_structure.txt
 rm -f toy_structure.txt
 ```
 
-    ## this is the value of the hidden variable:  on the line: 
-    ## this is the value of the hidden variable:  on the line:
+    ## this is the value of the hidden variable:  X on the line: 1
+    ## this is the value of the hidden variable:  Y on the line: 2
 
 A real world problem where I use awk inside a bash while loop structure
 is in a fastqc quality information miner script, extracted from
@@ -565,7 +619,7 @@ Non excecutable script
 
 ------------------------------------------------------------------------
 
-- For loops on awk are mainly array handlers:
+-   For loops on awk are mainly array handlers:
 
 DEVELOP HERE
 
@@ -645,7 +699,7 @@ gRNAs with pure Unknown gene targets we can use the `<()` syntax as
 follow:
 
 First generate the pattern to search using the single line grep regular
-expressions as “^” or “\$” or others, for instance starting with a file
+expressions as “^” or “$” or others, for instance starting with a file
 like this:
 
 ``` bash
@@ -699,9 +753,9 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0.052s
-    ## user 0m0.007s
-    ## sys  0m0.009s
+    ## real 0m0,003s
+    ## user 0m0,004s
+    ## sys  0m0,001s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -712,11 +766,11 @@ head BASH/piping_alternative.sh
 ```
 
     ##       7 RPS12_A1
-    ##       2 RPS12_A2
+    ##       3 RPS12_A2
     ## 
-    ## real 0m0.084s
-    ## user 0m0.028s
-    ## sys  0m0.003s
+    ## real 0m0,010s
+    ## user 0m0,010s
+    ## sys  0m0,003s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -729,11 +783,11 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
 ```
 
     ##       7 RPS12_A1
-    ##       2 RPS12_A2
+    ##       3 RPS12_A2
     ## 
-    ## real 0m0.093s
-    ## user 0m0.036s
-    ## sys  0m0.003s
+    ## real 0m0,017s
+    ## user 0m0,013s
+    ## sys  0m0,006s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the
@@ -807,7 +861,7 @@ For each entry there are 7 lines of information, to extract an specific
 query, non separated information, with only alphanumeric characters
 match, including connector characters as “\_” or, we can use grep -oP
 command and perl
-[“\w+”](https://stackoverflow.com/questions/47361430/about-the-meaning-of-perl-w)
+[“\\w+”](https://stackoverflow.com/questions/47361430/about-the-meaning-of-perl-w)
 expression to include the whole word, as follow :
 
 ``` bash
@@ -855,7 +909,7 @@ cat BASH/complex_formatting.txt | grep -oP "Type:(.+?)(?=[\n|;])"
 
     ## Type:           Non-coding RNA profiling by high throughput sequencing
 
-An equivalent expression to “\w+” examples
+An equivalent expression to “\\w+” examples
 
 ``` bash
 grep -oP "(Accession:.+?)(?=ID)"  BASH/complex_formatting.txt
@@ -942,19 +996,19 @@ folder. A situation taht does not happen with hard links.
 
 ### Creating comands on Bash
 
-- Save routinary functions and alias as bash commands with the label you
-  want to use it for them on the terminal. To start, what we need it’s
-  edit the file `~/.bashrc` with your favorite text editor, in my case
-  Vim ([(guide for vim commands)](VIM/README.md)). The difference
-  between alias and the functions is mainly that the functions read
-  arguments, while alias not. My favorite list of alias and functions on
-  .bashrc file
+-   Save routinary functions and alias as bash commands with the label
+    you want to use it for them on the terminal. To start, what we need
+    it’s edit the file `~/.bashrc` with your favorite text editor, in my
+    case Vim ([(guide for vim commands)](VIM/README.md)). The difference
+    between alias and the functions is mainly that the functions read
+    arguments, while alias not. My favorite list of alias and functions
+    on .bashrc file
 
 <details>
 <summary>
 
-- Alias
-  </summary>
+-   Alias
+    </summary>
 
 ``` bash
 # List the files in human readble format withut writing -lh and
@@ -990,8 +1044,8 @@ alias waste_time='for f in {1..200}; do echo ------ wasting time minutes $f;  sl
 <details>
 <summary>
 
-- Functions
-  </summary>
+-   Functions
+    </summary>
 
 Alias are boring, but save time. Functions are quite interesting, they
 are basically mini software and bash allow you to create commnads as
@@ -1148,9 +1202,9 @@ bash Perl/oneliner_search-replace.sh
 ### Search and save multiple hits in a single line
 
 NCBI headers zcat TAIR10.1_cds.ol.fa.gz \| grep “protein_id=” \| perl
--ne ’ \$\_ =~
-s/TAIR:(\[a-zA-Z0-9\]++)\].\*protein_id=(\[a-zA-Z0-9\]++.\[0-9\])/\$1/;
-print \$1.”.\$2.”“;’ \| sort \| uniq \> TAIRid2Uniprot.txt
+-ne ’ $\_ =\~
+s/TAIR:(\[a-zA-Z0-9\]++)\].\*protein_id=(\[a-zA-Z0-9\]++.\[0-9\])/$1/;
+print $1.”.$2.”“;’ \| sort \| uniq \> TAIRid2Uniprot.txt
 
 ### Pop for cleaning multiple separators inside a single column
 

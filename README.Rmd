@@ -141,7 +141,7 @@ NCBI gen omnibus dataset has such problem and awk has the solution:
 awk -F',' 'OFS="\t"{gsub("\"","",$0);gsub(" |, ","_",$0);print $1,$2,$4,$8}' $1 
 ```
 
-```{bash, eval=FALSE, include=TRUE}
+```{bash, eval=TRUE, include=TRUE}
 cat AWK/sentence.temp 
 cat AWK/separator.awk
 #Run in terminal 
@@ -156,7 +156,7 @@ awk -F'(,"|",)' 'OFS="\t"{gsub(" ","_",$0); print $1,$2,$4,$8}' $1
 
 A more complicated case comes from SraRunTable.txt formatting, which might have at the same time, comma separated fields, but not \" demarcation, a annoying solution is to homogenize the header and the fields with such characteristic, as here the original file now includes \" in the header, to be able to run with the same syntax
 
-```{bash,  eval=FALSE, include=TRUE}
+```{bash,  eval=TRUE, include=TRUE}
 head -n 1 AWK/SraRunTable_edited.txt 
 
 bash AWK/separator.awk AWK/SraRunTable_edited.txt "SRA"
@@ -192,7 +192,7 @@ Using the same previous example, this time without modifiend the header of the S
 awk -F',' -v OFS="," '{if (NR == "1") {$10=$11=$12=""; print  } else {gsub("ncRNA-Seq","smallRNA-Seq",$2);print  }}'
 ```
 
-```{bash,  eval=FALSE, include=TRUE}
+```{bash,  eval=TRUE, include=TRUE}
 bash AWK/separator.awk AWK/SraRunTable.txt "IF"
 ``` 
 This code has an additional unneeded feature, the deletion of three fields, but it works to illustrate differential processing depending of an If condition. 
@@ -221,6 +221,7 @@ echo -ne "Chromosome\tDuplicated Gene\nchr1\tgeneA\nchr2\tgeneB\nchr3\tgeneA\n" 
 </details>
 
 Sadly, although it seems awk engine is implemented for R markdown, it requires an additional effort to make it work, here the code of how to run awk using [knitr](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.Rmd), and here the [R markdown output](https://github.com/yihui/knitr-examples/blob/master/024-engine-awk.md) of that code, however after several attempts I could not make awk work here, anyway, awk is integrated as a command on bash, then we can write the comand of awk as a awk script and executing with bash. 
+
 <details> 
 <summary>The code is</summary>
 ```{bash}
