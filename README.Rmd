@@ -216,7 +216,6 @@ rm -f AWK/td_Gene_duplication_per.txt
 #chr3       geneA
 
 echo -ne "Chromosome\tDuplicated Gene\nchr1\tgeneA\nchr2\tgeneB\nchr3\tgeneA\n" > AWK/td_Gene_duplication_per.txt 
-
 ```
 </details>
 
@@ -241,14 +240,11 @@ bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 <summary> What happen if we include more genes ? </summary>
 
 ```{bash}
-echo -ne "chr4\tgeneA" >> AWK/td_Gene_duplication_per.txt 
+echo -ne "chr4\tgeneA\n" >> AWK/td_Gene_duplication_per.txt 
 
 bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 ```
 
-```{bash, include=FALSE}
-rm -f AWK/td_Gene_duplication_per.txt 
-```
 </details> 
 
 Now let's see this code applied to real world problems, at least how I used, one example is here 
@@ -257,15 +253,31 @@ PRINT here how it work to make quick table (Mirnomics project) or for multi-fast
 DEVELOP HERE 
 
 ***
-* IF and arrays as de-duplicated control structures: 
+#### IF and arrays as de-duplicated control structures: 
 
 Sum a particular column  
-```{bash, eval=FALSE}
-awk '{sum+=$7} END {print sum}'  
+```{bash}
+echo -ne "reads\n12\n123\n213\n12\n" > AWK/extra_column.txt 
+paste AWK/td_Gene_duplication_per.txt  AWK/extra_column.txt   > AWK/td_Gene_duplication_values.txt
+rm AWK/extra_column.txt 
+head AWK/td_Gene_duplication_values.txt
+awk '{sum+=$3} END {print sum}'  AWK/td_Gene_duplication_values.txt
 ```
-sum non duplicated rows as an example of the UNDEVELOPED code here
+Sum entries belonging to the same factor
+```{bash}
+echo -ne "chr1\tgeneA\t15\n" >> AWK/td_Gene_duplication_values.txt
+sort -k 1 AWK/td_Gene_duplication_values.txt 
+echo -ne "\n\n"
+awk 'NR>1{sum[$1"\t"$2]+=$3} END {for (gene in sum) print gene, sum[gene]  }'  AWK/td_Gene_duplication_values.txt | sort -k 1 
+```
+Sum only non duplicated entries
+```{bash}
+ awk 'NR>1 && !sum[$2]++'  AWK/td_Gene_duplication_values.txt | awk 'NR>1{sum[$1"\t"$2]+=$3} END {for (gene in sum) print gene, sum[gene]  }'
+```
 
-DEVELOP HERE 
+```{bash, include=FALSE}
+rm -f AWK/td_Gene_duplication_per.txt 
+```
 
 #### For and While 
 

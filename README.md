@@ -454,7 +454,7 @@ What happen if we include more genes ?
 </summary>
 
 ``` bash
-echo -ne "chr4\tgeneA" >> AWK/td_Gene_duplication_per.txt 
+echo -ne "chr4\tgeneA\n" >> AWK/td_Gene_duplication_per.txt 
 
 bash AWK/classificator.awk AWK/td_Gene_duplication_per.txt
 ```
@@ -473,17 +473,54 @@ DEVELOP HERE
 
 ------------------------------------------------------------------------
 
-- IF and arrays as de-duplicated control structures:
+#### IF and arrays as de-duplicated control structures:
 
 Sum a particular column
 
 ``` bash
-awk '{sum+=$7} END {print sum}'  
+echo -ne "reads\n12\n123\n213\n12\n" > AWK/extra_column.txt 
+paste AWK/td_Gene_duplication_per.txt  AWK/extra_column.txt   > AWK/td_Gene_duplication_values.txt
+rm AWK/extra_column.txt 
+head AWK/td_Gene_duplication_values.txt
+awk '{sum+=$3} END {print sum}'  AWK/td_Gene_duplication_values.txt
 ```
 
-sum non duplicated rows as an example of the UNDEVELOPED code here
+    ## Chromosome   Duplicated Gene reads
+    ## chr1 geneA   12
+    ## chr2 geneB   123
+    ## chr3 geneA   213
+    ## chr4 geneA   12
+    ## 360
 
-DEVELOP HERE
+Sum entries belonging to the same factor
+
+``` bash
+echo -ne "chr1\tgeneA\t15\n" >> AWK/td_Gene_duplication_values.txt
+sort -k 1 AWK/td_Gene_duplication_values.txt 
+echo -ne "\n\n"
+awk 'NR>1{sum[$1"\t"$2]+=$3} END {for (gene in sum) print gene, sum[gene]  }'  AWK/td_Gene_duplication_values.txt | sort -k 1 
+```
+
+    ## chr1 geneA   12
+    ## chr1 geneA   15
+    ## chr2 geneB   123
+    ## chr3 geneA   213
+    ## chr4 geneA   12
+    ## Chromosome   Duplicated Gene reads
+    ## 
+    ## 
+    ## chr1 geneA 27
+    ## chr2 geneB 123
+    ## chr3 geneA 213
+    ## chr4 geneA 12
+
+Sum only non duplicated entries
+
+``` bash
+ awk 'NR>1 && !sum[$2]++'  AWK/td_Gene_duplication_values.txt | awk 'NR>1{sum[$1"\t"$2]+=$3} END {for (gene in sum) print gene, sum[gene]  }'
+```
+
+    ## chr2 geneB 123
 
 #### For and While
 
@@ -755,8 +792,8 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,013s
-    ## user 0m0,009s
+    ## real 0m0,007s
+    ## user 0m0,008s
     ## sys  0m0,001s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
@@ -772,8 +809,8 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,011s
-    ## user 0m0,011s
+    ## real 0m0,013s
+    ## user 0m0,013s
     ## sys  0m0,002s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
