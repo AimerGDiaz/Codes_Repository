@@ -1,17 +1,12 @@
----
-title: "R codes, functions, packages"
-author: "Aimer G. Diaz"
-output: github_document
----
+R codes, functions, packages
+================
+Aimer G. Diaz
+
 ## GGplot boxplot and barplots significance
-```{r, , include=FALSE}
-#options(scipen=999) ; options(scipen=0)
-library(ggplot2)
-library(ggpubr)
-```
 
 ## Boxplots with significance
-```{r}
+
+``` r
 #https://rpkgs.datanovia.com/ggpubr/reference/stat_compare_means.html 
 
 ##################### Box plots  #####################
@@ -37,14 +32,21 @@ comparisons <- list(
 # Add statistical comparisons using t test 
 boxplot_pretty_sig <- boxplot_pretty + stat_compare_means(comparisons = comparisons, method = "t.test", label = "p.signif")
 boxplot_pretty_sig
+```
+
+![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+``` r
  ggsave(filename = "boxplot_signif.svg", plot = boxplot_pretty_sig,device = "svg", width=6, height=5)
 
 # Alternative using ggsignif, but bars overlap each other
 #gplot + geom_signif(test = t.test, comparisons = comparisons, map_signif_level=TRUE, 
  #                   textsize = 3, angle = 45, vjust = 4 )
-``` 
+```
+
 ## Barplots with significance
-```{r}
+
+``` r
 colors <- c( "Control" = "#edf8e9",  "Factor1" = "#31a354", "Factor2" = "#006d2c" )
 
 ##################### Bar plots  #####################
@@ -58,12 +60,16 @@ barplot <- ggplot(df, aes(x = Factor  , y = Value, fill = Factor )) +
 
 barplot_signif <-barplot + stat_compare_means(comparisons = comparisons, method = "t.test", label = "p.signif")
 barplot_signif
- ggsave(filename = "barplot_signif.svg", plot = barplot_signif,device = "svg", width=6, height=5)
-
 ```
 
-# Languague interaction 
+![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
-## Using awk in R 
-https://coderedirect.com/questions/378456/combining-r-awk-bash-commands 
+``` r
+ ggsave(filename = "barplot_signif.svg", plot = barplot_signif,device = "svg", width=6, height=5)
+```
 
+# Languague interaction
+
+## Using awk in R
+
+<https://coderedirect.com/questions/378456/combining-r-awk-bash-commands>

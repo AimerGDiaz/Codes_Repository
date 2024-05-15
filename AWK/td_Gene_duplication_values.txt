@@ -1,6 +1,0 @@
-Chromosome	Duplicated Gene	reads
-chr1	geneA	12
-chr2	geneB	123
-chr3	geneA	213
-chr4	geneA	12
-chr1	geneA	15
