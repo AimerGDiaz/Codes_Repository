@@ -8,6 +8,11 @@ output: github_document
 #options(scipen=999) ; options(scipen=0)
 library(ggplot2)
 library(ggpubr)
+BiocManager::install(c("org.At.tair.db","enrichplot","GOSemSim","clusterProfiler"))
+library(org.At.tair.db)
+library(enrichplot)
+library(GOSemSim)
+library(clusterProfiler)
 ```
 
 ## Boxplots with significance
@@ -60,6 +65,35 @@ barplot_signif <-barplot + stat_compare_means(comparisons = comparisons, method 
 barplot_signif
  ggsave(filename = "barplot_signif.svg", plot = barplot_signif,device = "svg", width=6, height=5)
 
+```
+
+# GO clutering analysis
+
+```{r}
+
+DEG12_Ribo_up_unique<- readRDS(file = "list_of_upGenes.rds")
+entrez_ids  <- mapIds(x =org.At.tair.db  ,
+       keys =DEG12_Ribo_up_unique, 
+       column =  "ENTREZID", 
+       keytype = "TAIR",
+       multiVals = "first")
+#length(DEG12_Ribo_down_unique)
+ego <- enrichGO(gene  = entrez_ids,
+                OrgDb         = org.At.tair.db,
+                ont           = "BP",
+                pAdjustMethod = "BH",
+                pvalueCutoff  = 0.01,
+                qvalueCutoff  = 0.05,
+                readable      = TRUE)
+
+ego_at <- attributes(ego )
+ Whole_table <- ego_at$result
+# write.csv(Whole_table, "DE_results/GO_total_DEG12_Ribo_up.csv") 
+d <- godata('org.At.tair.db', ont="BP")
+
+ego2 <- pairwise_termsim(ego, method="Wang", semData = d)
+gos_clustered <- treeplot(ego2 ) 
+ gos_clustered
 ```
 
 # Languague interaction 
