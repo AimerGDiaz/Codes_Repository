@@ -95,11 +95,13 @@ head(df)
     ## 6 10.0   VC  0.5 fail
 
 ``` r
-ggsummarystats(
+GroupDose <- ggsummarystats(
   df, x = "supp", y = "len", 
   ggfunc = ggboxplot, add = c("jitter"), 
   color = "dose", palette = "npg"
   )
+
+GroupDose 
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
