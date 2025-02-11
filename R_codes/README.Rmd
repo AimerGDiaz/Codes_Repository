@@ -83,11 +83,13 @@ df$qc <- as.factor(sample(qc, 60))
 head(df)
 
 
-ggsummarystats(
+GroupDose <- ggsummarystats(
   df, x = "supp", y = "len", 
   ggfunc = ggboxplot, add = c("jitter"), 
   color = "dose", palette = "npg"
   )
+
+GroupDose 
 ```
 
 
