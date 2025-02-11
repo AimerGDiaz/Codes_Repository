@@ -4,11 +4,12 @@ author: "Aimer G. Diaz"
 output: github_document
 ---
 ## GGplot boxplot and barplots significance
-```{r, , include=FALSE}
+```{r, include=FALSE}
 #options(scipen=999) ; options(scipen=0)
 library(ggplot2)
 library(ggpubr)
-BiocManager::install(c("org.At.tair.db","enrichplot","GOSemSim","clusterProfiler"))
+library(tidyverse)
+#BiocManager::install(c("org.At.tair.db","enrichplot","GOSemSim","clusterProfiler"))
 library(org.At.tair.db)
 library(enrichplot)
 library(GOSemSim)
@@ -66,10 +67,33 @@ barplot_signif
  ggsave(filename = "barplot_signif.svg", plot = barplot_signif,device = "svg", width=6, height=5)
 
 ```
+## Grouped bar plots and line plots
+
+Base on a post in (datanovia)[https://www.datanovia.com/en/blog/how-to-create-a-beautiful-plots-in-r-with-summary-statistics-labels/]
+```{r}
+# Demo data
+data("ToothGrowth")
+df <- ToothGrowth
+df$dose <- as.factor(df$dose)
+# Add random QC column
+set.seed(123)
+qc <- rep(c("pass", "fail"), 30)
+df$qc <- as.factor(sample(qc, 60))
+# Inspect the data
+head(df)
+
+
+ggsummarystats(
+  df, x = "supp", y = "len", 
+  ggfunc = ggboxplot, add = c("jitter"), 
+  color = "dose", palette = "npg"
+  )
+```
+
 
 # GO clutering analysis
 
-```{r}
+```{r, error=FALSE, warning=FALSE, message=FALSE}
 
 DEG12_Ribo_up_unique<- readRDS(file = "list_of_upGenes.rds")
 entrez_ids  <- mapIds(x =org.At.tair.db  ,

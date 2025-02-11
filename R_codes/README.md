@@ -68,6 +68,42 @@ barplot_signif
  ggsave(filename = "barplot_signif.svg", plot = barplot_signif,device = "svg", width=6, height=5)
 ```
 
+## Grouped bar plots and line plots
+
+Base on a post in
+(datanovia)\[<https://www.datanovia.com/en/blog/how-to-create-a-beautiful-plots-in-r-with-summary-statistics-labels/>\]
+
+``` r
+# Demo data
+data("ToothGrowth")
+df <- ToothGrowth
+df$dose <- as.factor(df$dose)
+# Add random QC column
+set.seed(123)
+qc <- rep(c("pass", "fail"), 30)
+df$qc <- as.factor(sample(qc, 60))
+# Inspect the data
+head(df)
+```
+
+    ##    len supp dose   qc
+    ## 1  4.2   VC  0.5 pass
+    ## 2 11.5   VC  0.5 pass
+    ## 3  7.3   VC  0.5 pass
+    ## 4  5.8   VC  0.5 fail
+    ## 5  6.4   VC  0.5 pass
+    ## 6 10.0   VC  0.5 fail
+
+``` r
+ggsummarystats(
+  df, x = "supp", y = "len", 
+  ggfunc = ggboxplot, add = c("jitter"), 
+  color = "dose", palette = "npg"
+  )
+```
+
+![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
 # GO clutering analysis
 
 ``` r
@@ -77,11 +113,6 @@ entrez_ids  <- mapIds(x =org.At.tair.db  ,
        column =  "ENTREZID", 
        keytype = "TAIR",
        multiVals = "first")
-```
-
-    ## 'select()' returned 1:1 mapping between keys and columns
-
-``` r
 #length(DEG12_Ribo_down_unique)
 ego <- enrichGO(gene  = entrez_ids,
                 OrgDb         = org.At.tair.db,
@@ -95,68 +126,13 @@ ego_at <- attributes(ego )
  Whole_table <- ego_at$result
 # write.csv(Whole_table, "DE_results/GO_total_DEG12_Ribo_up.csv") 
 d <- godata('org.At.tair.db', ont="BP")
-```
 
-    ## preparing gene to GO mapping data...
-
-    ## preparing IC data...
-
-``` r
 ego2 <- pairwise_termsim(ego, method="Wang", semData = d)
 gos_clustered <- treeplot(ego2 ) 
-```
-
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-    ## ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-
-``` r
  gos_clustered
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 # Languague interaction
 
