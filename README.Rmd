@@ -174,6 +174,7 @@ As the sequence length change depending on each loci, an approach to extract eac
 ```{bash,  eval=FALSE, include=TRUE}
 awk '/^Discription:/{d=$2};/^Coordinate/{c=$2};/^TAS region:/{s=$3}/^TAR/ {print d,c,s}'  AWK/tasiRNA_generating_loci.txt | grep atTAS3a
 ```
+
 ```{bash,  eval=TRUE}
 bash AWK/reformatting.sh  AWK/tasiRNA_generating_loci.txt | grep atTAS3a
 ```
@@ -300,7 +301,7 @@ I usually work with a modified version of the output format 6, declaring all the
 blastn  -query <QUERY> -db <SUBJECT> -outfmt   "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen nident" -perc_identity 10 -task blastn -word_size 10 -out 
 ```
 If there is not interest in filtering the blast result, reusing it as an annotation file, the next command would be quite useful
-```{bash, eval=FALSE}
+```{bash, eval=TRUE}
 awk -v i=1 'OFS="\t"{if ($9 < $10) {sense="+"; S=$9} else {sense="-";S=$10}; if ($9 < $10) E=$10; else E=$9; print $2,S,E,"viral2TAIR_hit_"i,sense, E-S , $1, "id:"$3";aln:"$4";nind:"$15 ; i++ }' collection2TAIR.out | sort -k1,1 -k2,2n  > collection2TAIR.bed
 ```
 
@@ -495,13 +496,13 @@ grep -oP "Accession: \w+"  BASH/complex_formatting.txt
 ```
 The information include in perl matching characters as \w+ can be displayed using: 
 
-```{bash, eval=FALSE}
+```{bash, eval=TRUE}
 unichars -a -u '\w' | wc -l 
 ```
 
 To check the difference in perl matching characters, we can use unichars and diff command, however they are not available in all unix systems 
 
-```{bash, eval=FALSE}
+```{bash, eval=TRUE}
 diff -u  <( unichars -a -u '\w' )  <( unichars -a -u '\d' )
 ```
 
@@ -518,7 +519,7 @@ Using the previous complex formatting text:
 cat BASH/complex_formatting.txt | grep -oP "Type:(.+?)(?=[\n|;])"  
 ``` 
 An equivalent expression to "\\w+" examples
-```{bash, eval=FALSE}
+```{bash, eval=TRUE}
 grep -oP "(Accession:.+?)(?=ID)"  BASH/complex_formatting.txt
 ```
 
@@ -739,7 +740,7 @@ echo -ne "chr1\t115215\t115320\ttesting-syntax_hsaPmmu-mir-23a\nchr1\t115215\t11
 tail -n 1 Perl/oneliner_search-replace.sh
 ```
 
-```{bash, eval=FALSE}
+```{bash, eval=TRUE}
 bash Perl/oneliner_search-replace.sh 
 ```
 ### Search and save multiple hits in a single line
@@ -830,19 +831,19 @@ git config remote.origin.url git@github.com:AimerGDiaz/Codes_Repository
 Install first [git](http://git-scm.com/downloads) and configure github account using github credentials. 
 ```{bash, eval=FALSE}
 git config --global user.name AimerGDiaz 
-git config --global user.email <mail>
-ssh-keygen -t rsa -C <mail>
+git config --global user.email aiagutierrezdi@unal.edu.co 
 ```
 
 ### New connections in MSU server
 ```{bash, eval=FALSE}
 # Generate git.pub in conventional .ssh folder, copy its content into github ssh keys
-ssh-keygen -t rsa -C EMAIL_GITHUB_ACCOUNT
-
+# BE Aware of not overwrite  previous rsa  !!
+ssh-keygen -t rsa -C aiagutierrezdi@unal.edu.co -f ~/.ssh/git 
+# Write the actual password for login there 
 # Go to github settings and open a new ssh key using the  content of .pub document previuosly created
 
 #Tesdt key funcion by 
- ssh  -T git@github.com
+ ssh  -T git@github.com 
  
 module load GCCcore/12.2.0
 # To initialize a new Git repository in the current directory, use:
