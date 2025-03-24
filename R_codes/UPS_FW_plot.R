@@ -25,12 +25,12 @@ colors <- c("Col-0" = "#29614D", "uba1" = "#601831")
 #table(UBA1_UBC3536_FW_avg$Genotype)
 UBA1_FW_avg <- UBA1_UBC3536_FW_avg[UBA1_UBC3536_FW_avg$Genotype != "ubc35/36", ]
 #UBA1_FW_avg_plot <- ggplot(UBA1_FW_avg[UBA1_FW_avg$Genotype == "uba1",], aes(x=Infection.x      , y=Relative_Weight,fill = Genotype)) +
-UBA1_FW_avg_plot <- ggplot(UBA1_FW_avg, aes(x=Infection.x      , y=Relative_Weight,fill = Genotype)) +
+UBA1_FW_avg_plot <- ggplot(UBA1_FW_avg, aes(x=Infection.x  , y=Relative_Weight,fill = Genotype)) +
   geom_bar(position = position_dodge(width = 0.9), stat = 'summary' ) +
   geom_errorbar(position = position_dodge(width = 0.9),stat = 'summary', width = 0.4,alpha = 0.5) + 
   geom_jitter( stat = 'identity', shape = 16, position = position_jitterdodge(0.15), size = 1, alpha = 0.5) +
   scale_fill_manual(values = colors ) +
-  labs(y = "Relative Fresh weight", x = "Infection treatment" ) + facet_wrap(.~Genotype) +
+  labs(y = "Relative Fresh weight", x = "Infection treatment" ) + facet_grid(~Genotype) +
   theme_classic(base_size = 20) +
   scale_y_continuous(limits = c(0, 2), breaks = seq(0, 2, by = 0.5)) + 
   theme(axis.text.x = element_text(angle = 90),legend.position = "bottom") 
@@ -59,7 +59,7 @@ UBA1_FW_avg_plot <- ggplot(UBA1_FW_avg, aes(x=Interaction      , y=Relative_Weig
   scale_fill_manual(values = colors ) +
   labs(y = "Relative Fresh weight", x = "Infection treatment" ) +# facet_wrap(.~Genotype) +
   theme_classic(base_size = 20) +
-  scale_y_continuous(limits = c(0, 2), breaks = seq(0, 2, by = 0.5)) + 
+  scale_y_continuous(limits = c(0, 2.2), breaks = seq(0, 2, by = 0.5)) + 
   theme(axis.text.x = element_text(angle = 90),legend.position = "bottom") 
 
 # Define custom comparisons for each group
@@ -71,6 +71,6 @@ comparisons <- list(
 )
 
 # Add statistical comparisons using t test 
-UBA1_FW_avg_sig_plot <- UBA1_FW_avg_plot + stat_compare_means(step.increase = 0.06, comparisons = comparisons, method = "t.test", label = "p.signif")
+UBA1_FW_avg_sig_plot <- UBA1_FW_avg_plot + stat_compare_means(step.increase = 0, comparisons = comparisons, method = "t.test", label = "p.signif")
 
 UBA1_FW_avg_sig_plot
