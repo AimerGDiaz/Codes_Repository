@@ -23,8 +23,8 @@ SG_CMV_plot  <-ggplot(SG_CMV, aes(x= Treatment , y=Counts,fill = Treatment)) +
   geom_errorbar(position = position_dodge(width = 0.9),stat = 'summary',fun.data = mean_se, width = 0.4,alpha = 0.5) + 
   geom_jitter( stat = 'identity', shape = 16, position = position_jitterdodge(0.15), size = 1, alpha = 0.5) +
   scale_fill_manual(values = c("Mock" = "#555555", "CMV" = "#c0c0c0" ) ) +
-  labs(y = "Foci count", x = "Infection treatment" ) + facet_grid(~SG, scales = "free") +
-  theme_bw(base_size = 20) +
+  labs(y = "Foci count", x = "Infection treatment" ) + facet_wrap(~SG) + #, scales = "free_y") +
+  theme_classic(base_size = 20) +
   theme(axis.text.x = element_text(angle = 90),legend.position = "bottom" ,legend.title = element_blank())  +
   stat_compare_means(step.increase = 0, comparisons = comparisons, method = "t.test", label = "p.signif")
 
