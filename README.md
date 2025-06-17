@@ -779,9 +779,9 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,003s
-    ## user 0m0,003s
-    ## sys  0m0,003s
+    ## real 0m0,004s
+    ## user 0m0,002s
+    ## sys  0m0,006s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -794,9 +794,9 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,008s
-    ## user 0m0,006s
-    ## sys  0m0,005s
+    ## real 0m0,012s
+    ## user 0m0,002s
+    ## sys  0m0,013s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -811,9 +811,9 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,014s
-    ## user 0m0,004s
-    ## sys  0m0,012s
+    ## real 0m0,016s
+    ## user 0m0,008s
+    ## sys  0m0,011s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the
@@ -1361,10 +1361,15 @@ git config --global user.email aiagutierrezdi@unal.edu.co
 
 ### New connections in MSU server
 
+In case of need follow github guide: \* [Generating SSH
+keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+\* [Genereting .pub pair in
+github](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github)
+
 ``` bash
 # Generate git.pub in conventional .ssh folder, copy its content into github ssh keys
 # BE Aware of not overwrite  previous rsa  !!
-ssh-keygen -t rsa -C aiagutierrezdi@unal.edu.co -f ~/.ssh/git 
+ssh-keygen -t ed25519 -C aiagutierrezdi@unal.edu.co -f ~/.ssh/git 
 # Write the actual password for login there 
 # Go to github settings and open a new ssh key using the  content of .pub document previuosly created
 

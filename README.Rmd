@@ -835,10 +835,15 @@ git config --global user.email aiagutierrezdi@unal.edu.co
 ```
 
 ### New connections in MSU server
+
+In case of need follow github guide: 
+* [Generating SSH keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+* [Genereting .pub pair in github](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github) 
+
 ```{bash, eval=FALSE}
 # Generate git.pub in conventional .ssh folder, copy its content into github ssh keys
 # BE Aware of not overwrite  previous rsa  !!
-ssh-keygen -t rsa -C aiagutierrezdi@unal.edu.co -f ~/.ssh/git 
+ssh-keygen -t ed25519 -C aiagutierrezdi@unal.edu.co -f ~/.ssh/git 
 # Write the actual password for login there 
 # Go to github settings and open a new ssh key using the  content of .pub document previuosly created
 
