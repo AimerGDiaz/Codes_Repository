@@ -522,7 +522,7 @@ Sum only non duplicated entries
 
     ## chr2 geneB 123
 
-#### For and While
+### For and While
 
 Sum all columns
 
@@ -531,6 +531,17 @@ awk 'BEGIN{FS=OFS=","}
      NR==1{print}
      NR>1{for (i=1;i<=NF;i++) a[i]+=$i}
      END{for (i=1;i<=NF;i++) printf a[i] OFS; printf "\n"}' file
+```
+
+### Change the file format
+
+A useful way to change the file format, and at the same time printing
+recursively all columns of a file, the next code takes a file comma
+separated, filtered by padj value field and them print the selected rows
+in a tab separated file
+
+``` bash
+awk -F',' -v OFS="\t"  '$8 < 0.05 {out=$1; for (i=2;i<=NF;i++) out= out "\t" $i; print out}'
 ```
 
 #### From blast out to Bed file
@@ -577,10 +588,9 @@ intersectBed  -wo  -a  ../../Arabidopsis/TAIR10.1_NCBI.gff3 -b collection2TAIR.b
 
 ------------------------------------------------------------------------
 
-- While, beigin honest I have never used while loop on awks. But I do
-  use while structure on bash followed by an awk code, which is, awk as
-  line per line variable mining tool, which employ the next code
-  structure:
+- While, being honest I have never used while loop on awk. But I do use
+  while structure on bash followed by an awk code, which is, awk as line
+  per line variable mining tool, which employ the next code structure:
 
 ``` bash
 echo  "This a toy example; with a semicolon separator structure; and I want to show you; hidden variable X 
@@ -779,9 +789,9 @@ head BASH/piping.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,004s
+    ## real 0m0,003s
     ## user 0m0,002s
-    ## sys  0m0,006s
+    ## sys  0m0,004s
     ## grep -f <(bash  BASH/tempids.sh) $1 | awk -F',' '{print $7}'  | sort | uniq -c
 
 In such way this code is equivalent to run grep in a for loop as:
@@ -794,9 +804,9 @@ head BASH/piping_alternative.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,012s
-    ## user 0m0,002s
-    ## sys  0m0,013s
+    ## real 0m0,007s
+    ## user 0m0,005s
+    ## sys  0m0,005s
     ## tempids=()
     ## tempids=$(cut -d '_' -f 1  BASH/grep_lists_example.txt)
     ## time ( for f in ${tempids[@]}; do grep "^"$f","  $1; done | cut -d ',' -f 7  | sort | uniq -c )
@@ -811,9 +821,9 @@ tail -n 1  BASH/awk_regrex_insideFor.sh
     ##       7 RPS12_A1
     ##       3 RPS12_A2
     ## 
-    ## real 0m0,016s
-    ## user 0m0,008s
-    ## sys  0m0,011s
+    ## real 0m0,012s
+    ## user 0m0,004s
+    ## sys  0m0,010s
     ## time ( for f in ${tempids[@]};  do  awk -F',' '/^'$f',/{print $7}' $1 ; done | sort | uniq -c  ) # $1 ~ /^'$f'$/ equivalent
 
 However the first code is much faster as time command show us, the

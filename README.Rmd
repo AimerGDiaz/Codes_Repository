@@ -280,7 +280,7 @@ Sum only non duplicated entries
 rm -f AWK/td_Gene_duplication_per.txt 
 ```
 
-#### For and While 
+### For and While 
 
 Sum all columns
 ```{bash, eval=FALSE}
@@ -289,6 +289,15 @@ awk 'BEGIN{FS=OFS=","}
      NR>1{for (i=1;i<=NF;i++) a[i]+=$i}
      END{for (i=1;i<=NF;i++) printf a[i] OFS; printf "\n"}' file
 ```
+
+### Change the file format 
+
+A useful way to change the file format, and at the same time printing recursively all columns of a file, the next code takes a file comma separated, filtered by padj value field and them print the selected rows in a tab separated file
+
+```{bash, eval=FALSE}
+awk -F',' -v OFS="\t"  '$8 < 0.05 {out=$1; for (i=2;i<=NF;i++) out= out "\t" $i; print out}'
+```
+
 
 #### From blast out to Bed file 
 
@@ -324,7 +333,7 @@ intersectBed  -wo  -a  ../../Arabidopsis/TAIR10.1_NCBI.gff3 -b collection2TAIR.b
 /mnt/g/My\ Drive/Bioinformatica/0_Tesis\ Maestria/Precise_counting/Readme.txt
 --> 
 ***
-* While, beigin honest I have never used while loop on awks. But I do use while structure on bash followed by an awk code, which is, awk as line per line variable mining tool, which employ the next code structure: 
+* While, being honest I have never used while loop on awk. But I do use while structure on bash followed by an awk code, which is, awk as line per line variable mining tool, which employ the next code structure: 
 
 ```{bash}
 echo  "This a toy example; with a semicolon separator structure; and I want to show you; hidden variable X 
