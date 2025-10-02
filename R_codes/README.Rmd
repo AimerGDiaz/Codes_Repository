@@ -120,6 +120,8 @@ d <- godata('org.At.tair.db', ont="BP")
 ego2 <- pairwise_termsim(ego, method="Wang", semData = d)
 gos_clustered <- treeplot(ego2 ) 
  gos_clustered
+ #ggsave(plot = gos_clustered,filename = "./GO_total_GWAS.svg", device = "svg",  width=12, height=8)
+
 ```
 
 # Languague interaction 
